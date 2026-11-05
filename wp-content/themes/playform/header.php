@@ -55,11 +55,7 @@ $pf_usps  = [
 				foreach ( playform_menu() as $item ) :
 					?>
 					<div class="mm__item" data-mm>
-						<a href="<?php echo esc_url( $item['url'] ); ?>" class="mm__link<?php echo $current === $item['slug'] ? ' is-active' : ''; ?>" aria-haspopup="true"><?php
-							$ico = function_exists( 'playform_menu_icons' ) ? ( playform_menu_icons()[ $item['slug'] ] ?? '' ) : '';
-							echo $ico ? '<span class="mm__ico">' . playform_icon( $ico, 17, 1.4 ) . '</span>' : ''; // phpcs:ignore
-							echo esc_html( $item['label'] );
-							?></a>
+						<a href="<?php echo esc_url( $item['url'] ); ?>" class="mm__link<?php echo $current === $item['slug'] ? ' is-active' : ''; ?>" aria-haspopup="true"><?php echo esc_html( $item['label'] ); ?></a>
 						<div class="mm__panel">
 							<div class="mm__inner">
 								<div class="mm__cats<?php echo count( $item['primary'] ) > 7 ? ' mm__cats--2' : ''; ?>">

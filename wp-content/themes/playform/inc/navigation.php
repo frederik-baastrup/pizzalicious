@@ -140,11 +140,6 @@ function playform_menu_spec(): array {
 	];
 }
 
-/** Ikoner foran hovedmenuens punkter (desktop), slug => ikon i playform_icon(). */
-function playform_menu_icons(): array {
-	return [ 'pizzaovne' => 'pizzaoven', 'pizzasten' => 'stone', 'pizzaspader' => 'peel', 'pizzaskaerere' => 'cutter', 'dej' => 'dough', 'tilbehoer' => 'tools', 'ingredienser' => 'tomato' ];
-}
-
 /** Visningsnavne fra menuen (fx "Romaskiner" for kategorien "Romaskine"), slug => navn. */
 function playform_menu_labels(): array {
 	// Kategorierne hedder ental (som folk søger), men i menu, faner og "Tilbud på …" læser flertal bedst.
