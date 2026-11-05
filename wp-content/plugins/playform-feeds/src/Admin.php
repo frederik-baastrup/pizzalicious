@@ -315,7 +315,7 @@ final class Admin {
 				echo ' <label><input type="checkbox" name="remove_key" value="1"> Fjern nøglen</label>';
 			}
 		}
-		echo '</td></tr><tr><th><label for="texts_per_run">Nye tekster pr. import</label></th><td><input type="number" min="0" max="500" id="texts_per_run" name="texts_per_run" value="' . (int) get_option( 'playform_ai_texts_per_run', 100 ) . '"> <span class="description">0 = kun når du selv beder om det. Tekster, der består faktatjekket, udgives automatisk; resten venter under Produkter → Tekster til godkendelse.</span></td></tr></table>';
+		echo '</td></tr><tr><th><label for="texts_per_run">Nye tekster pr. import</label></th><td><input type="number" min="0" max="1000" id="texts_per_run" name="texts_per_run" value="' . (int) get_option( 'playform_ai_texts_per_run', 500 ) . '"> <span class="description">0 = kun når du selv beder om det. Tekster, der består faktatjekket, udgives automatisk; resten venter under Produkter → Tekster til godkendelse.</span></td></tr></table>';
 		$prov = (string) get_option( 'playform_nl_provider', '' );
 		echo '<h2>Nyhedsbrev</h2><table class="form-table">';
 		echo '<tr><th><label for="nl_provider">Tjeneste</label></th><td><select id="nl_provider" name="nl_provider"><option value="">Ikke sat op</option><option value="brevo"' . selected( $prov, 'brevo', false ) . '>Brevo</option><option value="mailerlite"' . selected( $prov, 'mailerlite', false ) . '>MailerLite</option></select></td></tr>';
