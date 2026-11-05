@@ -117,7 +117,7 @@ while ( have_posts() ) :
 						<span class="stock<?php echo $best && $best['in_stock'] ? ' stock--in' : ''; ?>"><span class="stock__dot"></span><?php echo esc_html( $stock_txt ); ?></span>
 					</div>
 					<?php if ( $best ) : ?>
-						<a href="<?php echo esc_url( playform_aff_url( $best['url'], get_post_field( 'post_name', $id ), 'produktside' ) ); ?>" class="btn-shop" rel="sponsored nofollow noopener" referrerpolicy="no-referrer-when-downgrade" target="_blank">Se pris hos <?php echo esc_html( $best['shop'] ); ?> <?php echo playform_icon( 'external', 18 ); // phpcs:ignore ?></a>
+						<a href="<?php echo esc_url( playform_aff_url( $best['url'], get_post_field( 'post_name', $id ), 'produktside' ) ); ?>" class="btn-shop" rel="sponsored nofollow noopener" referrerpolicy="strict-origin-when-cross-origin" target="_blank">Se pris hos <?php echo esc_html( $best['shop'] ); ?> <?php echo playform_icon( 'external', 18 ); // phpcs:ignore ?></a>
 						<span class="adnote"><b>Annonce</b>Vi får provision, hvis du køber via knappen.</span>
 						<ul class="pricebox__chips">
 							<?php
@@ -171,12 +171,12 @@ while ( have_posts() ) :
 				<div class="offer<?php echo $i === 0 ? ' offer--best' : ''; ?>">
 					<span class="offer__shop">
 						<b><?php echo esc_html( $o['shop'] ); ?></b>
-						<?php if ( $i === 0 ) : ?><span class="badge badge--accent">Billigst</span><?php endif; ?>
+						<?php if ( $i === 0 ) : ?><span class="badge badge--accent" title="Laveste pris inkl. fragt">Billigst<span class="gt-long"> inkl. fragt</span></span><?php endif; ?>
 						<span class="stock<?php echo $o['in_stock'] ? ' stock--in' : ''; ?>"><span class="stock__dot"></span><?php echo $o['in_stock'] ? 'På lager' : 'Ikke på lager'; ?></span>
 					</span>
 					<span class="offer__meta"><?php echo esc_html( trim( ( $o['delivery'] ? 'Levering ' . $o['delivery'] : '' ) ) ); ?><br><?php echo $o['shipping'] === null ? '' : esc_html( $o['shipping'] > 0 ? 'Fragt ' . playform_kr( $o['shipping'] ) : 'Gratis fragt' ); ?></span>
 					<span class="offer__price"><?php echo esc_html( playform_kr( $o['price'] ) ); ?></span>
-					<a href="<?php echo esc_url( playform_aff_url( $o['url'], get_post_field( 'post_name', $id ), 'produktside-prisliste' ) ); ?>" class="btn-out" rel="sponsored nofollow noopener" referrerpolicy="no-referrer-when-downgrade" target="_blank">Gå til butik</a>
+					<a href="<?php echo esc_url( playform_aff_url( $o['url'], get_post_field( 'post_name', $id ), 'produktside-prisliste' ) ); ?>" class="btn-out" rel="sponsored nofollow noopener" referrerpolicy="strict-origin-when-cross-origin" target="_blank">Gå til butik</a>
 				</div>
 			<?php endforeach; ?>
 		</div>
@@ -265,7 +265,8 @@ while ( have_posts() ) :
 	<?php
 	if ( $cat_term ) {
 		$price   = max( 1, $d['price'] );
-		$related = get_posts(
+		$related = get_transient( 'pf_related_' . $id );
+		$related = is_array( $related ) ? $related : get_posts(
 			[
 				'post_type'      => 'product',
 				'posts_per_page' => 4,
@@ -279,6 +280,7 @@ while ( have_posts() ) :
 				],
 			]
 		);
+		set_transient( 'pf_related_' . $id, $related, 12 * HOUR_IN_SECONDS ); // RAND()-forespørgslen køres højst to gange i døgnet
 		if ( $related ) {
 			echo '<section class="wrap section section--end"><div class="section__head"><h2>Lignende ' . esc_html( mb_strtolower( playform_cat_label( $cat_term ) ) ) . '</h2><span class="section__line"></span><a class="section__more" href="' . esc_url( get_term_link( $cat_term ) ) . '">Se alle</a></div><div class="grid grid--4">';
 			foreach ( $related as $rid ) {

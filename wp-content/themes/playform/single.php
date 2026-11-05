@@ -92,7 +92,7 @@ while ( have_posts() ) :
 						<li><b><?php echo esc_html( (string) $n_shops ); ?></b><span>danske butikker</span></li>
 					</ul>
 					<ul class="author-card__rules">
-						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Ingen betalte placeringer</li>
+						<?php if ( ! get_post_meta( get_the_ID(), '_pf_hidden', true ) ) : ?><li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Ingen betalte placeringer</li><?php endif; ?>
 						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Fakta fra butikkernes egne data</li>
 						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Priser opdateres to gange i døgnet</li>
 					</ul>

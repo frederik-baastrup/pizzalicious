@@ -145,7 +145,7 @@ add_shortcode(
 				$alt_html = '<div class="pick-alt"><span class="pick-alt__label">' . ( $p ? 'Ikke på lager lige nu' : 'Ikke længere i butikkerne' ) . ' – et alternativ i samme prisklasse:</span>'
 					. '<a class="pick-alt__item" href="' . esc_url( $a['url'] ) . '">' . ( $a['image'] ? '<img src="' . esc_url( $a['image'] ) . '" alt="" loading="lazy">' : '' )
 					. '<span><b>' . esc_html( $a['name'] ) . '</b><small>' . esc_html( playform_kr( $a['price'] ) . ' · Hos ' . $a['shop'] ) . '</small></span></a>'
-					. ( $ao ? '<a class="pick-alt__cta" href="' . esc_url( playform_aff_url( $ao['url'], get_post_field( 'post_name', $alts[0]->get_id() ), get_post_field( 'post_name', get_the_ID() ) . '-alternativ' ) ) . '" rel="sponsored nofollow noopener" referrerpolicy="no-referrer-when-downgrade" target="_blank">Se pris</a>' : '' ) . '</div>';
+					. ( $ao ? '<a class="pick-alt__cta" href="' . esc_url( playform_aff_url( $ao['url'], get_post_field( 'post_name', $alts[0]->get_id() ), get_post_field( 'post_name', get_the_ID() ) . '-alternativ' ) ) . '" rel="sponsored nofollow noopener" referrerpolicy="strict-origin-when-cross-origin" target="_blank">Se pris</a><span class="adnote pick-alt__ad"><b>Annonce</b>Provision ved køb</span>' : '' ) . '</div>';
 			}
 		}
 		if ( ! $p ) {
@@ -185,14 +185,14 @@ add_shortcode(
 					<div class="pick__price">
 						<?php if ( $d['in_stock'] ) : ?>
 							<b<?php echo $d['was'] > $d['price'] ? ' class="is-sale"' : ''; ?>><?php echo esc_html( playform_kr( $d['price'] ) ); ?></b>
-							<?php if ( $d['was'] > $d['price'] ) : ?><s title="Laveste pris de 30 dage før tilbuddet"><?php echo esc_html( playform_kr( $d['was'] ) ); ?></s><?php endif; ?>
+							<?php if ( $d['was'] > $d['price'] ) : ?><s title="<?php echo 'shop' === ( $d['was_src'] ?? '' ) ? 'Butikkens førpris' : 'Laveste pris de 30 dage før tilbuddet'; ?>"><?php echo esc_html( playform_kr( $d['was'] ) ); ?></s><?php endif; ?>
 							<small><?php echo esc_html( $d['sale'] ? 'Tilbud hos ' . $d['shop'] : ( $d['shops'] > 1 ? 'Billigst hos ' . $d['shop'] . ' · ' . $d['shops'] . ' butikker' : 'Hos ' . $d['shop'] ) ); ?></small>
 						<?php else : ?>
 							<b class="pick__out">Ikke på lager lige nu</b>
 						<?php endif; ?>
 					</div>
 					<?php if ( $offer ) : ?>
-						<a class="btn-shop pick__cta" href="<?php echo esc_url( playform_aff_url( $offer['url'], get_post_field( 'post_name', $p->get_id() ), get_post_field( 'post_name', get_the_ID() ) ) ); ?>" rel="sponsored nofollow noopener" referrerpolicy="no-referrer-when-downgrade" target="_blank">Se pris hos <?php echo esc_html( $offer['shop'] ); ?> <?php echo playform_icon( 'external', 16 ); // phpcs:ignore ?></a>
+						<a class="btn-shop pick__cta" href="<?php echo esc_url( playform_aff_url( $offer['url'], get_post_field( 'post_name', $p->get_id() ), get_post_field( 'post_name', get_the_ID() ) ) ); ?>" rel="sponsored nofollow noopener" referrerpolicy="strict-origin-when-cross-origin" target="_blank">Se pris hos <?php echo esc_html( $offer['shop'] ); ?> <?php echo playform_icon( 'external', 16 ); // phpcs:ignore ?></a>
 						<span class="adnote pick__adnote"><b>Annonce</b>Vi får provision ved køb via knappen.</span>
 					<?php else : ?>
 						<a class="pick__more" href="<?php echo esc_url( $d['url'] ); ?>">Se produktet</a>
@@ -258,7 +258,13 @@ add_shortcode(
 			$q['posts_per_page'] = $n - count( $ids );
 			$q['post__not_in']   = array_merge( $exclude, $ids ); // phpcs:ignore
 			$q['orderby']        = 'rand';
-			$ids                 = array_merge( $ids, get_posts( $q ) );
+			$ckey                = 'pf_flere_' . md5( get_the_ID() . '|' . wp_json_encode( $q ) );
+			$rand                = get_transient( $ckey );
+			if ( ! is_array( $rand ) ) { // stabilt udvalg i 6 timer: sparer en RAND()-forespørgsel pr. visning
+				$rand = get_posts( $q );
+				set_transient( $ckey, $rand, 6 * HOUR_IN_SECONDS );
+			}
+			$ids = array_merge( $ids, $rand );
 		}
 		if ( ! $ids ) {
 			return '';
@@ -557,7 +563,7 @@ function playform_guide_test_note( array $a ): string {
 	$h .= '<p>' . ( $rev
 		? 'Vil du læse en egentlig ' . $kw . ' test, så følg linkene til anmeldelserne ved de enkelte modeller ovenfor.'
 		: 'Finder du en ' . $kw . ' test fra et uafhængigt medie, er det en god idé at sammenligne den med valgene her. Hvor der findes anmeldelser af præcis samme model, linker vi til dem.' )
-		. ' Priser og lager opdateres to gange i døgnet, så du altid kan se, hvor du får den billigst lige nu.</p>' . "\n";
+		. ' Priser og lager opdateres to gange i døgnet, så du kan se den aktuelle pris hos de butikker, vi samarbejder med.</p>' . "\n";
 	return $h;
 }
 
@@ -585,7 +591,7 @@ function playform_best_html( array $a ): string {
 				$host = preg_replace( '/^www\./', '', (string) wp_parse_url( $r[1], PHP_URL_HOST ) );
 				$h   .= '<a class="review-card" href="' . esc_url( $r[1] ) . '" target="_blank" rel="noopener">'
 					. '<span class="review-card__icon">' . playform_icon( 'check', 20, 2 ) . '</span>'
-					. '<span class="review-card__body"><small>Uafhængig anmeldelse</small><b>' . esc_html( $r[0] ) . ' har testet ' . esc_html( $pk['name'] ) . '</b>'
+					. '<span class="review-card__body"><small>Uafhængig anmeldelse</small><b>Anmeldelse af ' . esc_html( $pk['name'] ) . ' hos ' . esc_html( $r[0] ) . '</b>'
 					. '<span>Læs hele anmeldelsen hos ' . esc_html( $host ) . '</span></span>'
 					. '<span class="review-card__go">' . playform_icon( 'external', 18 ) . "</span></a>\n";
 			}

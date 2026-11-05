@@ -18,7 +18,12 @@ add_action(
 		if ( ! is_readable( $file ) ) {
 			return;
 		}
+		$stamp = (string) filemtime( $file ) . ':' . filesize( $file );
+		if ( get_option( 'playform_product_texts_stamp' ) === $stamp ) {
+			return; // billig kontrol pr. visning – md5 kun når filen er ændret
+		}
 		$hash = md5_file( $file );
+		update_option( 'playform_product_texts_stamp', $stamp, false );
 		if ( get_option( 'playform_product_texts_hash' ) === $hash ) {
 			return;
 		}

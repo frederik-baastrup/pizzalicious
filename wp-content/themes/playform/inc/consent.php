@@ -22,7 +22,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const PLAYFORM_CONSENT_VERSION = 1;
+const PLAYFORM_CONSENT_VERSION = 2; // 2: statistik beskrevet korrekt (Matomo)
 
 function playform_consent_scripts(): array {
 	return (array) apply_filters( 'playform_consent_scripts', [] );

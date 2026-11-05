@@ -79,7 +79,7 @@ $pf_usps  = [
 												<div class="mm__col">
 													<span class="mm__title">Pris</span>
 													<?php foreach ( $p['prices'] as [ $label, $url ] ) : ?>
-														<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+														<a href="<?php echo esc_url( $url ); ?>" rel="nofollow"><?php echo esc_html( $label ); ?></a>
 													<?php endforeach; ?>
 												</div>
 											<?php endif; ?>
@@ -88,7 +88,7 @@ $pf_usps  = [
 											<div class="mm__col">
 												<span class="mm__title"><?php echo esc_html( $p['label'] ); ?> efter pris</span>
 												<?php foreach ( $p['prices'] as [ $label, $url ] ) : ?>
-													<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+													<a href="<?php echo esc_url( $url ); ?>" rel="nofollow"><?php echo esc_html( $label ); ?></a>
 												<?php endforeach; ?>
 												<a href="<?php echo esc_url( $p['url'] ); ?>" class="mm__more">Se hele kategorien &rarr;</a>
 											</div>

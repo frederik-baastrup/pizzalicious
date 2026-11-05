@@ -246,7 +246,8 @@ function playform_product_schema( WC_Product $product, array $offers, array $d )
 		$data['description'] = trim( $product->get_name() . ( $d['brand'] ? ' fra ' . $d['brand'] : '' ) . ( $cat ? ' i kategorien ' . wp_specialchars_decode( $cat->name ) : '' ) . '. Se pris og lagerstatus hos danske butikker.' );
 	}
 	if ( $offers ) {
-		$prices = array_column( $offers, 'price' );
+		$in     = array_values( array_filter( $offers, static fn( $o ) => ! empty( $o['in_stock'] ) ) ) ?: $offers;
+		$prices = array_column( $in, 'price' ); // kun tilbud på lager tæller i lav/høj pris
 		$avail  = ! empty( array_filter( array_column( $offers, 'in_stock' ) ) ) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock';
 		if ( count( $offers ) === 1 ) {
 			$data['offers'] = [ '@type' => 'Offer', 'price' => number_format( $offers[0]['price'], 2, '.', '' ), 'priceCurrency' => 'DKK', 'itemCondition' => 'https://schema.org/NewCondition', 'availability' => $avail, 'url' => $data['url'], 'seller' => [ '@type' => 'Organization', 'name' => $offers[0]['shop'] ] ];
@@ -258,7 +259,7 @@ function playform_product_schema( WC_Product $product, array $offers, array $d )
 				];
 			}
 		} else {
-			$data['offers'] = [ '@type' => 'AggregateOffer', 'lowPrice' => number_format( min( $prices ), 2, '.', '' ), 'highPrice' => number_format( max( $prices ), 2, '.', '' ), 'offerCount' => count( $offers ), 'priceCurrency' => 'DKK', 'itemCondition' => 'https://schema.org/NewCondition', 'availability' => $avail, 'url' => $data['url'] ];
+			$data['offers'] = [ '@type' => 'AggregateOffer', 'lowPrice' => number_format( min( $prices ), 2, '.', '' ), 'highPrice' => number_format( max( $prices ), 2, '.', '' ), 'offerCount' => count( $in ), 'priceCurrency' => 'DKK', 'itemCondition' => 'https://schema.org/NewCondition', 'availability' => $avail, 'url' => $data['url'] ];
 		}
 	}
 	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . '</script>';

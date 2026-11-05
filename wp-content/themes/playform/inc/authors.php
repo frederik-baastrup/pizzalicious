@@ -116,7 +116,7 @@ add_action(
 				'dateModified'  => get_the_modified_date( 'c', $id ),
 				'mainEntityOfPage' => get_permalink( $id ),
 				'author'        => playform_author_schema( $a ),
-				'publisher'     => [ '@type' => 'Organization', 'name' => playform_site( 'name' ), 'url' => home_url( '/' ), 'logo' => [ '@type' => 'ImageObject', 'url' => playform_asset( 'logo.svg' ) ] ],
+				'publisher'     => [ '@type' => 'Organization', 'name' => playform_site( 'name' ), 'url' => home_url( '/' ), 'logo' => [ '@type' => 'ImageObject', 'url' => playform_asset( 'favicon-192.png' ) ] ],
 			];
 			if ( has_post_thumbnail( $id ) ) {
 				$d['image'] = get_the_post_thumbnail_url( $id, 'large' );

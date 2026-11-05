@@ -31,11 +31,6 @@ add_action(
 							'name'            => playform_site( 'name' ),
 							'inLanguage'      => 'da-DK',
 							'publisher'       => [ '@id' => $home . '#organisation' ],
-							'potentialAction' => [
-								'@type'       => 'SearchAction',
-								'target'      => [ '@type' => 'EntryPoint', 'urlTemplate' => $home . '?s={search_term_string}' ],
-								'query-input' => 'required name=search_term_string',
-							],
 						],
 					],
 				]
@@ -54,7 +49,7 @@ add_action(
 			$data = [
 				'@type'      => 'CollectionPage',
 				'name'       => $term instanceof WP_Term ? wp_specialchars_decode( playform_cat_label( $term ) ) : '',
-				'url'        => $term instanceof WP_Term ? get_term_link( $term ) : '',
+				'url'        => $term instanceof WP_Term ? ( max( 1, (int) get_query_var( 'paged' ) ) > 1 ? trailingslashit( get_term_link( $term ) ) . 'page/' . (int) get_query_var( 'paged' ) . '/' : get_term_link( $term ) ) : '',
 				'inLanguage' => 'da-DK',
 				'isPartOf'   => [ '@type' => 'WebSite', 'name' => playform_site( 'name' ), 'url' => home_url( '/' ) ],
 			];

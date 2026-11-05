@@ -24,7 +24,7 @@ $cookie_url = home_url( '/cookies/' );
 				<span class="cc__sw is-locked" aria-hidden="true"></span>
 			</li>
 			<li>
-				<label for="cc-stat"><b>Statistik</b><small>Viser os, hvad der bliver brugt, så vi kan forbedre siden. Bruges ikke lige nu.</small></label>
+				<label for="cc-stat"><b>Statistik</b><small><?php echo class_exists( 'WpMatomo' ) ? 'Matomo på vores egen server tæller besøg, så vi kan se, hvad der bliver brugt. Ingen data deles med tredjepart.' : 'Viser os, hvad der bliver brugt, så vi kan forbedre siden. Bruges ikke lige nu.'; ?></small></label>
 				<input type="checkbox" id="cc-stat" class="cc__sw" data-cc-cat="statistik" role="switch">
 			</li>
 			<li>

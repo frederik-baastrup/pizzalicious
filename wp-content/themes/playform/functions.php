@@ -68,7 +68,7 @@ add_action(
 		foreach ( [ 300, 400, 500, 600, 700, 800, 900 ] as $w ) {
 			if ( is_file( "$dir/bdo-grotesk-$w.woff2" ) ) {
 				$css .= "@font-face{font-family:'BDO Grotesk';src:url('$uri/bdo-grotesk-$w.woff2') format('woff2');font-weight:$w;font-style:normal;font-display:swap}";
-				if ( $w === 600 ) {
+				if ( $w === 400 || $w === 600 ) { // brødtekst og overskrifter
 					echo '<link rel="preload" href="' . esc_url( "$uri/bdo-grotesk-$w.woff2" ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
 				}
 			}

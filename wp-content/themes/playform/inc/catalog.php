@@ -358,18 +358,14 @@ add_action(
 				$ids = $state['ids'];
 				$pct = $state['pct'] ?? [];
 				usort( $ids, static fn( $a, $b ) => ( $pct[ $b ] ?? [ 0, 0 ] ) <=> ( $pct[ $a ] ?? [ 0, 0 ] ) ?: $a <=> $b );
-				$q->set( 'post__in', $ids ?: [ 0 ] );
-				$q->set( 'meta_query', [] );
-				$q->set( 'orderby', 'post__in' );
+				playform_catalog_page_slice( $q, $ids );
 				break;
 			default:
 				// "Mest populære": se 'pop' i playform_catalog_state() – på lager, typisk pris, flere butikker, tilbud.
 				$ids = $state['ids'];
 				$pop = $state['pop'] ?? [];
 				usort( $ids, static fn( $a, $b ) => ( $pop[ $b ] ?? [ 0, -9 ] ) <=> ( $pop[ $a ] ?? [ 0, -9 ] ) ?: $a <=> $b );
-				$q->set( 'post__in', $ids ?: [ 0 ] );
-				$q->set( 'meta_query', [] );
-				$q->set( 'orderby', 'post__in' );
+				playform_catalog_page_slice( $q, $ids );
 		}
 	},
 	20
@@ -501,3 +497,27 @@ add_action( 'template_redirect', static function () {
 		header( sprintf( 'Server-Timing: state;dur=%.0f, untilquery;dur=%.0f', ( $t['state'] ?? 0 ) * 1000, ( $t['wp'] ?? 0 ) * 1000 ) );
 	}
 }, 0 );
+
+/**
+ * Når rækkefølgen er regnet ud i PHP, får SQL kun den aktuelle sides id'er (ikke alle id'er i kategorien, som på
+ * /produkter/ er over 20.000 i én ORDER BY FIELD). Det samlede antal sættes bagefter, så sideskift virker som før.
+ */
+function playform_catalog_page_slice( WP_Query $q, array $ids ): void {
+	$per   = PLAYFORM_PER_PAGE;
+	$paged = max( 1, (int) $q->get( 'paged' ) );
+	$slice = array_slice( $ids, ( $paged - 1 ) * $per, $per );
+	$q->set( 'post__in', $slice ?: [ 0 ] );
+	$q->set( 'meta_query', [] );
+	$q->set( 'orderby', 'post__in' );
+	$q->set( 'offset', 0 ); // id'erne er allerede udsnittet – ingen SQL-offset oveni
+	$q->set( 'pf_total', count( $ids ) );
+}
+add_filter(
+	'found_posts',
+	static function ( int $found, WP_Query $q ): int {
+		$total = $q->get( 'pf_total' );
+		return is_int( $total ) ? $total : $found;
+	},
+	10,
+	2
+);

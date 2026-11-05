@@ -81,7 +81,7 @@ add_action(
 		$path  = rawurldecode( (string) wp_parse_url( $uri, PHP_URL_PATH ) );
 		$query = (string) wp_parse_url( $uri, PHP_URL_QUERY );
 		$go    = static function ( string $url ) use ( $path, $query ) {
-			if ( rtrim( (string) wp_parse_url( $url, PHP_URL_PATH ), '/' ) === rtrim( $path, '/' ) ) {
+			if ( rtrim( rawurldecode( (string) wp_parse_url( $url, PHP_URL_PATH ) ), '/' ) === rtrim( $path, '/' ) ) {
 				return; // allerede den rigtige adresse – undgå uendelig løkke
 			}
 			wp_safe_redirect( $query ? $url . '?' . $query : $url, 301 );

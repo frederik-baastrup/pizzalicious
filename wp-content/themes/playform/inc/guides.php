@@ -34,7 +34,12 @@ add_shortcode(
 		} else {
 			$args['orderby'] = 'rand';
 		}
-		$ids = get_posts( $args );
+		$ckey = 'pf_prod_sc_' . md5( wp_json_encode( $args ) );
+		$ids  = get_transient( $ckey );
+		if ( ! is_array( $ids ) ) { // udvalget gemmes i 6 timer (RAND() er dyrt på hver visning)
+			$ids = get_posts( $args );
+			set_transient( $ckey, $ids, 6 * HOUR_IN_SECONDS );
+		}
 		if ( ! $ids ) {
 			return '';
 		}
