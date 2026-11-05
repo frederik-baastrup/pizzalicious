@@ -1,0 +1,23 @@
+# SEO-tjek af det udrullede site (kør manuelt under Actions). Rapporten står i jobbets "Summary".
+name: SEO-tjek
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Site-URL (tom = SITE_URL)"
+        required: false
+        default: ""
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tjek sitet
+        shell: bash {0}
+        run: |
+          URL="${{ github.event.inputs.url }}"; [ -z "$URL" ] && URL="${{ vars.SITE_URL }}"; [ -z "$URL" ] && URL="https://pizzalicious.dk"
+          python3 dev/seo-audit.py "$URL" 180 > report.md
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+          cat report.md
+      - uses: actions/upload-artifact@v4
+        with: { name: seo-rapport, path: report.md }
