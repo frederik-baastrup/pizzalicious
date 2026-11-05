@@ -15,14 +15,23 @@ defined( 'ABSPATH' ) || exit;
 /** Finder produktet bag et valg: EAN først (samme på tværs af importer), ellers URL-navnet. */
 function playform_pick_product( array $pick ): ?WC_Product {
 	static $cache = [];
-	$key = ( $pick['ean'] ?? '' ) . '|' . ( $pick['slug'] ?? '' );
+	// 'ean' og evt. 'eans' (fx andre farver af samme model): den første, der er på lager, ellers den første, der findes.
+	$eans = array_values( array_filter( array_map( 'strval', array_merge( [ $pick['ean'] ?? '' ], (array) ( $pick['eans'] ?? [] ) ) ) ) );
+	$key  = implode( ',', $eans ) . '|' . ( $pick['slug'] ?? '' );
 	if ( array_key_exists( $key, $cache ) ) {
 		return $cache[ $key ];
 	}
 	$id = 0;
-	if ( ! empty( $pick['ean'] ) ) {
-		$ids = get_posts( [ 'post_type' => 'product', 'post_status' => 'publish', 'fields' => 'ids', 'posts_per_page' => 1, 'meta_key' => '_pf_ean', 'meta_value' => (string) $pick['ean'] ] ); // phpcs:ignore
-		$id  = $ids ? (int) $ids[0] : 0;
+	if ( $eans ) {
+		$ids = get_posts( [ 'post_type' => 'product', 'post_status' => 'publish', 'fields' => 'ids', 'posts_per_page' => 20, 'meta_query' => [ [ 'key' => '_pf_ean', 'value' => $eans, 'compare' => 'IN' ] ] ] ); // phpcs:ignore
+		usort( $ids, static fn( $a, $b ) => array_search( (string) get_post_meta( $a, '_pf_ean', true ), $eans, true ) <=> array_search( (string) get_post_meta( $b, '_pf_ean', true ), $eans, true ) );
+		foreach ( $ids as $cand ) {
+			if ( get_post_meta( $cand, '_pf_in_stock', true ) ) {
+				$id = (int) $cand;
+				break;
+			}
+		}
+		$id = $id ?: ( $ids ? (int) $ids[0] : 0 );
 	}
 	if ( ! $id && ! empty( $pick['slug'] ) ) {
 		$p  = get_page_by_path( (string) $pick['slug'], OBJECT, 'product' );
@@ -84,7 +93,7 @@ add_shortcode(
 			$how = 'Vi har ikke selv testet produkterne. Ved de produkter, der er anmeldt af uafhængige medier, linker vi til anmeldelserne. De øvrige er vores egen vurdering ud fra specifikationer, pris og garanti fra butikkerne – det står ved produktet.';
 			$sel = 'anmeldelser og produktdata';
 		} else {
-			$how = 'Vi har ikke selv testet produkterne, og vi har ikke fundet uafhængige anmeldelser af netop disse modeller. Valgene er derfor vores egen vurdering ud fra specifikationer, materialer, pris og garanti fra butikkerne.';
+			$how = 'Vi har ikke selv testet produkterne. Valgene er vores egen vurdering ud fra specifikationer, materialer, pris og garanti fra butikkerne.';
 			$sel = 'produktdata';
 		}
 		return '<aside class="method"><span class="method__title">' . playform_icon( 'check', 16, 1.6 ) . 'Sådan har vi valgt</span>'
@@ -167,7 +176,7 @@ add_shortcode(
 						?>
 					</span>
 				<?php else : ?>
-					<span class="pick__basis">Vores vurdering ud fra specifikationer, pris og garanti – vi har ikke fundet uafhængige anmeldelser</span>
+					<span class="pick__basis">Vores vurdering ud fra specifikationer, pris og garanti</span>
 				<?php endif; ?>
 				<?php if ( $facts ) : ?>
 					<ul class="pick__facts"><?php foreach ( $facts as $f ) : ?><li><?php echo esc_html( $f ); ?></li><?php endforeach; ?></ul>

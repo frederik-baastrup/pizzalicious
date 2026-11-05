@@ -15,7 +15,8 @@ return [
 HTML,
 	'picks'    => [
 		[
-			'ean'     => '7350061086097',
+			'ean'     => '7350173640408',
+			'eans'    => [ '7350061086097', '7350061086080' ],
 			'price'   => 5495,
 			'name'    => 'Ankarsrum Assistent Original AKM 6230',
 			'role'    => 'Bedst til store portioner',
