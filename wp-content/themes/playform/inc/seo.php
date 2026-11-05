@@ -154,7 +154,9 @@ add_action(
 			$path  = preg_replace( '~/page/\d+/?$~', '/', $path );
 			$canon = home_url( user_trailingslashit( $path ) );
 		}
-		if ( $canon ) {
+		// Filtrerede/sorterede/søgte URL'er har noindex – dér udelades canonical (ingen blandede signaler).
+		$noisy = function_exists( 'playform_filter_groups' ) && array_intersect( array_keys( $_GET ), array_merge( array_keys( playform_filter_groups() ), [ 'sortering', 'q', 'tilbud' ] ) ); // phpcs:ignore
+		if ( $canon && ! $noisy && ! is_search() ) {
 			echo '<link rel="canonical" href="' . esc_url( $paged > 1 ? trailingslashit( $canon ) . 'page/' . $paged . '/' : $canon ) . '">' . "\n";
 		}
 	},
