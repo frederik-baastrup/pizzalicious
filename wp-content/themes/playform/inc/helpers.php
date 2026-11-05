@@ -48,7 +48,7 @@ function playform_icon( string $name, int $size = 20, float $stroke = 1.6 ): str
 		'truck'       => '<path d="M2.5 6.5h11v9.5h-11z"/><path d="M13.5 9.5h4l3 3v3.5h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
 		'clock'       => '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
 		'calendar'    => '<rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>',
-		'product'     => '<rect x="4" y="15" width="15" height="3" rx="1.5"/><path d="M15 15l2-8h3"/><path d="M16 11h3"/>',
+		'product'     => '<rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 15.5l-4.5-4.5-8 8"/>',
 	];
 	return sprintf(
 		'<svg width="%1$d" height="%1$d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="%2$s" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%3$s</svg>',

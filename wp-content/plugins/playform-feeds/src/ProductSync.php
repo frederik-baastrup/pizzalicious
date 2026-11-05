@@ -55,6 +55,11 @@ final class ProductSync {
 			// Ingen butik sælger det længere: siden bliver liggende som "ikke på lager".
 			update_post_meta( $product_id, self::META_IN_STOCK, 0 );
 			update_post_meta( $product_id, self::META_SHOPS, 0 );
+			// Uden tilbud og uden billede er der intet at vise: skjul produktet (siden bliver ikke slettet).
+			if ( '' === (string) get_post_meta( $product_id, self::META_IMAGE, true ) && 'publish' === $product->get_status() ) {
+				$product->set_status( 'draft' );
+				$product->save();
+			}
 			delete_post_meta( $product_id, self::META_DROP );
 			return;
 		}
