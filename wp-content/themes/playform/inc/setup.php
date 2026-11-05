@@ -186,15 +186,20 @@ add_action( 'playform_refresh_multishop', static fn() => playform_refresh_multis
  * Kører kun én gang – slår ejeren det til igen, bliver det ikke slået fra på ny.
  */
 function playform_launch(): void {
-	if ( get_option( 'playform_launched' ) ) {
-		return;
-	}
+	// Køres efter hver udrulning: WooCommerce' "Kommer snart"-tilstand skjuler butikken for besøgende, og den kan
+	// blive slået til igen af WooCommerce' opsætning. Den skal altid være slået fra.
 	update_option( 'woocommerce_coming_soon', 'no' );
 	update_option( 'woocommerce_store_pages_only', 'no' );
-	// Søgemaskiner må først komme, når sitet ligger på sit rigtige domæne (ikke på SiteGrounds midlertidige adresse).
+	// Søgemaskiner må kun komme, når sitet ligger på sit rigtige domæne (ikke på SiteGrounds midlertidige adresse).
+	// SiteGround kan selv have skiftet WordPress-adressen ved domæneskiftet, så det tjekkes hver gang.
 	$home = (string) wp_parse_url( (string) get_option( 'home' ), PHP_URL_HOST );
-	update_option( 'blog_public', str_ends_with( $home, '.sg-host.com' ) ? '0' : '1' );
-	update_option( 'playform_launched', current_time( 'mysql' ), false );
+	$want = str_ends_with( $home, '.sg-host.com' ) || 'localhost' === $home ? '0' : '1';
+	if ( get_option( 'blog_public' ) !== $want ) {
+		update_option( 'blog_public', $want );
+	}
+	if ( ! get_option( 'playform_launched' ) ) {
+		update_option( 'playform_launched', current_time( 'mysql' ), false );
+	}
 }
 
 function playform_run_upgrades(): void {
