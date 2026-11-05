@@ -22,8 +22,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Klassisk bagestål på 9 kg, der ikke knækker ved store temperaturudsving.',
 			'why'     => <<<'HTML'
-<p>Gourmetstål Classic er ifølge butikken det samme som en pizzasten, bare af stål. Forskellen er, at stålet ikke knækker ved store temperaturudsving, og at pladen vejer 9 kg.</p>
-<p>Vægten er en fordel: der er meget varme gemt i pladen, så du kan bage flere pizzaer eller et stort brød uden at stålet bliver koldt. Til gengæld skal du løfte 9 kg ind og ud af ovnen. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Gourmetstål Classic er det samme som en pizzasten, bare af stål. Forskellen er, at stålet ikke knækker ved store temperaturudsving, og at pladen vejer 9 kg.</p>
+<p>Vægten er en fordel: der er meget varme gemt i pladen, så du kan bage flere pizzaer eller et stort brød uden at stålet bliver koldt. Til gengæld skal du løfte 9 kg ind og ud af ovnen.</p>
 HTML,
 			'good'    => [ 'Flere pizzaer i træk', 'Brød og focaccia' ],
 			'less'    => [ 'Dig, der vil have noget let' ],
@@ -36,8 +36,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Gourmetståls premium-model – til dig, der bager meget.',
 			'why'     => <<<'HTML'
-<p>Norrland er ifølge butikken den ultimative premium-model i Gourmetståls kollektion. Som de andre stål fra mærket fungerer den som en pizzasten, men med mindre risiko for, at den flækker.</p>
-<p>Bager du ofte og vil have det bedste fra mærket, er det denne. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Norrland er den ultimative premium-model i Gourmetståls kollektion. Som de andre stål fra mærket fungerer den som en pizzasten, men med mindre risiko for, at den flækker.</p>
+<p>Bager du ofte og vil have det bedste fra mærket, er det denne.</p>
 HTML,
 			'good'    => [ 'Dig, der bager hver uge' ],
 			'less'    => [ 'Lavt budget' ],
@@ -50,8 +50,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Lettere bagestål i varmevalset stål, der tåler store temperaturudsving.',
 			'why'     => <<<'HTML'
-<p>Light er den lette udgave fra Gourmetstål. Butikken skriver, at stålet er varmevalset og kan tåle store temperaturudsving, og at det fungerer præcis som en pizzasten.</p>
-<p>Et lettere stål bliver hurtigere varmt og er nemmere at håndtere, men holder lidt mindre varme. Det er et godt valg til den almindelige ovn, hvor du bager én pizza ad gangen. Valget er vores vurdering.</p>
+<p>Light er den lette udgave fra Gourmetstål. Stålet er varmevalset og kan tåle store temperaturudsving, og det fungerer præcis som en pizzasten.</p>
+<p>Et lettere stål bliver hurtigere varmt og er nemmere at håndtere, men holder lidt mindre varme. Det er et godt valg til den almindelige ovn, hvor du bager én pizza ad gangen.</p>
 HTML,
 			'good'    => [ 'Dig, der skal løfte stålet ofte', 'Små ovne' ],
 			'less'    => [ 'Mange pizzaer i træk' ],
@@ -64,8 +64,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Svensk bagestål med opfoldede kanter, der kan bruges i ovn, på grill, over bål og på kogepladen.',
 			'why'     => <<<'HTML'
-<p>Kockums Jernverk laver dette stål i Sverige af kulstofstål. Kanterne er foldet op, så det er 3 cm højt, 33 cm bredt og 37 cm langt, skriver butikken, og det kan bruges i ovn, på grill, over åben ild og på alle typer kogeplader.</p>
-<p>De høje kanter gør det til en mellemting mellem et bagestål og en pande – godt til pizza på plade og til at stege direkte på stålet. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Kockums Jernverk laver dette stål i Sverige af kulstofstål. Kanterne er foldet op, så det er 3 cm højt, 33 cm bredt og 37 cm langt, og det kan bruges i ovn, på grill, over åben ild og på alle typer kogeplader.</p>
+<p>De høje kanter gør det til en mellemting mellem et bagestål og en pande – godt til pizza på plade og til at stege direkte på stålet.</p>
 HTML,
 			'good'    => [ 'Grill og bål', 'Pizza på plade' ],
 			'less'    => [ 'Runde napolitanske pizzaer' ],

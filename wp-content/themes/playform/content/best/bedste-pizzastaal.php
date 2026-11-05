@@ -22,8 +22,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Rundt pizzastål fra svenske Gourmetstål – formet som en klassisk pizzasten, men i stål, der ikke knækker.',
 			'why'     => <<<'HTML'
-<p>Gourmetstål er et svensk firma. Det runde pizzastål er ifølge butikken inspireret af de klassiske pizzasten, men lavet i et robust materiale, så du ikke skal være nervøs for, at det knækker.</p>
-<p>Den runde form passer til en kuglegrill og en kamado, og med 39 cm er der plads til en stor pizza. Det runde stål findes også i andre størrelser og med greb. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Gourmetstål er et svensk firma. Det runde pizzastål er inspireret af de klassiske pizzasten, men lavet i et robust materiale, så du ikke skal være nervøs for, at det knækker.</p>
+<p>Den runde form passer til en kuglegrill og en kamado, og med 39 cm er der plads til en stor pizza. Det runde stål findes også i andre størrelser og med greb.</p>
 HTML,
 			'good'    => [ 'Ovn og grill', 'Store runde pizzaer' ],
 			'less'    => [ 'Brød på hele pladen' ],
@@ -36,8 +36,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Svensk pizzastål i 6 mm kulstofstål, der holder godt på varmen.',
 			'why'     => <<<'HTML'
-<p>Kockums Jernverk laver pizzastålet i Sverige af 6 mm kulstofstål fra SSAB, skriver butikken. Stålet holder godt på varmen, og det er det, der giver brød og pizza en god skorpe og krumme.</p>
-<p>Det er et alsidigt stål til dig, der både vil bage pizza og brød på det. Valget er vores vurdering ud fra butikkens oplysninger og prisen.</p>
+<p>Kockums Jernverk laver pizzastålet i Sverige af 6 mm kulstofstål fra SSAB. Stålet holder godt på varmen, og det er det, der giver brød og pizza en god skorpe og krumme.</p>
+<p>Det er et alsidigt stål til dig, der både vil bage pizza og brød på det.</p>
 HTML,
 			'good'    => [ 'Pizza og brød', 'Dig, der vil have svensk kvalitet' ],
 			'less'    => [ 'Meget store pizzaer' ],
@@ -50,8 +50,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Kraftig, valset stålplade på 6 mm til ovnen og grillen – til en lav pris.',
 			'why'     => <<<'HTML'
-<p>Mareld pizzastål er ifølge butikken en kraftig, valset plade på 6 millimeter, som du sætter i ovnen eller på grillen. Pladen giver en jævn og høj varme til pizzaen.</p>
-<p>Til prisen er det en billig måde at prøve pizzastål på. Den firkantede form udnytter pladsen i ovnen godt. Valget er vores vurdering ud fra pris.</p>
+<p>Mareld pizzastål er en kraftig, valset plade på 6 millimeter, som du sætter i ovnen eller på grillen. Pladen giver en jævn og høj varme til pizzaen.</p>
+<p>Til prisen er det en billig måde at prøve pizzastål på. Den firkantede form udnytter pladsen i ovnen godt.</p>
 HTML,
 			'good'    => [ 'Lavt budget', 'Firkantede pizzaer og brød' ],
 			'less'    => [ 'Runde kamadogrills' ],
@@ -64,8 +64,7 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Bage- og pizzastål i kulstofstål, der giver en sprød skorpe som i Italien.',
 			'why'     => <<<'HTML'
-<p>Dorre bagestål er ifølge butikken lavet til at bage sprøde pizzaer med en sprød skorpe, "ligesom du får dem i Italien", og det er lavet af kulstofstål. Det er et enkelt, billigt alternativ til de svenske mærker.</p>
-<p>Valget er vores vurdering ud fra pris og butikkens oplysninger.</p>
+<p>Dorre bagestål er lavet til at bage sprøde pizzaer med en sprød skorpe, "ligesom du får dem i Italien", og det er lavet af kulstofstål. Det er et enkelt, billigt alternativ til de svenske mærker.</p>
 HTML,
 			'good'    => [ 'Lavt budget', 'Pizza i almindelig ovn' ],
 			'less'    => [ 'Dig, der vil have det tykkeste stål' ],

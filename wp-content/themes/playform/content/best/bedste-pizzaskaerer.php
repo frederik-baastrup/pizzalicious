@@ -22,8 +22,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Pizzahjul med skarpt blad i rustfrit stål og et slidstærkt håndtag i glasforstærket nylon.',
 			'why'     => <<<'HTML'
-<p>Ooni pizzahjulet har ifølge butikken et skarpt blad af rustfrit stål og et slidstærkt håndtag af glasforstærket nylon. Det er et enkelt, solidt pizzahjul fra pizzaovnsmærket Ooni.</p>
-<p>Et pizzahjul er det mest alsidige valg til almindelige runde pizzaer. Valget er vores vurdering ud fra butikkens oplysninger og prisen.</p>
+<p>Ooni pizzahjulet har et skarpt blad af rustfrit stål og et slidstærkt håndtag af glasforstærket nylon. Det er et enkelt, solidt pizzahjul fra pizzaovnsmærket Ooni.</p>
+<p>Et pizzahjul er det mest alsidige valg til almindelige runde pizzaer.</p>
 HTML,
 			'good'    => [ 'Runde pizzaer', 'Hverdagsbrug' ],
 			'less'    => [ 'Tykke deep pan-pizzaer' ],
@@ -36,8 +36,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Stor vippekniv, der skærer igennem tykke deep pan-pizzaer, hvor et pizzahjul har svært ved det.',
 			'why'     => <<<'HTML'
-<p>Med en stor pizzaskærer som denne kan du lægge kræfterne i, skriver butikken. Designet gør den særligt velegnet til deep pan-pizzaer, som kan være svære at skære ud med et klassisk pizzahjul.</p>
-<p>Du vipper bladet fra side til side og skærer hele pizzaen over i ét. Det er hurtigt og giver pæne snit, men kræver plads i skuffen. Valget er vores vurdering.</p>
+<p>Med en stor pizzaskærer som denne kan du lægge kræfterne i. Designet gør den særligt velegnet til deep pan-pizzaer, som kan være svære at skære ud med et klassisk pizzahjul.</p>
+<p>Du vipper bladet fra side til side og skærer hele pizzaen over i ét. Det er hurtigt og giver pæne snit, men kræver plads i skuffen.</p>
 HTML,
 			'good'    => [ 'Deep pan og pizza på plade', 'Mange pizzaer i træk' ],
 			'less'    => [ 'Små skuffer' ],
@@ -50,8 +50,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Pizzasaks med en spartelbund, der glider ind under pizzaen uden at ridse panden.',
 			'why'     => <<<'HTML'
-<p>Scizza er en pizzasaks fra australske Dreamfarm. Ifølge butikken skærer den enhver pizzabund uanset tykkelse og form, og den har en spartelbund, der glider ind under pizzaen, så knivene ikke ridser nonstick-belægningen.</p>
-<p>Det gør den til det bedste valg, når pizzaen ligger på en bageplade eller i en pande, hvor et pizzahjul ville ridse. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Scizza er en pizzasaks fra australske Dreamfarm. Skærer den enhver pizzabund uanset tykkelse og form, og den har en spartelbund, der glider ind under pizzaen, så knivene ikke ridser nonstick-belægningen.</p>
+<p>Det gør den til det bedste valg, når pizzaen ligger på en bageplade eller i en pande, hvor et pizzahjul ville ridse.</p>
 HTML,
 			'good'    => [ 'Pizza i pande eller på bageplade', 'Børn, der selv skærer' ],
 			'less'    => [ 'Store pizzaer, der skal skæres på én gang' ],
@@ -64,8 +64,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Billigt pizzahjul med skarpt stålhjul og et skridsikkert greb, der beskytter tommelfingeren.',
 			'why'     => <<<'HTML'
-<p>OXO-pizzahjulet har ifølge butikken et skarpt skærehjul af rustfrit stål, som skærer gennem selv tykke pizzabunde med meget fyld. Håndtaget har skridsikkert gummi og en beskyttelse til tommelfingeren.</p>
-<p>Det er et godt, billigt pizzahjul til hverdagspizzaen. Valget er vores vurdering ud fra pris.</p>
+<p>OXO-pizzahjulet har et skarpt skærehjul af rustfrit stål, som skærer gennem selv tykke pizzabunde med meget fyld. Håndtaget har skridsikkert gummi og en beskyttelse til tommelfingeren.</p>
+<p>Det er et godt, billigt pizzahjul til hverdagspizzaen.</p>
 HTML,
 			'good'    => [ 'Lavt budget', 'Hverdagspizza' ],
 			'less'    => [ 'Meget store pizzaer' ],

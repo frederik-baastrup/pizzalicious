@@ -22,8 +22,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Perforeret aluminiumsspade, hvor hullerne lader damp og overskydende mel slippe væk.',
 			'why'     => <<<'HTML'
-<p>Hullerne i en perforeret pizzaspade lader ifølge butikken varmen fra pizzaens bund slippe væk, før den lægger sig som damp, der kan gøre bunden mindre sprød. Det overskydende mel falder også igennem hullerne i stedet for at brænde på stenen.</p>
-<p>Med 35,5 cm passer den til store pizzaer og 16" ovne. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Hullerne i en perforeret pizzaspade lader varmen fra pizzaens bund slippe væk, før den lægger sig som damp, der kan gøre bunden mindre sprød. Det overskydende mel falder også igennem hullerne i stedet for at brænde på stenen.</p>
+<p>Med 35,5 cm passer den til store pizzaer og 16" ovne.</p>
 HTML,
 			'good'    => [ 'Store pizzaovne', 'Sprød bund uden brændt mel' ],
 			'less'    => [ 'Små 12" ovne' ],
@@ -36,8 +36,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Stor bambusspade til pizzaer op til 35,5 cm – rå dej hænger mindre fast i træ end i metal.',
 			'why'     => <<<'HTML'
-<p>Ooni bambusspaden har ifølge butikken plads til pizzaer på op til 35,5 cm i diameter og passer til Oonis største ovne.</p>
-<p>Mange bygger pizzaen direkte på en træspade, fordi den rå dej hænger mindre fast i træ end i metal, og bruger en metalspade til at tage pizzaen ud. Valget er vores vurdering.</p>
+<p>Ooni bambusspaden har plads til pizzaer på op til 35,5 cm i diameter og passer til Oonis største ovne.</p>
+<p>Mange bygger pizzaen direkte på en træspade, fordi den rå dej hænger mindre fast i træ end i metal, og bruger en metalspade til at tage pizzaen ud.</p>
 HTML,
 			'good'    => [ 'At bygge pizzaen på spaden', 'Servering' ],
 			'less'    => [ 'At tage pizzaen ud af ovnen' ],
@@ -50,8 +50,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Stabil, perforeret spade til store pizzaer med blødt greb.',
 			'why'     => <<<'HTML'
-<p>Witt Pizzaspade 14" Soft Grip er ifølge butikken udviklet til sikker og kontrolleret håndtering af større pizzaer, og den perforerede overflade hjælper bunden med at holde sig sprød.</p>
-<p>Det bløde greb gør den behagelig at holde, når du står ved ovnen. Witt er dansk og laver også pizzaovne. Valget er vores vurdering.</p>
+<p>Witt Pizzaspade 14" Soft Grip er udviklet til sikker og kontrolleret håndtering af større pizzaer, og den perforerede overflade hjælper bunden med at holde sig sprød.</p>
+<p>Det bløde greb gør den behagelig at holde, når du står ved ovnen. Witt er dansk og laver også pizzaovne.</p>
 HTML,
 			'good'    => [ 'Store pizzaer', 'Witt-pizzaovne' ],
 			'less'    => [ 'Lavt budget' ],
@@ -64,8 +64,7 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Let og holdbar pizzaspade i aluminium til en fornuftig pris.',
 			'why'     => <<<'HTML'
-<p>Mustang Premium pizzaspaden er ifølge butikken lavet i aluminium, så den er både let og holdbar. Den er et robust og pålideligt redskab til både hobbykokke og pizzafans.</p>
-<p>Valget er vores vurdering ud fra pris og butikkens oplysninger.</p>
+<p>Mustang Premium pizzaspaden er lavet i aluminium, så den er både let og holdbar. Den er et robust og pålideligt redskab til både hobbykokke og pizzafans.</p>
 HTML,
 			'good'    => [ 'Lavt budget', 'Pizzaovne på 12–13"' ],
 			'less'    => [ 'De største pizzaer' ],

@@ -22,8 +22,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Stor gasovn med en brænder, der kan styres fra høj til lav varme – til dig, der vil bage mange pizzaer og mere end pizza.',
 			'why'     => <<<'HTML'
-<p>Ooni Koda 2 Pro er Oonis store gasovn. Butikken fremhæver Ooni G2 Gas Technology, der ifølge producenten fordeler varmen jævnt i hele ovnen, så du kan lave mad ved høj, medium og lav varme. Brænderen er dobbelt og konisk og designet til, at du kan styre flammens position og størrelse præcist.</p>
-<p>Det betyder, at ovnen ikke kun er til napolitansk pizza ved fuld kraft, men også til tykkere pizzaer, der skal have lidt lavere varme og længere tid. Gas er nemt: du tænder, venter på, at stenen er varm, og så kører det. Valget er vores vurdering ud fra butikkens oplysninger og prisen.</p>
+<p>Ooni Koda 2 Pro er Oonis store gasovn. Ooni G2 Gas Technology fordeler varmen jævnt i hele ovnen, så du kan lave mad ved høj, medium og lav varme. Brænderen er dobbelt og konisk og designet til, at du kan styre flammens position og størrelse præcist.</p>
+<p>Det betyder, at ovnen ikke kun er til napolitansk pizza ved fuld kraft, men også til tykkere pizzaer, der skal have lidt lavere varme og længere tid. Gas er nemt: du tænder, venter på, at stenen er varm, og så kører det.</p>
 HTML,
 			'good'    => [ 'Dig, der bager pizza til mange', 'Både tynd og tyk pizza', 'Nem start med gas' ],
 			'less'    => [ 'Lille altan', 'Dig, der vil have røgsmag fra træ' ],
@@ -36,8 +36,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Kompakt pizzaovn til træ, der også kan bruge gas med en gasbrænder, som købes ved siden af.',
 			'why'     => <<<'HTML'
-<p>Ooni Karu 2 er til dig, der vil have flammer og røgsmag fra træ. Butikken beskriver den som kompakt og robust og skriver, at den kan bage en pizza på 60 sekunder. Den er lille nok til at stå på et bord i haven eller tage med i sommerhuset.</p>
-<p>Ovnen kan også bruge gas: Ooni sælger en gasbrænder til Karu 2, som du kan købe ved siden af. Så kan du bruge træ, når du har tid, og gas en hverdagsaften. Træ kræver lidt mere øvelse, fordi du selv skal holde ilden ved lige. Valget er vores vurdering.</p>
+<p>Ooni Karu 2 er til dig, der vil have flammer og røgsmag fra træ. Den er kompakt og robust, og den kan bage en pizza på 60 sekunder. Den er lille nok til at stå på et bord i haven eller tage med i sommerhuset.</p>
+<p>Ovnen kan også bruge gas: Ooni sælger en gasbrænder til Karu 2, som du kan købe ved siden af. Så kan du bruge træ, når du har tid, og gas en hverdagsaften. Træ kræver lidt mere øvelse, fordi du selv skal holde ilden ved lige.</p>
 HTML,
 			'good'    => [ 'Røgsmag og den klassiske oplevelse', 'Sommerhuset og turen', 'Dig, der vil kunne skifte til gas' ],
 			'less'    => [ 'Dig, der vil have det helt nemt', 'Store pizzaer' ],
@@ -50,8 +50,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Gasovn med en pizzasten, der drejer rundt af sig selv, så du ikke skal vende pizzaen.',
 			'why'     => <<<'HTML'
-<p>Det sværeste ved en pizzaovn er at vende pizzaen, så den ikke brænder på den side, der vender mod flammen. Witt Etna Rotante løser det med en pizzasten, der roterer – butikken skriver, at den giver en jævn og sprød overflade hele vejen rundt.</p>
-<p>Benene har gummifødder og kan foldes væk, når ovnen skal stå et andet sted. Witt er et dansk mærke, så der er kort vej til service og reservedele. Den er dyrere end en ovn uden roterende sten, men sparer dig for den mest typiske fejl. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Det sværeste ved en pizzaovn er at vende pizzaen, så den ikke brænder på den side, der vender mod flammen. Witt Etna Rotante løser det med en pizzasten, der roterer – den giver en jævn og sprød overflade hele vejen rundt.</p>
+<p>Benene har gummifødder og kan foldes væk, når ovnen skal stå et andet sted. Witt er et dansk mærke, så der er kort vej til service og reservedele. Den er dyrere end en ovn uden roterende sten, men sparer dig for den mest typiske fejl.</p>
 HTML,
 			'good'    => [ 'Første pizzaovn', 'Dig, der ikke vil stå med pizzavenderen', 'Jævnt bagte pizzaer' ],
 			'less'    => [ 'Lavt budget', 'Træfyring' ],
@@ -64,8 +64,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Kompakt gasovn til 16" pizzaer, der hurtigt bliver varm – til en fornuftig pris.',
 			'why'     => <<<'HTML'
-<p>Muurikka er et finsk mærke, der laver udstyr til madlavning udendørs. Butikken beskriver deres 16" pizzaovn til gas som kompakt og kraftfuld, og skriver, at den hurtigt når en høj arbejdstemperatur og giver en ensartet varme over hele pizzaen.</p>
-<p>Med plads til 16" pizzaer er den på størrelse med de dyreste ovne, men koster en del mindre. Den er et godt valg, hvis du vil prøve kræfter med pizzaovn uden at bruge mange penge. Valget er vores vurdering ud fra pris og butikkens oplysninger.</p>
+<p>Muurikka er et finsk mærke, der laver udstyr til madlavning udendørs. Deres 16" pizzaovn til gas er kompakt og kraftfuld, og den hurtigt når en høj arbejdstemperatur og giver en ensartet varme over hele pizzaen.</p>
+<p>Med plads til 16" pizzaer er den på størrelse med de dyreste ovne, men koster en del mindre. Den er et godt valg, hvis du vil prøve kræfter med pizzaovn uden at bruge mange penge.</p>
 HTML,
 			'good'    => [ 'Lavt budget', 'Store pizzaer', 'Nem start med gas' ],
 			'less'    => [ 'Dig, der vil lave meget andet end pizza' ],

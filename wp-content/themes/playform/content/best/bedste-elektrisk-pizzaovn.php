@@ -22,8 +22,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Elektrisk stenovn til køkkenbordet, der er bygget til at efterligne varmen i en napolitansk stenovn.',
 			'why'     => <<<'HTML'
-<p>Sage Pizzaiolo er den mest kendte elektriske pizzaovn til køkkenet. Butikken forklarer, at den er bygget til at efterligne den klassiske stenovn fra Napoli,, der kan nå temperaturer, en almindelig ovn ikke kan.</p>
-<p>Den er dyr, men den er lavet til at stå fast i køkkenet og bruges ofte. Er du i tvivl mellem en elektrisk ovn og en gasovn til haven, er det her den model, der kommer tættest på. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Sage Pizzaiolo er den mest kendte elektriske pizzaovn til køkkenet. Den er bygget til at efterligne den klassiske stenovn fra Napoli,, der kan nå temperaturer, en almindelig ovn ikke kan.</p>
+<p>Den er dyr, men den er lavet til at stå fast i køkkenet og bruges ofte. Er du i tvivl mellem en elektrisk ovn og en gasovn til haven, er det her den model, der kommer tættest på.</p>
 HTML,
 			'good'    => [ 'Pizza hele året i køkkenet', 'Napolitansk pizza', 'Dig, der bager pizza ofte' ],
 			'less'    => [ 'Lavt budget', 'Små køkkener med lidt bordplads' ],
@@ -36,8 +36,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Elektrisk 12" pizzaovn fra Ooni med "Pizza Intelligence" og start med ét tryk.',
 			'why'     => <<<'HTML'
-<p>Ooni Volt 2 er Oonis elektriske pizzaovn. Butikken skriver, at den giver professionelle resultater derhjemme uden en kompliceret installation, og at du starter ovnen med et enkelt tryk. Ovnen har det, Ooni kalder Pizza Intelligence, der hjælper med at styre varmen.</p>
-<p>Den er til 12" pizzaer og findes i hvid og grå. Kender du Oonis gasovne, er Volt 2 den samme tankegang i en elektrisk udgave, der kan stå i køkkenet. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Ooni Volt 2 er Oonis elektriske pizzaovn. Den giver professionelle resultater derhjemme uden en kompliceret installation, og du starter ovnen med et enkelt tryk. Ovnen har det, Ooni kalder Pizza Intelligence, der hjælper med at styre varmen.</p>
+<p>Den er til 12" pizzaer og findes i hvid og grå. Kender du Oonis gasovne, er Volt 2 den samme tankegang i en elektrisk udgave, der kan stå i køkkenet.</p>
 HTML,
 			'good'    => [ 'Dig, der kender og kan lide Ooni', 'Enkel betjening' ],
 			'less'    => [ 'Store pizzaer' ],
@@ -50,8 +50,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Kompakt elektrisk pizzaovn fra danske Witt til 13" pizzaer.',
 			'why'     => <<<'HTML'
-<p>Witt eGNITE Control er en kompakt og moderne elektrisk pizzaovn, som butikken beskriver som en kombination af avanceret varmeteknologi og intuitiv betjening. Den er til 13" pizzaer og findes i grøn.</p>
-<p>Witt er dansk og laver også gasovne til haven, så mærket kender pizza. Ovnen er et godt valg, hvis du vil have en lidt større pizza end i de mindste elektriske ovne, uden at den fylder for meget. Valget er vores vurdering.</p>
+<p>Witt eGNITE Control er en kompakt og moderne elektrisk pizzaovn, der kombinerer avanceret varmeteknologi med intuitiv betjening. Den er til 13" pizzaer og findes i grøn.</p>
+<p>Witt er dansk og laver også gasovne til haven, så mærket kender pizza. Ovnen er et godt valg, hvis du vil have en lidt større pizza end i de mindste elektriske ovne, uden at den fylder for meget.</p>
 HTML,
 			'good'    => [ 'Køkkener med begrænset plads', 'Dig, der vil have et dansk mærke' ],
 			'less'    => [ 'Lavt budget' ],
@@ -64,8 +64,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Billig elektrisk pizzaovn med justerbar temperatur op til 430 grader og digital timer.',
 			'why'     => <<<'HTML'
-<p>Vil du prøve elektrisk pizzaovn uden at bruge mange penge, er Nordic Sense et godt sted at starte. Butikken skriver, at temperaturen kan justeres fra 80 til 430 grader, og at ovnen har en digital timer.</p>
-<p>Den har en effekt på 1700 watt og koster en brøkdel af de dyreste modeller. Forvent ikke helt samme resultat som i en ovn til 6.000 kr., men en tydelig forskel fra den almindelige ovn. Valget er vores vurdering ud fra pris og butikkens oplysninger.</p>
+<p>Vil du prøve elektrisk pizzaovn uden at bruge mange penge, er Nordic Sense et godt sted at starte. Temperaturen kan justeres fra 80 til 430 grader, og ovnen har en digital timer.</p>
+<p>Den har en effekt på 1700 watt og koster en brøkdel af de dyreste modeller. Forvent ikke helt samme resultat som i en ovn til 6.000 kr., men en tydelig forskel fra den almindelige ovn.</p>
 HTML,
 			'good'    => [ 'Lavt budget', 'Første pizzaovn' ],
 			'less'    => [ 'Dig, der bager pizza flere gange om ugen' ],

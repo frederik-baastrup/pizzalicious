@@ -22,8 +22,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Svensk klassiker med 7 liters skål, der kan ælte op til 5 kg dej.',
 			'why'     => <<<'HTML'
-<p>Ankarsrum er bygget anderledes end de fleste røremaskiner: skålen drejer rundt, og motoren sidder i bunden. Butikken skriver, at den har en kapacitet på 7 liter og kan klare op til 5 kg dej, og at hastigheden kan reguleres.</p>
-<p>Det gør den til et oplagt valg, når der skal laves pizzadej til hele familien eller til at fryse ned. Den sælges af flere butikker og findes i mange farver. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Ankarsrum er bygget anderledes end de fleste røremaskiner: skålen drejer rundt, og motoren sidder i bunden. Den har en kapacitet på 7 liter og kan klare op til 5 kg dej, og hastigheden kan reguleres.</p>
+<p>Det gør den til et oplagt valg, når der skal laves pizzadej til hele familien eller til at fryse ned. Den sælges af flere butikker og findes i mange farver.</p>
 HTML,
 			'good'    => [ 'Store portioner dej', 'Brød og pizza' ],
 			'less'    => [ 'Små køkkener', 'Dig, der mest pisker flødeskum' ],
@@ -36,8 +36,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Spiralælter fra pizzaovnsmærket Ooni – lavet til at ælte dej skånsomt og effektivt.',
 			'why'     => <<<'HTML'
-<p>Ooni Halo Pro er en spiralælter, den type maskine pizzeriaer bruger. Butikken skriver, at den ælter dejen skånsomt og effektivt og giver gode resultater med alt fra brød til pizzadej, og at hastigheden kan justeres.</p>
-<p>Den er bedst til dig, der primært bager pizza og brød og vil have en maskine, der er tænkt til dej. Valget er vores vurdering ud fra butikkens oplysninger.</p>
+<p>Ooni Halo Pro er en spiralælter, den type maskine pizzeriaer bruger. Den ælter dejen skånsomt og effektivt og giver gode resultater med alt fra brød til pizzadej, og hastigheden kan justeres.</p>
+<p>Den er bedst til dig, der primært bager pizza og brød og vil have en maskine, der er tænkt til dej.</p>
 HTML,
 			'good'    => [ 'Pizzadej og brød', 'Dig med en Ooni-pizzaovn' ],
 			'less'    => [ 'Lavt budget' ],
@@ -50,8 +50,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Køkkenmaskine med roterende 7 liters skål og 20 hastigheder, udviklet med det norske kokkelandshold.',
 			'why'     => <<<'HTML'
-<p>Wilfa Probaker er ifølge butikken designet i samarbejde med det norske kokkelandshold. Den store roterende skål på 7 liter kan ælte en dej på op til 5 kg, og der er 20 hastighedsindstillinger.</p>
-<p>Med den roterende skål minder den om Ankarsrum og er et godt alternativ, hvis du laver store portioner. Valget er vores vurdering.</p>
+<p>Wilfa Probaker er designet i samarbejde med det norske kokkelandshold. Den store roterende skål på 7 liter kan ælte en dej på op til 5 kg, og der er 20 hastighedsindstillinger.</p>
+<p>Med den roterende skål minder den om Ankarsrum og er et godt alternativ, hvis du laver store portioner.</p>
 HTML,
 			'good'    => [ 'Store portioner dej', 'Fin kontrol med hastigheden' ],
 			'less'    => [ 'Små køkkener' ],
@@ -64,8 +64,8 @@ HTML,
 			'reviews' => [],
 			'verdict' => 'Den ikoniske røremaskine med 4,8 liters skål – til dej, kager og alt det andet.',
 			'why'     => <<<'HTML'
-<p>KitchenAid Artisan KSM175 er ifølge butikken en røremaskine med en kapacitet på 4,8 liter, hvor der er plads til op mod 1 kg mel. Det rækker til pizzadej til en familie.</p>
-<p>Den er ikke bygget specielt til tung dej som Ankarsrum og Ooni Halo, men den kan meget andet, og den findes i mange farver. Vil du have én maskine til både pizzadej, kager og flødeskum, er den et godt valg. Valget er vores vurdering.</p>
+<p>KitchenAid Artisan KSM175 er en røremaskine med en kapacitet på 4,8 liter, hvor der er plads til op mod 1 kg mel. Det rækker til pizzadej til en familie.</p>
+<p>Den er ikke bygget specielt til tung dej som Ankarsrum og Ooni Halo, men den kan meget andet, og den findes i mange farver. Vil du have én maskine til både pizzadej, kager og flødeskum, er den et godt valg.</p>
 HTML,
 			'good'    => [ 'Både dej og kager', 'Design' ],
 			'less'    => [ 'Meget store portioner pizzadej' ],
