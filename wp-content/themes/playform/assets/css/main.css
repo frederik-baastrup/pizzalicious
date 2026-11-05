@@ -1442,3 +1442,6 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 /* Links i brødtekst (kategoritekster, FAQ, guides, artikler) er understreget, så man kan se dem. */
 .seo p a, .seo li a, .faq p a, .prose p a, .prose li a, .cat-intro a, .term-description a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); transition: text-decoration-color .2s ease; }
 .seo p a:hover, .seo li a:hover, .faq p a:hover, .prose p a:hover, .prose li a:hover, .cat-intro a:hover, .term-description a:hover { text-decoration-color: currentColor; }
+
+/* Annonce-notits under købsknappen i købsguides (som på produktsiden) */
+.pick__adnote { margin-top: 10px; }
