@@ -1401,3 +1401,8 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 @media (max-width: 1080px) { .logo img { height: 40px; } }
 @media (max-width: 760px) { .logo img { height: 36px; } }
 .site-footer img[src*="logo-white"] { height: 52px; width: auto; }
+
+/* Sådan fungerer … (inc/how.php) */
+.how .lead { font-size: 17px; line-height: 1.7; color: var(--ink); }
+.how h2 { margin-top: 36px; }
+.how .note { font-size: 13px; color: var(--ink-3, var(--ink-2)); }

@@ -14,6 +14,10 @@ while ( have_posts() ) :
 					<li><?php echo esc_html( $name ); ?></li>
 				<?php endforeach; ?>
 			</ul>
+			<p>Læs også <a href="<?php echo esc_url( playform_how_url() ); ?>"><?php echo esc_html( playform_how_title() ); ?></a>: hvor produkterne kommer fra, og hvorfor vi må vise dem.</p>
+		<?php endif; ?>
+		<?php if ( get_post_field( 'post_name' ) === PLAYFORM_HOW_SLUG ) : ?>
+			<div class="how"><?php echo playform_how_html(); // phpcs:ignore ?></div>
 		<?php endif; ?>
 	</article>
 	<?php

@@ -17,6 +17,7 @@ require_once __DIR__ . '/inc/security.php';
 require_once __DIR__ . '/inc/setup.php';
 require_once __DIR__ . '/inc/seo.php';
 require_once __DIR__ . '/inc/legal.php';
+require_once __DIR__ . '/inc/how.php';
 require_once __DIR__ . '/inc/guides.php';
 require_once __DIR__ . '/inc/authors.php';
 require_once __DIR__ . '/inc/best.php';

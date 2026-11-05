@@ -202,6 +202,7 @@ function playform_run_upgrades(): void {
 	playform_rename_categories(); // før Install::activate, så der ikke oprettes en ny kategori ved siden af den gamle
 	playform_refresh_multishop();
 	playform_update_legal_pages();
+	playform_ensure_how_page();
 	playform_fix_default_site_name();
 	playform_author_profile();
 	playform_hide_imageless_products();

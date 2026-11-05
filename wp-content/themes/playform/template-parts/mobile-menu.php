@@ -63,6 +63,7 @@ $head = static function ( string $title ) use ( $back ): void {
 				<li><a href="<?php echo esc_url( playform_guide_url() ); ?>">Købsguides</a></li>
 				<li><a href="<?php echo esc_url( home_url( '/viden/' ) ); ?>">Viden &amp; guides</a></li>
 				<li><a href="<?php echo esc_url( home_url( '/vores-butikker/' ) ); ?>">Vores butikker</a></li>
+				<li><a href="<?php echo esc_url( playform_how_url() ); ?>"><?php echo esc_html( playform_how_title() ); ?></a></li>
 				<li><a href="<?php echo esc_url( home_url( '/saadan-tjener-vi-penge/' ) ); ?>">Sådan tjener vi penge</a></li>
 			</ul>
 		</section>
