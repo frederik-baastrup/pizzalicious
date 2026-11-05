@@ -314,3 +314,12 @@ function playform_aff_url( string $url, string $uid, string $uid2 = '' ): string
 	}
 	return false === $pos ? $url . $add : substr( $url, 0, $pos ) . $add . substr( $url, $pos );
 }
+
+/**
+ * WordPress giver body klassen "search" på søgesiden – samme navn som søgefeltets form (.search), så søgefeltets
+ * regler ramte hele siden (på mobil blev siden helt usynlig). Klassen omdøbes.
+ */
+add_filter(
+	'body_class',
+	static fn( array $classes ): array => array_map( static fn( $c ) => 'search' === $c ? 'is-search-page' : $c, $classes )
+);

@@ -75,8 +75,8 @@ html, body { overflow-x: clip; } /* sikkerhedsnet: intet må gøre siden bredere
 .search__go { display: none; height: 32px; padding: 1px 16px 0; border: 0; border-radius: 999px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
 .site-header.is-searching .search { flex-grow: 1; background: #fff; border-color: var(--ink); }
 .site-header.is-searching .search__go { display: block; }
-.search__drop:not([hidden]) { animation: pf-drop .3s cubic-bezier(.2,.7,.2,1) .12s both; }
-@keyframes pf-drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.search__drop:not([hidden]) { animation: pf-drop .45s cubic-bezier(.22,1,.36,1) .15s both; }
+@keyframes pf-drop { from { opacity: 0; transform: translateY(-10px) scale(.985); } to { opacity: 1; transform: none; } }
 .search__drop { position: absolute; top: calc(100% + 10px); left: 0; right: 0; z-index: 70; display: flex; flex-direction: column; gap: 22px; padding: 22px 24px 24px; background: #fff; border: 1px solid #E4E4DF; border-radius: var(--r-l); box-shadow: 0 24px 48px rgba(17, 17, 17, .12); color: var(--ink); cursor: default; }
 .search__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .search__chips a { padding: 7px 14px 6px; border-radius: 999px; border: 1px solid var(--line-2); font-size: 13px; }
@@ -1333,7 +1333,11 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.site-header.is-searching .mm { max-width: none; margin: 0; overflow: visible; visibility: visible; }
 	.site-header.is-searching .mm__item { opacity: 1; transform: none; }
 	.site-header.is-searching .search { flex-grow: 0; width: 560px; }
+	/* search-smooth: feltet glider blødt ud og ind */
+	.site-header__row > .search { transition: width .55s cubic-bezier(.22,1,.36,1), background-color .3s ease, border-color .3s ease, box-shadow .3s ease; }
+	.search__go { animation: pf-fade .35s ease .2s both; }
 }
+@keyframes pf-fade { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
 /* Smal desktop: menuen strammes op, og under 1240 px flyttes Tilbud ind i menuen i stedet for Viden/Købsguides. */
 @media (min-width: 1081px) and (max-width: 1360px) {
 	.site-header__row > .mm { gap: 22px; }
