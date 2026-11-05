@@ -64,5 +64,5 @@ add_action(
 			. "try{var m=document.cookie.match(/(?:^|; )pf_consent=([^;]*)/),c=m&&JSON.parse(decodeURIComponent(m[1]));if(c&&c.v===$v&&c.statistik)ok();}catch(e){}"
 			. "document.addEventListener('pf:consent',function(e){if(e.detail&&e.detail.statistik)ok();});})();</script>\n"; // phpcs:ignore
 	},
-	1
+	-9999 // før Matomo-pluginets egen kode, som også ligger tidligt i <head>
 );
