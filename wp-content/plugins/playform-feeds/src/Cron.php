@@ -63,7 +63,7 @@ final class Cron {
 		} catch ( \Throwable $e ) {
 			$error = 'Sortering: ' . $e->getMessage(); // stop ikke teksterne, fordi sorteringen fejler
 		}
-		$n    = (int) get_option( 'playform_ai_texts_per_run', 100 );
+		$n    = (int) get_option( 'playform_ai_texts_per_run', 500 ); // 2 importer i døgnet × 500 = dagens loft på 1.000
 		$done = self::write_texts( $n, $error );
 		return $done;
 	}
@@ -82,6 +82,23 @@ final class Cron {
 			}
 		}
 		update_option( 'playform_ai_status', [ 'time' => current_time( 'mysql' ), 'done' => $done, 'queued' => count( $queue ), 'error' => $error ], false );
+		// Besked til ejeren, når der ikke er flere produkter at skrive til (første gang) – og hvis jobbet er stoppet af en fejl.
+		$site = Config::site();
+		$to   = (string) get_option( 'admin_email' );
+		if ( $n > 0 && ! $queue && $to && ! get_option( 'playform_ai_done_mailed' ) ) {
+			update_option( 'playform_ai_done_mailed', current_time( 'mysql' ), false );
+			wp_mail( $to, $site['name'] . ': alle produkter har nu en tekst', "Hej\n\nAI-jobbet på " . $site['name'] . " har ikke flere produkter uden tekst. Nye produkter fra kommende importer får tekst automatisk.\n\nTekster, der ikke bestod faktatjekket, venter under Produkter → Tekster til godkendelse.\n" );
+		} elseif ( $error && ! str_contains( $error, 'loft' ) && $to && get_option( 'playform_ai_error_mailed' ) !== substr( $error, 0, 80 ) ) {
+			update_option( 'playform_ai_error_mailed', substr( $error, 0, 80 ), false );
+			wp_mail( $to, $site['name'] . ': AI-teksterne er stoppet', "Hej\n\nAI-jobbet på " . $site['name'] . " stoppede med fejlen:\n\n" . $error . "\n\nTjek API-nøglen og kreditten hos Anthropic. Jobbet prøver igen efter næste import.\n" );
+		}
+		if ( ! $queue ) {
+			// Køen er tom nu, men nye produkter kan komme: tillad en ny "alle har tekst"-mail, hvis køen senere fyldes og tømmes igen.
+			update_option( 'playform_ai_queue_was_empty', 1, false );
+		} elseif ( get_option( 'playform_ai_queue_was_empty' ) ) {
+			delete_option( 'playform_ai_queue_was_empty' );
+			delete_option( 'playform_ai_done_mailed' );
+		}
 		return $done;
 	}
 }
