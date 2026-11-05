@@ -136,6 +136,13 @@ final class Config {
 				'bagestaal'          => [ 'name' => 'Bagestål', 'match' => 'bagest[åa]l|pizzastål|stålplade' ],
 				'pizzapande'         => [ 'name' => 'Pizzapande & pizzaform', 'match' => 'pizzapande|pizzaform|pizzaplade|detroit|pande' ],
 			],
+			// Pizzaskærere efter type. Et "pizzaskærer" uden andet i navnet er næsten altid et hjul.
+			'pizzaskaerere' => [
+				'pizzahjul'          => [ 'name' => 'Pizzahjul', 'match' => 'pizzahjul|pizza ?hjul|pizza ?cutter|pizza ?slicer|pizzaskærer|pizza ?skærer', 'not' => 'rocker|vippekniv|mezzaluna|saks|stålbue|\\b(3\\d|4\\d)([,.]\\d)? ?cm|ø ?3\\d|pizza- og steak|pizza/steak' ],
+				'vippekniv'          => [ 'name' => 'Vippekniv', 'match' => 'rocker|vippekniv|mezzaluna|stålbue|pizzaskærer.*\\b(3\\d|4\\d)([,.]\\d)? ?cm', 'not' => 'saks|pizzabræt|ø ?3\\d', 'desc' => 'vippekniv|rocker|mezzaluna' ],
+				'pizzasaks'          => [ 'name' => 'Pizzasaks', 'match' => 'pizzasaks|pizza ?saks|scizza' ],
+				'pizzaknive'         => [ 'name' => 'Pizzaknive', 'match' => 'pizzakniv|pizza- og steakkniv|pizza/steak' ],
+			],
 			'dej' => [
 				'aeltemaskine'       => [ 'name' => 'Æltemaskine', 'match' => 'æltemaskine|spiral ?mixer|røremaskine|køkkenmaskine|køkkenassistent|assistent original|stand ?mixer' ],
 				'dejkasse'           => [ 'name' => 'Dejkasser', 'match' => 'dejkasse|dejsæske|dejæske|dejbakke' ],

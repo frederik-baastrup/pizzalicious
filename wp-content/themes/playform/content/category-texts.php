@@ -222,4 +222,40 @@ return [
 			[ 'Hvad er hot honey?', 'Honning med chili, som dryppes på pizzaen efter bagning. Den passer godt til salami og andre salte toppings.' ],
 		],
 	],
+	'pizzahjul' => [
+		'intro' => 'Pizzahjul i rustfrit stål, med træ- eller plastgreb og i flere størrelser. Find det klassiske pizzahjul, der skærer rent igennem bunden, fra flere danske webshops.',
+		'seo'   => '<h2>Pizzahjul – sådan finder du det rigtige</h2><p>Pizzahjulet er den klassiske pizzaskærer: et rundt, skarpt blad, der ruller gennem pizzaen, så du kan dele den i trekanter eller firkanter på få sekunder. Her har vi samlet pizzahjul fra flere danske webshops. Priser og lager opdateres morgen og aften, og du køber direkte hos butikken.</p><h3>Størrelsen på hjulet</h3><p>Et større hjul kommer lettere igennem en tyk kant og en høj topping uden at trække osten med. Til tynde, napolitanske pizzaer er et mindre hjul helt fint, mens pan pizza og pizza på plade kræver et stort hjul – eller en <a href="/pizzaskaerere/vippekniv/">vippekniv</a>.</p><h3>Greb og fingerbeskyttelse</h3><p>Et greb, der ligger godt i hånden, gør det nemt at trykke ned. Kig efter en kant eller skærm mellem greb og hjul, så fingrene holdes væk fra bladet.</p><h3>Rengøring</h3><p>Pizzahjul, der kan skilles ad, er lettest at gøre rent, fordi ost og dej ikke sætter sig fast omkring akslen. Tjek, om hjulet tåler opvaskemaskine, eller vask det i hånden for at bevare skarpheden.</p>',
+		'faq'   => [
+			[ 'Hvor stort skal et pizzahjul være?', 'Et hjul på omkring 9–10 cm passer til de fleste hjemmelavede pizzaer. Til tykke pizzaer og pizza på plade er et større hjul eller en vippekniv lettere at arbejde med.' ],
+			[ 'Kan et pizzahjul slibes?', 'Mange pizzahjul i stål kan slibes let med en knivsliber eller et slibestål. Billige hjul i blødt stål bliver ofte hurtigt sløve.' ],
+			[ 'Tåler pizzahjul opvaskemaskine?', 'Det afhænger af modellen. Træhåndtag bør vaskes i hånden, og et hjul, der kan skilles ad, bliver renest.' ],
+		],
+	],
+	'vippekniv' => [
+		'intro' => 'Vippeknive – også kaldet rocker cutter eller mezzaluna – deler hele pizzaen i ét snit. Se vippeknive til pizza fra flere danske webshops.',
+		'seo'   => '<h2>Vippekniv til pizza – del pizzaen i ét snit</h2><p>En vippekniv er et langt, buet blad med greb i den ene eller begge sider. Du lægger den hen over pizzaen og vipper den fra side til side, så den skærer hele vejen igennem på én gang. Toppingen bliver liggende, og kanten bliver ikke trykket flad. Her finder du vippeknive fra flere danske webshops, med priser og lager, der opdateres to gange i døgnet.</p><h3>Længden</h3><p>Bladet bør være lige så langt som den største pizza, du bager – omkring 35 cm passer til de fleste hjemmeovne og pizzaovne. Så deler du pizzaen i halve med ét tryk og vipper dig videre til stykker.</p><h3>Én eller to hænder</h3><p>Vippeknive med greb i begge ender styres med to hænder og giver et jævnt tryk. Modeller med greb i midten eller en bue over bladet kan bruges med én hånd.</p><h3>Beskyttelse og opbevaring</h3><p>Det lange blad er skarpt, så en beskytter eller et bræt med plads til kniven er en god idé i skuffen. Se også <a href="/pizzaskaerere/pizzahjul/">pizzahjul</a>, hvis du foretrækker noget mindre.</p>',
+		'faq'   => [
+			[ 'Hvad er en vippekniv?', 'En pizzaskærer med et langt, buet blad, som du vipper hen over pizzaen. Den kaldes også rocker cutter eller mezzaluna.' ],
+			[ 'Er en vippekniv bedre end et pizzahjul?', 'Til store og tykke pizzaer og pizza på plade, ja – den deler i ét snit uden at trække toppingen af. Til en lille, tynd pizza er et pizzahjul hurtigt og fylder mindre.' ],
+			[ 'Hvor lang skal en vippekniv være?', 'Omkring samme længde som dine pizzaer – typisk 35 cm til hjemmebagte pizzaer.' ],
+		],
+	],
+	'pizzasaks' => [
+		'intro' => 'Pizzasakse klipper pizzaen i stykker og løfter dem op bagefter. Find pizzasakse fra flere danske webshops – praktiske, når du deler pizzaen direkte på bagepladen.',
+		'seo'   => '<h2>Pizzasaks – klip, løft og servér</h2><p>En pizzasaks klipper sig gennem pizzaen i stedet for at skære, og mange har en flad, bred side, der glider ind under stykket, så du kan løfte det direkte op på tallerkenen. Her har vi samlet pizzasakse fra flere danske webshops. Priser og lager bliver opdateret to gange om dagen, og købet sker hos butikken.</p><h3>Hvornår giver en saks mening?</h3><p>En saks er oplagt, når pizzaen ligger på en bageplade, et bagestål eller en stenplade, hvor et skarpt hjul eller en kniv kan ridse overfladen. Den er også nem til børn at bruge, fordi bladene ikke sidder frit.</p><h3>Materiale og greb</h3><p>Rustfrit stål er nemt at holde rent. Kig efter greb, der giver godt fat med fedtede fingre, og en saks, der kan skilles ad, hvis den skal i opvaskemaskinen.</p><h3>Andre pizzaskærere</h3><p>Foretrækker du at skære, så se <a href="/pizzaskaerere/pizzahjul/">pizzahjul</a> og <a href="/pizzaskaerere/vippekniv/">vippeknive</a>.</p>',
+		'faq'   => [
+			[ 'Hvad bruger man en pizzasaks til?', 'Til at klippe pizzaen i stykker og løfte dem op med den flade side – især når pizzaen ligger på en plade, som en kniv kan ridse.' ],
+			[ 'Kan en pizzasaks klippe en tyk pizza?', 'Ja, en kraftig pizzasaks klarer også tykkere bunde, men på meget høje pan pizzaer kan en vippekniv være nemmere.' ],
+			[ 'Kan pizzasaksen ridse bagestålet?', 'Saksen klipper over pladen i stedet for at skære ned i den, så den er skånsom mod bagestål, sten og non-stick.' ],
+		],
+	],
+	'pizzaknive' => [
+		'intro' => 'Pizzaknive og pizza- og steakknive med takket eller glat æg til at skære pizzaen ved bordet. Se pizzaknive og knivsæt fra flere danske webshops.',
+		'seo'   => '<h2>Pizzaknive – til den napolitanske pizza ved bordet</h2><p>I Italien bliver den napolitanske pizza ofte serveret hel, og hver gæst skærer sin egen med kniv og gaffel. En pizzakniv har et skarpt, ofte takket blad, der kommer let gennem den luftige kant uden at trykke den flad. Her finder du pizzaknive og sæt med pizza- og steakknive fra flere danske webshops, med priser og lager, der opdateres morgen og aften.</p><h3>Takket eller glat æg</h3><p>Et takket blad bider godt i en sprød kant og holder sig skarpt længe. Et glat blad giver et pænere snit, men skal slibes oftere.</p><h3>Sæt til hele bordet</h3><p>Mange pizzaknive sælges i sæt, så alle ved bordet har en. De samme knive kan bruges som steakknive, så de kommer i brug til mere end pizza.</p><h3>Pleje</h3><p>Knive med træskaft holder længst, når de vaskes i hånden og tørres af med det samme. Se også <a href="/pizzaskaerere/pizzahjul/">pizzahjul</a> til at dele pizzaen i køkkenet.</p>',
+		'faq'   => [
+			[ 'Hvad er forskellen på en pizzakniv og en steakkniv?', 'Ikke meget – mange sælges som pizza- og steakknive. Begge har et skarpt, ofte takket blad, der skærer let gennem en sprød overflade.' ],
+			[ 'Hvorfor spiser man pizza med kniv og gaffel?', 'Den napolitanske pizza er blød i midten og serveres hel i Italien, så hver gæst skærer sin egen pizza ved bordet.' ],
+			[ 'Kan pizzaknive komme i opvaskemaskinen?', 'Knive med træskaft bør vaskes i hånden. Tjek producentens anvisning for andre modeller.' ],
+		],
+	],
 ];
