@@ -24,12 +24,7 @@ jobs:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
         run: |
-          # SiteGround omdøber FTP-kontoen (navn@frederikb11.sg-host.com → navn@pizzalicious.dk), når domænet skiftes.
           FTP_USER="$FTP_USERNAME"
-          case "$FTP_USERNAME" in
-            *@*.sg-host.com) FTP_USER="${FTP_USERNAME%@*}@pizzalicious.dk"; echo "FTP-brugernavnet peger på det midlertidige domæne – bruger @pizzalicious.dk." ;;
-          esac
-          echo "::add-mask::$FTP_USER"
           echo "FTP_USER=$FTP_USER" >> "$GITHUB_ENV"
           # Det midlertidige domæne (fx frederikb11.sg-host.com) forsvinder, når hoveddomænet skiftes til pizzalicious.dk.
           # Kan FTP-værten fra secret'en ikke slås op, bruges pizzalicious.dk (samme SiteGround-server).
@@ -58,6 +53,20 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           VAR_SITE_DIR: ${{ vars.SITE_DIR }}
         run: |
+          # SiteGround omdøber FTP-kontoen (navn@xxx.sg-host.com → navn@pizzalicious.dk), når domænet skiftes.
+          # Virker brugernavnet fra secret'en ikke, prøves den omdøbte konto.
+          if ! curl -sS -k --ssl-reqd --user "$FTP_USER:$FTP_PASSWORD" --list-only "ftp://$FTP_HOST:21/" >/dev/null 2>&1; then
+            case "$FTP_USERNAME" in
+              *@*.sg-host.com)
+                ALT="${FTP_USERNAME%@*}@pizzalicious.dk"
+                if curl -sS -k --ssl-reqd --user "$ALT:$FTP_PASSWORD" --list-only "ftp://$FTP_HOST:21/" >/dev/null 2>&1; then
+                  echo "::add-mask::$ALT"
+                  echo "FTP-kontoen er omdøbt – bruger @pizzalicious.dk."
+                  FTP_USER="$ALT"
+                  echo "FTP_USER=$ALT" >> "$GITHUB_ENV"
+                fi ;;
+            esac
+          fi
           # Når hoveddomænet i SiteGround skiftes til pizzalicious.dk, omdøbes mappen. Findes den nye mappe, bruges den automatisk.
           if [ -z "$VAR_SITE_DIR" ] && curl -sS -k --ssl-reqd --user "$FTP_USER:$FTP_PASSWORD" --list-only \
                "ftp://$FTP_HOST:21/pizzalicious.dk/public_html/" 2>/dev/null | grep -qx "wp-config.php"; then
