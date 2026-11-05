@@ -1423,3 +1423,18 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.site-header__row { padding: 17px 0; }
 	.site-header.is-search-open .site-header__row { padding-bottom: 14px; }
 }
+
+/* Prisliste på mobil: én samlet, rolig liste – butik og lager til venstre, pris og en lille pil til højre. */
+@media (max-width: 760px) {
+	.offers { gap: 0; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+	.offer { grid-template-columns: minmax(0, 1fr) auto auto; gap: 14px; padding: 14px 14px 14px 16px; border: 0; border-radius: 0; }
+	.offer + .offer { border-top: 1px solid var(--line); }
+	.offer--best { background: var(--soft); }
+	.offer__shop { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 2px 8px; }
+	.offer__shop b { flex: 0 0 100%; font-size: 15px; line-height: 1.25; }
+	.offer__shop .badge { padding: 1px 6px; font-size: 10.5px; line-height: 1.5; }
+	.offer__price { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+	.offer .btn-out { position: relative; width: 38px; height: 38px; padding: 0; justify-content: center; border-color: var(--line); background: #fff; font-size: 0; }
+	.offer .btn-out::after { content: ""; width: 16px; height: 16px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7M9 7h8v8'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7M9 7h8v8'/%3E%3C/svg%3E") center / contain no-repeat; }
+	.offer--best .btn-out { border-color: var(--ink); background: var(--ink); color: #fff; }
+}
