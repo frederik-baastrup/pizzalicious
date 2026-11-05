@@ -161,14 +161,27 @@
 				v.classList.toggle('is-behind', i > -1 && i < stack.length - 1);
 			});
 		};
+		// Headerens plads, mens skuffen er åben: lige under topbaren, når den kan ses, ellers helt foroven.
+		// Regnes ud fra topbaren (ikke headerens aktuelle position), så et åbent tastatur på iPhone ikke flytter den.
+		var topbar = document.querySelector('.topbar');
+		var placeHeader = function () {
+			if (!header || !drawer.classList.contains('is-open')) return;
+			var below = topbar ? topbar.offsetTop + topbar.offsetHeight : 0;
+			var ht = Math.max(0, below - window.scrollY);
+			header.style.position = 'fixed';
+			header.style.top = ht + 'px';
+			header.style.left = '0';
+			header.style.right = '0';
+			document.documentElement.style.setProperty('--dr-top', (ht + header.offsetHeight) + 'px');
+		};
 		var openDrawer = function () {
 			if (header) {
-				var wasTucked = header.classList.contains('is-tucked');
 				header.classList.remove('is-tucked');
+				// Luk søgningen helt (og tastaturet), før menuen åbner
+				var act = document.activeElement;
+				if (act && header.contains(act) && act.blur) act.blur();
+				header.classList.remove('is-searching');
 				closeSearch();
-				// Tophøjde: headerens underkant (topbaren over headeren tæller med, når siden ikke er scrollet)
-				var hb = header.getBoundingClientRect().bottom;
-				document.documentElement.style.setProperty('--dr-top', Math.max(0, wasTucked ? header.offsetHeight : hb) + 'px');
 			}
 			drawer.removeAttribute('inert');
 			drawer.setAttribute('aria-hidden', 'false');
@@ -176,13 +189,8 @@
 			if (drawerBg) { drawerBg.hidden = false; requestAnimationFrame(function () { drawerBg.classList.add('is-open'); }); }
 			// Når siden er låst (overflow: hidden), holder "sticky" ikke længere – særligt i Safari på iPhone. Så sidder
 			// headeren (med logoet) fast foroven, mens menuen er åben, også når man har scrollet ned.
-			if (header) {
-				var ht = Math.max(0, header.getBoundingClientRect().top);
-				header.style.position = 'fixed';
-				header.style.top = ht + 'px';
-				header.style.left = '0';
-				header.style.right = '0';
-			}
+			placeHeader();
+			setTimeout(placeHeader, 350); // når tastaturet er gledet væk
 			document.documentElement.classList.add('dr-lock');
 			toggle.setAttribute('aria-expanded', 'true');
 			toggle.setAttribute('aria-label', 'Luk menu');
@@ -200,6 +208,8 @@
 			setTimeout(function () { if (!drawer.classList.contains('is-open')) { stack = ['root']; paint(); drawer.querySelectorAll('.dr__view').forEach(function (v) { v.scrollTop = 0; }); } }, 350);
 		};
 		toggle.addEventListener('click', function () { if (drawer.classList.contains('is-open')) closeDrawer(); else openDrawer(); });
+		window.addEventListener('scroll', placeHeader, { passive: true });
+		if (window.visualViewport) window.visualViewport.addEventListener('resize', placeHeader);
 		if (drawerBg) drawerBg.addEventListener('click', closeDrawer);
 		drawer.addEventListener('click', function (e) {
 			var to = e.target.closest('[data-to]');

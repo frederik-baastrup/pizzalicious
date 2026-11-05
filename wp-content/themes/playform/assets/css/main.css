@@ -178,8 +178,11 @@ html, body { overflow-x: clip; } /* sikkerhedsnet: intet må gøre siden bredere
 	.menu-toggle:active, .search-toggle:active { background: var(--soft); }
 	/* Søgefeltet er gemt bag luppen og folder sig ud under logoet */
 	.search { display: none; order: 3; flex: 0 0 100%; margin-left: 0; height: 44px; }
-	.site-header.is-search-open .search { display: flex; }
-	.search input { font-size: 16px; } /* 16 px: iPhone zoomer ikke ind */
+	/* Feltet glider blødt ned under logoet (i stedet for at springe frem) */
+	.search { display: flex; height: 0; margin-top: -10px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: height .38s cubic-bezier(.32,.72,0,1), margin-top .38s cubic-bezier(.32,.72,0,1), opacity .2s ease, transform .38s cubic-bezier(.32,.72,0,1), visibility 0s linear .38s; }
+	.site-header.is-search-open .search { height: 44px; margin-top: 0; opacity: 1; visibility: visible; transform: none; transition: height .38s cubic-bezier(.32,.72,0,1), margin-top .38s cubic-bezier(.32,.72,0,1), opacity .28s ease .08s, transform .38s cubic-bezier(.32,.72,0,1), visibility 0s; }
+	/* 16 px, så iPhone ikke zoomer ind – men vist en anelse mindre */
+	.search input { font-size: 16px; transform: scale(.875); transform-origin: left center; margin-right: -12%; }
 	.search__drop { top: calc(100% + 8px); padding: 18px 16px 20px; max-height: calc(100dvh - 160px); overflow-y: auto; }
 	.search__prods { grid-template-columns: minmax(0, 1fr); }
 }
