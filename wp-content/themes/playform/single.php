@@ -21,6 +21,9 @@ while ( have_posts() ) :
 			$is_best = (int) ( playform_root_posts()[ get_post_field( 'post_name' ) ] ?? 0 ) === get_the_ID();
 			playform_breadcrumbs( [ [ 'Forside', home_url( '/' ) ], $is_best ? [ 'Købsguides', playform_guide_url() ] : [ 'Viden & guides', $blog ], [ get_the_title(), '' ] ] );
 			?>
+			<?php if ( get_post_meta( get_the_ID(), '_pf_hidden', true ) ) : // Solgte/sponsorerede artikler skal tydeligt markeres som reklame (markedsføringsloven § 6, stk. 4). ?>
+				<p class="sponsored-note"><b>Annonce</b>Artiklen er sponsoreret indhold og indeholder betalte links.</p>
+			<?php endif; ?>
 			<h1><?php the_title(); ?></h1>
 			<?php if ( has_excerpt() ) : ?><p class="guide__lead"><?php echo esc_html( get_the_excerpt() ); ?></p><?php endif; ?>
 			<?php $checked = (string) get_post_meta( get_the_ID(), '_pf_checked', true ); ?>
