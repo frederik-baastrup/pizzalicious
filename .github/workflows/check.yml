@@ -1,0 +1,26 @@
+name: Tjek sitet
+
+# Kør manuelt (Actions → Tjek sitet → Run workflow): henter de vigtigste sider på det rigtige domæne og viser
+# status, omdirigeringer, robots og tema – så man kan se, om sitet virker, uden at være logget ind.
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tjek sider
+        env:
+          DOMAIN: pizzalicious.dk
+        run: |
+          B="https://$DOMAIN"
+          for p in / /bedste-pizzaovn/ /bedste-pizzaovn-test/ /pizzahjul/ /pizzaovne/ /pizzaovne/gas-pizzaovn/ /hvem-opfandt-pizza/ /populaere-retter-buffet/ /koebsguide/ /viden/ /robots.txt /wp-sitemap.xml /sitemap_index.xml /saadan-fungerer-det/; do
+            out=$(curl -s -o body.html -w "%{http_code} %{redirect_url}" --max-time 60 "$B$p")
+            theme=$(grep -o 'themes/[a-z0-9_-]*' body.html | head -1)
+            robots=$(grep -o '<meta name=.robots.[^>]*>' body.html | head -1)
+            prods=$(grep -o '[0-9.]* produkter' body.html | head -1)
+            echo "$p → $out | $theme | $robots | $prods"
+          done
+          echo "--- robots.txt"; curl -s "$B/robots.txt"
+          echo "--- www → "; curl -s -o /dev/null -w "%{http_code} %{redirect_url}\n" "https://www.$DOMAIN/"
+          echo "--- http → "; curl -s -o /dev/null -w "%{http_code} %{redirect_url}\n" "http://$DOMAIN/"
