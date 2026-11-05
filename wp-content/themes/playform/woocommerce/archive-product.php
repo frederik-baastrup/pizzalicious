@@ -245,8 +245,7 @@ global $wp_query;
 						<b>Ingen tilbud matcher dine filtre</b>
 						<span>Vi viser kun tilbud, som butikkerne selv har markeret, og som højst er 14 dage gamle. Prøv at fjerne et filter.</span>
 						<a class="btn" href="<?php echo esc_url( playform_reset_url() ); ?>">Nulstil filtre</a>
-					<?php else : ?>
-					<?php elseif ( function_exists( 'playform_active_filters' ) && playform_active_filters() ) : ?>
+					<?php elseif ( playform_active_filters() ) : ?>
 						<b>Ingen produkter matcher dine filtre</b>
 						<span>Prøv at fjerne et eller flere filtre.</span>
 						<a class="btn" href="<?php echo esc_url( playform_reset_url() ); ?>">Nulstil filtre</a>
