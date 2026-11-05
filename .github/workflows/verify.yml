@@ -1,0 +1,15 @@
+# Hurtig kontrol efter udrulning: sideskift i kataloget, canonical, noindex og sitemap.
+name: Verificer katalog
+on: workflow_dispatch
+jobs:
+  v:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash {0}
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
+          for p in /pizzaovne/ /pizzaovne/page/2/ /produkter/ /produkter/page/3/ "/pizzaovne/?sortering=rabat" "/pizzaovne/?utm_source=x" /tilbud/ /wp-sitemap.xml /wp-sitemap-posts-product-1.xml /2026/11/ /produkt/ooni-koda-16-gas-pizzaovn/ /privatlivspolitik/; do
+            sleep 1; curl -sS --http1.1 -A "$UA" -o b.html -w "%{http_code} %{time_total}s %{redirect_url}" "https://pizzalicious.dk$p" > st.txt
+            n=$(grep -o 'class="pcard' b.html | wc -l); c=$(grep -o '<link rel="canonical" href="[^"]*' b.html | sed 's/.*href="//'); r=$(grep -o '<meta name=.robots. content="[^"]*' b.html | sed 's/.*content="//'); t=$(grep -o '[0-9.]* produkter' b.html | head -1); u=$(grep -c "<url>" b.html)
+            echo "$p → $(cat st.txt) | kort:$n | $t | canonical:$c | robots:$r | urls:$u"
+          done
