@@ -211,6 +211,7 @@ function playform_run_upgrades(): void {
 	playform_fix_default_site_name();
 	playform_author_profile();
 	playform_hide_imageless_products();
+	playform_fix_brand_case();
 	// Importens tabeller og kategorier (kolonner, underkategorier, omsortering).
 	if ( class_exists( '\Playform\Feeds\Install' ) ) {
 		\Playform\Feeds\Install::activate();
@@ -934,3 +935,35 @@ add_action(
 );
 // Skjulte artikler skal stadig i sitemap, så de bliver fundet af søgemaskinerne.
 add_filter( 'wp_sitemaps_posts_query_args', static fn( array $args ): array => $args + [ 'pf_with_hidden' => true ] );
+
+/**
+ * Én gang: mærker med stort begyndelsesbogstav i de eksisterende produkter (metafelt og starten af navnet).
+ * Nye og opdaterede produkter rettes af importen (Normalizer::brand_case). Navne, redaktøren har låst, røres ikke.
+ */
+function playform_fix_brand_case(): void {
+	if ( get_option( 'playform_brand_case_v' ) === '1' || ! method_exists( '\Playform\Feeds\Normalizer', 'brand_case' ) ) {
+		return;
+	}
+	global $wpdb;
+	$brands = $wpdb->get_col( "SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = '_pf_brand' AND meta_value <> ''" );
+	foreach ( (array) $brands as $old ) {
+		$new = \Playform\Feeds\Normalizer::brand_case( (string) $old );
+		if ( $new === $old ) {
+			continue;
+		}
+		$ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_pf_brand' AND meta_value = %s", $old ) );
+		foreach ( (array) $ids as $id ) {
+			update_post_meta( (int) $id, '_pf_brand', $new );
+			$locks = (array) get_post_meta( (int) $id, '_pf_locks', true );
+			if ( empty( $locks['name'] ) ) {
+				$title = (string) get_post_field( 'post_title', (int) $id );
+				$fixed = \Playform\Feeds\Normalizer::name_brand_case( $title, (string) $old );
+				if ( $fixed !== $title ) {
+					$wpdb->update( $wpdb->posts, [ 'post_title' => $fixed ], [ 'ID' => (int) $id ] );
+					clean_post_cache( (int) $id );
+				}
+			}
+		}
+	}
+	update_option( 'playform_brand_case_v', '1', false );
+}

@@ -9,16 +9,40 @@ final class Normalizer {
 	/**
 	 * @return array{shop:string,shop_name:string,shop_product_id:string,ean:string,name:string,brand:string,shop_category:string,description:string,price:float,list_price:float,shipping:?float,in_stock:bool,stock_qty:?int,delivery:string,restock_date:?string,url:string,image:string,color:string}
 	 */
+	/**
+	 * Mærkenavne med stort begyndelsesbogstav ("Big green egg" → "Big Green Egg"). Mærker, der selv bruger
+	 * store bogstaver inde i navnet (KitchenAid, SACKit, WMF), bevares, som de er.
+	 */
+	public static function brand_case( string $brand ): string {
+		$brand = trim( $brand );
+		$rest  = mb_substr( (string) preg_replace( '/[^\p{L}]/u', '', $brand ), 1 );
+		if ( '' === $brand || $rest !== mb_strtolower( $rest ) ) {
+			return $brand;
+		}
+		return (string) preg_replace_callback( '/(^|[\s\-&\/])(\p{Ll})/u', static fn( $m ) => $m[1] . mb_strtoupper( $m[2] ), $brand );
+	}
+
+	/** Retter mærket forrest i produktnavnet, så det staves som mærket ("Big green egg Bagesten" → "Big Green Egg Bagesten"). */
+	public static function name_brand_case( string $name, string $brand ): string {
+		$fixed = self::brand_case( $brand );
+		$len   = mb_strlen( $brand );
+		if ( $brand === '' || $fixed === $brand || mb_strtolower( mb_substr( $name, 0, $len ) ) !== mb_strtolower( $brand ) ) {
+			return $name;
+		}
+		return $fixed . mb_substr( $name, $len );
+	}
+
 	public static function offer( array $row, string $shop_key, string $shop_name ): array {
 		[ $in_stock, $qty ] = self::stock( $row['lagerantal'] ?? '' );
+		$brand_raw = self::clean_text( $row['brand'] ?? '' );
 		[ $delivery, $restock ] = self::delivery( $row['leveringstid'] ?? '' );
 		return [
 			'shop'            => $shop_key,
 			'shop_name'       => $shop_name,
 			'shop_product_id' => (string) ( $row['produktid'] ?? '' ),
 			'ean'             => self::ean( $row['ean'] ?? '' ),
-			'name'            => self::clean_text( $row['produktnavn'] ?? '' ),
-			'brand'           => self::clean_text( $row['brand'] ?? '' ),
+			'name'            => self::name_brand_case( self::clean_text( $row['produktnavn'] ?? '' ), $brand_raw ),
+			'brand'           => self::brand_case( $brand_raw ),
 			'shop_category'   => self::clean_text( $row['kategorinavn'] ?? '' ),
 			'description'     => self::clean_text( $row['beskrivelse'] ?? '' ),
 			'price'           => self::price( $row['nypris'] ?? '' ),
