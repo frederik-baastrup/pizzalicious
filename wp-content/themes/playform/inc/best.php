@@ -193,7 +193,7 @@ add_shortcode(
 					</div>
 					<?php if ( $offer ) : ?>
 						<a class="btn-shop pick__cta" href="<?php echo esc_url( playform_aff_url( $offer['url'], get_post_field( 'post_name', $p->get_id() ), get_post_field( 'post_name', get_the_ID() ) ) ); ?>" rel="sponsored nofollow noopener" referrerpolicy="no-referrer-when-downgrade" target="_blank">Se pris hos <?php echo esc_html( $offer['shop'] ); ?> <?php echo playform_icon( 'external', 16 ); // phpcs:ignore ?></a>
-						<span class="adnote pick__adnote"><b>Annonce</b>Vi får provision, hvis du køber via knappen.</span>
+						<span class="adnote pick__adnote"><b>Annonce</b>Vi får provision ved køb via knappen.</span>
 					<?php else : ?>
 						<a class="pick__more" href="<?php echo esc_url( $d['url'] ); ?>">Se produktet</a>
 					<?php endif; ?>

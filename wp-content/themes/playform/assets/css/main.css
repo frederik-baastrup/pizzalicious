@@ -1444,7 +1444,8 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .seo p a:hover, .seo li a:hover, .faq p a:hover, .prose p a:hover, .prose li a:hover, .cat-intro a:hover, .term-description a:hover { text-decoration-color: currentColor; }
 
 /* Annonce-notits under købsknappen i købsguides (som på produktsiden) */
-.pick__adnote { margin-top: 10px; }
+.pick__adnote { margin-top: 10px; justify-content: center; gap: 6px; font-size: 12px; white-space: nowrap; }
+.pick__adnote b { padding: 2px 7px 1px; font-size: 10px; }
 
 /* Kort i Viden/Købsguides: metadata på én linje (ombrydes kun mellem punkterne), ingen "hængende" hover-understregning på touch. */
 .gcard__meta { flex-wrap: wrap; row-gap: 6px; }
