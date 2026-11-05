@@ -225,7 +225,8 @@ function playform_run_upgrades(): void {
 	// Er sorteringsreglerne (Config.php) ændret, sorteres alle tilbud igen i baggrunden.
 	if ( class_exists( '\\Playform\\Feeds\\Importer' ) && method_exists( '\\Playform\\Feeds\\Importer', 'reclassify' ) ) {
 		$hash = (string) md5_file( WP_PLUGIN_DIR . '/playform-feeds/src/Config.php' );
-		if ( get_option( 'playform_config_hash' ) !== $hash && ! wp_next_scheduled( 'playform_reclassify' ) ) {
+		if ( ( get_option( 'playform_config_hash' ) !== $hash || get_option( 'playform_resub_v' ) !== '1' ) && ! wp_next_scheduled( 'playform_reclassify' ) ) {
+			update_option( 'playform_resub_v', '1', false ); // 5. nov. 2026: underkategorier sættes på alle produkter én gang
 			wp_schedule_single_event( time() + 60, 'playform_reclassify' );
 		}
 	}

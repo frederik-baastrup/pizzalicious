@@ -359,6 +359,41 @@ final class Importer {
 			}
 		}
 		arsort( $moves );
-		return [ 'changed' => count( $changed ), 'moves' => $moves ];
+		// Underkategorierne (nye eller ændrede regler i Config::subcategories()) sættes igen på ALLE produkter – også dem,
+		// hvis hovedkategori ikke flyttede sig. Før blev nye underkategorier stående tomme, indtil et produkt blev opdateret.
+		$resubbed = self::resubcategorize( array_keys( $changed ) );
+		return [ 'changed' => count( $changed ), 'moves' => $moves, 'subcategories' => $resubbed ];
+	}
+
+	/** Regner underkategorier om for alle udgivne produkter (undtagen $skip, der lige er opdateret). Returnerer antal ændrede. */
+	public static function resubcategorize( array $skip = [] ): int {
+		global $wpdb;
+		Subcategories::install(); // nye underkategorier oprettes som termer først
+		$ids   = array_map( 'intval', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product' AND post_status IN ('publish','draft')" ) );
+		$skip  = array_flip( $skip );
+		$count = 0;
+		foreach ( $ids as $n => $id ) {
+			if ( isset( $skip[ $id ] ) ) {
+				continue;
+			}
+			$locks = (array) get_post_meta( $id, ProductSync::META_LOCKS, true );
+			$cat   = (string) get_post_meta( $id, ProductSync::META_CATEGORY, true );
+			if ( ! empty( $locks['category'] ) || $cat === '' || $cat === Config::uncategorized_slug() ) {
+				continue;
+			}
+			$subs = Subcategories::match( $cat, get_the_title( $id ), (array) get_post_meta( $id, ProductSync::META_ATTR, true ), (string) get_post_meta( $id, ProductSync::META_FEED_DESC, true ) );
+			$want = Subcategories::term_ids( $cat, $subs );
+			$have = array_map( 'intval', (array) wp_get_object_terms( $id, 'product_cat', [ 'fields' => 'ids' ] ) );
+			sort( $want );
+			sort( $have );
+			if ( $want !== $have ) {
+				wp_set_object_terms( $id, $want, 'product_cat' );
+				++$count;
+			}
+			if ( $n % 500 === 0 ) {
+				wp_cache_flush();
+			}
+		}
+		return $count;
 	}
 }
