@@ -1,0 +1,5 @@
+.local/
+*.sqlite
+.DS_Store
+/vendor/
+wp-content/plugins/playform-feeds/vendor/

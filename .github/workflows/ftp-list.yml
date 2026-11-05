@@ -1,0 +1,42 @@
+name: Vis mapper på FTP-kontoen
+# Hjælper ved opsætning: lister mapperne i roden (og ét niveau ned) på SiteGrounds FTP-konto og gemmer
+# listen på grenen ftp-list-result, så SITE_DIR kan sættes rigtigt. Kører ved push til grenen ftp-list eller claude/ftp-list.
+on:
+  workflow_dispatch:
+  push:
+    branches: [ftp-list, "claude/ftp-list"]
+permissions:
+  contents: write
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List mapper
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          mkdir out
+          {
+            echo "Kørt (UTC): $(date -u +'%F %T')"
+            [ -n "$FTP_SERVER" ] && echo "FTP_SERVER sat" || echo "FTP_SERVER mangler"
+            [ -n "$FTP_USERNAME" ] && echo "FTP_USERNAME sat" || echo "FTP_USERNAME mangler"
+            [ -n "$FTP_PASSWORD" ] && echo "FTP_PASSWORD sat" || echo "FTP_PASSWORD mangler"
+            echo "== /"
+            curl -sS -k --ssl-reqd --user "$FTP_USERNAME:$FTP_PASSWORD" --list-only "ftp://$FTP_SERVER:21/" 2>&1 | head -50
+            for d in $(curl -sS -k --ssl-reqd --user "$FTP_USERNAME:$FTP_PASSWORD" --list-only "ftp://$FTP_SERVER:21/" 2>/dev/null | head -20); do
+              echo "== /$d/"
+              curl -sS -k --ssl-reqd --user "$FTP_USERNAME:$FTP_PASSWORD" --list-only "ftp://$FTP_SERVER:21/$d/" 2>&1 | head -30
+            done
+          } > out/ftp-list.txt 2>&1 || true
+          sed -i "s/$FTP_PASSWORD/***/g" out/ftp-list.txt || true
+      - name: Gem på grenen ftp-list-result
+        run: |
+          cd out
+          git init -q -b ftp-list-result
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -qm "FTP-mapper $(date -u +%F)"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ftp-list-result

@@ -1,0 +1,130 @@
+name: Udrul til SiteGround
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Mappen på FTP-kontoen og sitets adresse sættes som repository-variabler (Settings → Secrets and variables →
+# Actions → Variables): SITE_DIR (fx pizzalicious.dk/public_html) og SITE_URL (fx https://pizzalicious.dk).
+# FTP-adgangen ligger i secrets: FTP_SERVER, FTP_USERNAME, FTP_PASSWORD.
+# Mangler noget af det, springes udrulningen over (sitet er ikke sat op på SiteGround endnu).
+# Indtil pizzalicious.dk peger på SiteGround, ligger sitet på det midlertidige domæne (fundet med ftp-list.yml 4. nov. 2026).
+# Når hoveddomænet skiftes, omdøber SiteGround mappen – ret så standardværdierne her (eller sæt variablerne).
+env:
+  SITE_DIR: ${{ vars.SITE_DIR || 'frederikb11.sg-host.com/public_html' }}
+  SITE_URL: ${{ vars.SITE_URL || 'https://frederikb11.sg-host.com' }}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tjek at udrulningen er sat op
+        id: setup
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        run: |
+          # SiteGround omdøber FTP-kontoen (navn@frederikb11.sg-host.com → navn@pizzalicious.dk), når domænet skiftes.
+          FTP_USER="$FTP_USERNAME"
+          case "$FTP_USERNAME" in
+            *@*.sg-host.com) FTP_USER="${FTP_USERNAME%@*}@pizzalicious.dk"; echo "FTP-brugernavnet peger på det midlertidige domæne – bruger @pizzalicious.dk." ;;
+          esac
+          echo "::add-mask::$FTP_USER"
+          echo "FTP_USER=$FTP_USER" >> "$GITHUB_ENV"
+          # Det midlertidige domæne (fx frederikb11.sg-host.com) forsvinder, når hoveddomænet skiftes til pizzalicious.dk.
+          # Kan FTP-værten fra secret'en ikke slås op, bruges pizzalicious.dk (samme SiteGround-server).
+          FTP_HOST="$FTP_SERVER"
+          if [ -n "$FTP_SERVER" ] && ! getent hosts "$FTP_SERVER" >/dev/null; then
+            echo "FTP-værten fra secret'en findes ikke længere – bruger pizzalicious.dk."
+            FTP_HOST="pizzalicious.dk"
+          fi
+          echo "FTP_HOST=$FTP_HOST" >> "$GITHUB_ENV"
+          if [ -z "$FTP_SERVER" ] || [ -z "$SITE_DIR" ] || [ -z "$SITE_URL" ]; then
+            echo "::notice::Udrulning springes over: FTP_SERVER (secret), SITE_DIR og SITE_URL (variabler) er ikke sat endnu."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.setup.outputs.ready == 'true'
+
+      # Stop, hvis mappen ikke er en WordPress-installation – ellers ville vi uploade til en tom mappe.
+      - name: Tjek at mappen findes på serveren
+        if: steps.setup.outputs.ready == 'true'
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          VAR_SITE_DIR: ${{ vars.SITE_DIR }}
+        run: |
+          # Når hoveddomænet i SiteGround skiftes til pizzalicious.dk, omdøbes mappen. Findes den nye mappe, bruges den automatisk.
+          if [ -z "$VAR_SITE_DIR" ] && curl -sS -k --ssl-reqd --user "$FTP_USER:$FTP_PASSWORD" --list-only \
+               "ftp://$FTP_HOST:21/pizzalicious.dk/public_html/" 2>/dev/null | grep -qx "wp-config.php"; then
+            echo "Hoveddomænet er pizzalicious.dk – udruller dertil."
+            SITE_DIR="pizzalicious.dk/public_html"
+            echo "SITE_DIR=pizzalicious.dk/public_html" >> "$GITHUB_ENV"
+            echo "SITE_URL=https://pizzalicious.dk" >> "$GITHUB_ENV"
+          fi
+          if ! curl -sS -k --ssl-reqd --user "$FTP_USER:$FTP_PASSWORD" --list-only \
+               "ftp://$FTP_HOST:21/$SITE_DIR/" | grep -qx "wp-config.php"; then
+            echo "::error::Fandt ikke $SITE_DIR/wp-config.php på FTP-serveren. Mapper i roden:"
+            curl -sS -k --ssl-reqd --user "$FTP_USER:$FTP_PASSWORD" --list-only "ftp://$FTP_HOST:21/" || true
+            exit 1
+          fi
+
+      - name: Udrul pluginnet
+        if: steps.setup.outputs.ready == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ env.FTP_HOST }}
+          username: ${{ env.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftps
+          security: loose
+          local-dir: ./wp-content/plugins/playform-feeds/
+          server-dir: ${{ env.SITE_DIR }}/wp-content/plugins/playform-feeds/
+          dangerous-clean-slate: false
+
+      - name: Udrul temaet
+        if: steps.setup.outputs.ready == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ env.FTP_HOST }}
+          username: ${{ env.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftps
+          security: loose
+          local-dir: ./wp-content/themes/playform/
+          server-dir: ${{ env.SITE_DIR }}/wp-content/themes/playform/
+          dangerous-clean-slate: false
+
+      # Til sidst: nyt udrulnings-id. Først når det skifter, kører siden sine opdateringer
+      # (se themes/playform/inc/setup.php), så de aldrig kører med halvt uploadede filer.
+      - name: Marker udrulningen som færdig
+        if: steps.setup.outputs.ready == 'true'
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo "${GITHUB_SHA}-${GITHUB_RUN_ID}" > playform-deploy.txt
+          curl -sS -k --ssl-reqd --user "$FTP_USER:$FTP_PASSWORD" -T playform-deploy.txt \
+            "ftp://$FTP_HOST:21/$SITE_DIR/wp-content/playform-deploy.txt"
+
+      # Besøg siden uden om cachen (REST-API'et caches ikke). Det kører opdateringerne med det samme,
+      # og de tømmer SiteGrounds sidecache (playform_purge_cache), så ændringer ses straks.
+      - name: Kør opdateringer og tøm cachen
+        if: steps.setup.outputs.ready == 'true'
+        run: |
+          sleep 3
+          for i in 1 2 3; do
+            code=$(curl -s -D hdr.txt -o /dev/null -w "%{http_code}" --max-time 240 "$SITE_URL/wp-json/?pf_deploy=${GITHUB_RUN_ID}-$i" -H "Cache-Control: no-cache")
+            echo "Svar: $code"
+            grep -i "x-pf-" hdr.txt || echo "(ingen x-pf-headere)"
+            css=$(grep -i "^x-pf-css:" hdr.txt | tr -d '\r' | awk '{print $2}')
+            [ "$code" = "200" ] && break
+            sleep 10
+          done
