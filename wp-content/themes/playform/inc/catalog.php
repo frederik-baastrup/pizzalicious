@@ -143,17 +143,21 @@ function playform_catalog_state(): array {
 		$args['meta_query'] = [ [ 'key' => '_pf_shop_sale', 'compare' => 'EXISTS' ] ];
 	}
 	// Data til filtrene ændrer sig kun ved en import, så de gemmes (undtagen ved søgning) indtil næste import.
+	// Produkt-id'erne hentes altid (hurtigt); antal og højeste id indgår i nøglen, så cachen også fornyes, når
+	// "Kør import nu" i admin tilføjer produkter (den opdaterer ikke playform_feeds_last_run). Før blev en kategori
+	// cachet som tom i 12 timer, hvis den blev vist, før importen var færdig.
+	$ids       = get_posts( $args );
 	$cache_key = '';
 	if ( empty( $args['s'] ) ) {
 		$last      = (array) get_option( 'playform_feeds_last_run', [] );
-		$cache_key = 'pf_catmeta2_' . md5( $cat . '|' . (int) $tilbud . '|' . ( $last['finished'] ?? '' ) . '|' . PLAYFORM_THEME_VERSION );
+		$cache_key = 'pf_catmeta3_' . md5( $cat . '|' . (int) $tilbud . '|' . ( $last['finished'] ?? '' ) . '|' . PLAYFORM_THEME_VERSION . '|' . count( $ids ) . '|' . ( $ids ? max( $ids ) : 0 ) );
 		$cached    = get_transient( $cache_key );
 		if ( is_array( $cached ) ) {
 			$meta = $cached;
 		}
 	}
 	if ( ! isset( $meta ) ) {
-		$meta = playform_catalog_meta( get_posts( $args ), $cat );
+		$meta = playform_catalog_meta( $ids, $cat );
 		if ( $cache_key ) {
 			set_transient( $cache_key, $meta, 12 * HOUR_IN_SECONDS );
 		}

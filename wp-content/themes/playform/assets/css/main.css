@@ -1410,3 +1410,9 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .how .lead { font-size: 17px; line-height: 1.7; color: var(--ink); }
 .how h2 { margin-top: 36px; }
 .how .note { font-size: 13px; color: var(--ink-3, var(--ink-2)); }
+
+/* Pizzalicious: mere luft om det høje logo på mobil (ejerens ønske 5. nov. 2026). */
+@media (max-width: 1080px) {
+	.site-header__row { padding: 16px 0 18px; }
+	.site-header.is-search-open .site-header__row { padding-bottom: 14px; }
+}
