@@ -22,7 +22,8 @@ return [
 
 	// Pizzaovne.
 	'gas-pizzaovn'       => [ 'intro' => 'Gas pizzaovne bliver hurtigt varme og er nemme at styre – de mest populære ovne til haven og altanen. Se modeller fra flere danske webshops.' ],
-	'trae-pizzaovn'      => [ 'intro' => 'Pizzaovne til træ og træpiller giver den klassiske røgsmag. Mange kan også bruges med gas. Se modeller fra flere danske webshops.' ],
+	'pizzaovn-traepiller' => [ 'intro' => 'Pizzaovne til træpiller giver høj varme og den klassiske røgsmag, og piller er nemme at fylde på undervejs. Nogle modeller kan også bruges med gas. Se modeller fra flere danske webshops.' ],
+	'pizzaovn-til-koekkenet' => [ 'intro' => 'Pizzaovne til køkkenet er elektriske og kan stå på køkkenbordet, så du kan bage pizza hele året uden at gå udenfor. Se modeller fra flere danske webshops.' ],
 	'elektrisk-pizzaovn' => [ 'intro' => 'Elektriske pizzaovne, der kan stå i køkkenet og bruges hele året – uden gas, træ eller røg. Se modeller fra flere danske webshops.' ],
 	'pizzaovn-til-grill' => [ 'intro' => 'Pizzaovne og pizzaindsatse til grillen, så din gas- eller kamadogrill kan bage pizza. Se udvalget fra flere danske webshops.' ],
 

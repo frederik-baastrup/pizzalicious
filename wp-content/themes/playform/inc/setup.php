@@ -736,6 +736,7 @@ add_action(
  */
 function playform_renamed_categories(): array {
 	return [
+		'trae-pizzaovn'       => [ 'pizzaovn-traepiller', 'Pizzaovn til træpiller', 'Pizzaovne til træ og træpiller giver den klassiske røgsmag. Mange kan også bruges med gas. Se modeller fra flere danske webshops.' ],
 		'drikkevarekoeleskab' => [ 'vinkoeleskab', 'Vinkøleskab', 'Køleskabe til drikkevarer, vinkøleskabe og ølkølere. Se modeller fra flere danske webshops samlet ét sted.' ],
 	];
 }

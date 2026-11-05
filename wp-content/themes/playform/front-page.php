@@ -80,7 +80,7 @@ function playform_front_category_products( string $slug, int $min ): array {
 }
 
 $hero = [
-	[ 'slug' => 'pizzaovne', 'title' => 'Pizzaovne', 'big' => true, 'subs' => [ [ 'Gas pizzaovn', [ 'sub' => 'gas-pizzaovn' ] ], [ 'Elektrisk pizzaovn', [ 'sub' => 'elektrisk-pizzaovn' ] ], [ 'Pizzaovn til træ', [ 'sub' => 'trae-pizzaovn' ] ], [ 'Pizzaovn til grill', [ 'sub' => 'pizzaovn-til-grill' ] ] ] ],
+	[ 'slug' => 'pizzaovne', 'title' => 'Pizzaovne', 'big' => true, 'subs' => [ [ 'Gas pizzaovn', [ 'sub' => 'gas-pizzaovn' ] ], [ 'Elektrisk pizzaovn', [ 'sub' => 'elektrisk-pizzaovn' ] ], [ 'Pizzaovn til træpiller', [ 'sub' => 'pizzaovn-traepiller' ] ], [ 'Pizzaovn til køkkenet', [ 'sub' => 'pizzaovn-til-koekkenet' ] ], [ 'Pizzaovn til grill', [ 'sub' => 'pizzaovn-til-grill' ] ] ] ],
 	[ 'slug' => 'pizzasten', 'title' => 'Pizzasten & bagestål', 'subs' => [ [ 'Pizzasten', [ 'sub' => 'pizzasten-sten' ] ], [ 'Bagestål', [ 'sub' => 'bagestaal' ] ], [ 'Pizzapander', [ 'sub' => 'pizzapande' ] ] ] ],
 	[ 'slug' => 'pizzaspader', 'title' => 'Pizzaspader', 'subs' => [] ],
 	[ 'slug' => 'dej', 'title' => 'Dej & æltning', 'subs' => [ [ 'Æltemaskiner', [ 'sub' => 'aeltemaskine' ] ], [ 'Dejkasser', [ 'sub' => 'dejkasse' ] ] ] ],

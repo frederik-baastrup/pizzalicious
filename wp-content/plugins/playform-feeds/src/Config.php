@@ -126,8 +126,9 @@ final class Config {
 		return [
 			'pizzaovne' => [
 				'gas-pizzaovn'       => [ 'name' => 'Gas pizzaovn', 'match' => '\bgas\b|gasdrevet|til gas|koda|multi ?fuel|karu', 'desc' => 'gas' ],
-				'trae-pizzaovn'      => [ 'name' => 'Pizzaovn til træ', 'match' => 'træpiller|træfyret|brænde|\bfyra\b|karu|multi ?fuel|\bpellet', 'not' => 'el\b|elektrisk' ],
+				'pizzaovn-traepiller' => [ 'name' => 'Pizzaovn til træpiller', 'match' => 'træpille|\bpellet|\bfyra\b|multi ?fuel', 'not' => 'el\b|elektrisk' ],
 				'elektrisk-pizzaovn' => [ 'name' => 'Elektrisk pizzaovn', 'match' => 'elektrisk|\bvolt\b|pizzaiolo|pizza ?maker|\d{3,4} ?w\b|effeuno|panetti|pizzetta|g3 ?ferrari|\b230 ?v', 'not' => '\bgas\b' ],
+				'pizzaovn-til-koekkenet' => [ 'name' => 'Pizzaovn til køkkenet', 'match' => 'indendørs|indoor|køkken|bordmodel|effeuno|g3 ?ferrari|pizzaiolo|pizza ?maker|panetti|pizzetta|\bvolt\b|elektrisk|\b230 ?v', 'not' => '\bgas\b|træpille|\bpellet' ],
 				'pizzaovn-til-grill' => [ 'name' => 'Pizzaovn til grill', 'match' => 'til grill|til kamado|kamado|grill pizza|rotisseri|indsats' ],
 			],
 			'pizzasten' => [

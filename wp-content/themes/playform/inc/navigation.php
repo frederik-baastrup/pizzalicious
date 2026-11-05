@@ -154,7 +154,8 @@ function playform_menu_labels(): array {
 		'ingredienser'       => 'Ingredienser',
 		// Underkategorier i flertal.
 		'gas-pizzaovn'       => 'Gas pizzaovne',
-		'trae-pizzaovn'      => 'Pizzaovne til træ',
+		'pizzaovn-traepiller' => 'Pizzaovne til træpiller',
+		'pizzaovn-til-koekkenet' => 'Pizzaovne til køkkenet',
 		'elektrisk-pizzaovn' => 'Elektriske pizzaovne',
 		'pizzaovn-til-grill' => 'Pizzaovne til grill',
 		'pizzasten-sten'     => 'Pizzasten',

@@ -81,7 +81,7 @@ HTML,
 <p>I en ovn med flammen bagerst skal pizzaen vendes undervejs. En roterende sten gør det for dig. Det er især rart, når du er ny med pizzaovn.</p>
 <h3>Det skal du også bruge</h3>
 <p>En <a href="/bedste-pizzaspade/">pizzaspade</a> til at sætte pizzaen ind, en mindre spade til at vende den, et infrarødt termometer til at måle stenen og en <a href="/bedste-pizzaskaerer/">pizzaskærer</a>. Har du ikke plads til en pizzaovn, så se vores guide til <a href="/bedste-pizzastaal/">pizzastål</a> – det giver en sprød bund i den almindelige ovn. Vil du bage indenfor, så se <a href="/bedste-elektrisk-pizzaovn/">elektriske pizzaovne</a>.</p>
-<p>Se alle <a href="/pizzaovne/">pizzaovne</a>, <a href="/pizzaovne/gas-pizzaovn/">gas pizzaovne</a> og <a href="/pizzaovne/trae-pizzaovn/">pizzaovne til træ</a>.</p>
+<p>Se alle <a href="/pizzaovne/">pizzaovne</a>, <a href="/pizzaovne/gas-pizzaovn/">gas pizzaovne</a>, <a href="/pizzaovne/pizzaovn-traepiller/">pizzaovne til træpiller</a>, <a href="/pizzaovne/elektrisk-pizzaovn/">elektriske pizzaovne</a> og <a href="/pizzaovne/pizzaovn-til-koekkenet/">pizzaovne til køkkenet</a>.</p>
 HTML,
 	'faq'      => [
 		[ 'Hvor varm skal en pizzaovn være?', 'Til napolitansk pizza skal stenen være meget varm – mange bager ved 400 grader eller mere. Tykkere pizzaer bages ved lavere varme i længere tid. Brug et infrarødt termometer til at måle stenen.' ],
