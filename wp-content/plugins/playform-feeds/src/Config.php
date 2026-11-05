@@ -130,11 +130,20 @@ final class Config {
 				'elektrisk-pizzaovn' => [ 'name' => 'Elektrisk pizzaovn', 'match' => 'elektrisk|\bvolt\b|pizzaiolo|pizza ?maker|\d{3,4} ?w\b|effeuno|panetti|pizzetta|g3 ?ferrari|\b230 ?v', 'not' => '\bgas\b' ],
 				'pizzaovn-til-koekkenet' => [ 'name' => 'Pizzaovn til køkkenet', 'match' => 'indendørs|indoor|køkken|bordmodel|effeuno|g3 ?ferrari|pizzaiolo|pizza ?maker|panetti|pizzetta|\bvolt\b|elektrisk|\b230 ?v', 'not' => '\bgas\b|træpille|\bpellet' ],
 				'pizzaovn-til-grill' => [ 'name' => 'Pizzaovn til grill', 'match' => 'til grill|til kamado|kamado|grill pizza|rotisseri|indsats' ],
+				// Long tail: mærke, rotation og størrelse (ejerens ønske 5. nov. 2026 – flere små landingssider).
+				'ooni-pizzaovn'      => [ 'name' => 'Ooni pizzaovn', 'match' => '^ooni|\\booni\\b', 'not' => 'overtræk|cover|træpiller|dør til|greb\\b|bord|tilbehør|dejskraber|værktøj|støbejernsfad|sæt\\b' ],
+				'witt-pizzaovn'      => [ 'name' => 'Witt pizzaovn', 'match' => '^witt|\\bwitt\\b', 'not' => 'overtræk|cover|træpiller|dør til|greb\\b|bord|tilbehør|dejskraber|værktøj|støbejernsfad|sæt\\b' ],
+				'roterende-pizzaovn' => [ 'name' => 'Roterende pizzaovn', 'match' => 'rotante|rotation|roterende|drejeplade|roterbar', 'not' => 'overtræk|cover|træpiller|dør til|greb\\b|bord|tilbehør|dejskraber|værktøj|støbejernsfad|sæt\\b' ],
+				'pizzaovn-16-tommer' => [ 'name' => 'Pizzaovn 16 tommer', 'match' => '16"|16 ?tommer|\\b16\\b', 'not' => 'overtræk|cover|træpiller|dør til|greb\\b|bord|tilbehør|dejskraber|værktøj|støbejernsfad|sæt\\b' ],
+				'pizzaovn-12-tommer' => [ 'name' => 'Pizzaovn 12 tommer', 'match' => '12"|12 ?tommer|\\b12\\b|\\b13"', 'not' => 'overtræk|cover|træpiller|dør til|greb\\b|bord|tilbehør|dejskraber|værktøj|støbejernsfad|sæt\\b|12 ?kg' ],
 			],
 			'pizzasten' => [
 				'pizzasten-sten'     => [ 'name' => 'Pizzasten', 'match' => 'pizzasten|pizza ?sten|bagesten|cordierit|keramisk' ],
 				'bagestaal'          => [ 'name' => 'Bagestål', 'match' => 'bagest[åa]l|pizzastål|stålplade' ],
 				'pizzapande'         => [ 'name' => 'Pizzapande & pizzaform', 'match' => 'pizzapande|pizzaform|pizzaplade|detroit|pande' ],
+				'pizzastaal'         => [ 'name' => 'Pizzastål', 'match' => 'pizzastål|pizza ?stål|bage ?/ ?pizzastål|bage-/pizzastål' ],
+				'pizzasten-til-grill' => [ 'name' => 'Pizzasten til grill', 'match' => 'grill|kamado|green egg|egg\\b|weber|broil ?king|bertha|o-grill|lotus|mustang|conveggtor', 'not' => 'pizzaform|pande' ],
+				'rund-pizzasten'     => [ 'name' => 'Rund pizzasten', 'match' => '(rund|ø ?\\d).*(sten|stål)|(sten|stål).*(rund|ø ?\\d)', 'not' => 'pizzaform|pande' ],
 			],
 			// Pizzaskærere efter type. Et "pizzaskærer" uden andet i navnet er næsten altid et hjul.
 			'pizzaskaerere' => [
@@ -143,9 +152,28 @@ final class Config {
 				'pizzasaks'          => [ 'name' => 'Pizzasaks', 'match' => 'pizzasaks|pizza ?saks|scizza' ],
 				'pizzaknive'         => [ 'name' => 'Pizzaknive', 'match' => 'pizzakniv|pizza- og steakkniv|pizza/steak' ],
 			],
+			'pizzaspader' => [
+				'perforeret-pizzaspade' => [ 'name' => 'Perforeret pizzaspade', 'match' => 'perforer' ],
+				'pizzaspade-aluminium'  => [ 'name' => 'Pizzaspade i aluminium', 'match' => 'alumin' ],
+				'pizzaspade-trae'       => [ 'name' => 'Pizzaspade i træ', 'match' => '\\btræ\\b|bambus|acacia|akacie|wood|bøg|eg\\b', 'not' => 'roterings|vender' ],
+				'pizzavender'           => [ 'name' => 'Pizzavender', 'match' => 'vender|roterings|turning|drejespade|rund spade' ],
+				'pizzaspade-12-tommer'  => [ 'name' => 'Pizzaspade 12 tommer', 'match' => '12"|12 ?tommer|\\b30(,5)? ?cm|30x30|31(,4)? ?cm', 'not' => 'vender|roterings' ],
+				'pizzaspade-14-tommer'  => [ 'name' => 'Pizzaspade 14 tommer', 'match' => '14"|14 ?tommer|\\b3[3-6](,5)? ?cm|35x35', 'not' => 'vender|roterings' ],
+			],
+			'tilbehoer' => [
+				'pizzakit'              => [ 'name' => 'Pizzakit & pizzasæt', 'match' => 'kit\\b|pizzakit|pizzasæt|pizza-sæt|udstyrspakke|tilbehørssæt|pizzaiolo sæt|serveringssæt|gift box', 'not' => 'regulator|beslag|hook' ],
+				'pizzatermometer'       => [ 'name' => 'Pizzatermometer', 'match' => 'termometer' ],
+				'overtraek-til-pizzaovn' => [ 'name' => 'Overtræk til pizzaovn', 'match' => 'overtræk|cover\\b|beskyttelsesovertræk' ],
+				'bord-til-pizzaovn'     => [ 'name' => 'Bord til pizzaovn', 'match' => 'bord\\b|rullebord|modulbord|folding table|pizzavogn|sidebord|udebord', 'not' => 'bordskåner|pizzabræt|serveringsbræt' ],
+				'pizzabraet'            => [ 'name' => 'Pizzabræt', 'match' => 'pizzabræt|serveringsbræt|tapas/pizzabræt|pizza serveringsbræt' ],
+				'dejskraber'            => [ 'name' => 'Dejskraber', 'match' => 'dejskraber|dejspatel|forskærer|plastspatel' ],
+				'steamer-til-pizzaovn'  => [ 'name' => 'Steamer til pizzaovn', 'match' => 'steamer' ],
+			],
 			'dej' => [
 				'aeltemaskine'       => [ 'name' => 'Æltemaskine', 'match' => 'æltemaskine|spiral ?mixer|røremaskine|køkkenmaskine|køkkenassistent|assistent original|stand ?mixer' ],
 				'dejkasse'           => [ 'name' => 'Dejkasser', 'match' => 'dejkasse|dejsæske|dejæske|dejbakke' ],
+				'haevekurv'          => [ 'name' => 'Hævekurv', 'match' => 'hævekurv|hæve ?kurv|banneton' ],
+				'dejdeler'           => [ 'name' => 'Dejdeler', 'match' => 'dejdeler|dejskærer|dejkniv|dough ?cutter' ],
 			],
 			'ingredienser' => [
 				'pizzamel'           => [ 'name' => 'Pizzamel', 'match' => 'mel\b|tipo|semola|manitoba|caputo' ],
@@ -153,6 +181,8 @@ final class Config {
 				'pizzaost'           => [ 'name' => 'Pizzaost', 'match' => 'mozzarella|fior di latte|burrata|ricotta|scamorza|provola|pecorino|parmigiano|stracciatella' ],
 				'pizzatoppings'      => [ 'name' => 'Pizzatoppings', 'match' => 'salam[ei]|prosciutto|nduja|guanciale|pancetta|pepperoni|topping|grillede|ansjos|tun i|oliven|kapers|artiskok' ],
 				'olie'               => [ 'name' => 'Olie & chiliolie', 'match' => 'olie|olio|hot honey|chili' ],
+				'pizzasalami'        => [ 'name' => 'Salami & pølser til pizza', 'match' => 'salam[ei]|nduja|spianata|pepperoni|ventricina|chorizo|finocchio' ],
+				'hot-sauce'          => [ 'name' => 'Hot sauce & chili', 'match' => 'hot ?sauce|chili|hot honey|jalape|peperoncino|piccante' ],
 			],
 		];
 	}
