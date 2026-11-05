@@ -52,7 +52,7 @@ $head = static function ( string $title ) use ( $back ): void {
 				<li>
 					<a class="dr__row dr__row--sale" href="<?php echo esc_url( playform_tilbud_url() ); ?>">
 						<span class="dr__thumb dr__thumb--icon"><?php echo playform_icon( 'tag', 20, 1.5 ); // phpcs:ignore ?></span>
-						<span class="dr__name">Tilbud<small>Butikkernes aktuelle tilbud</small></span>
+						<span class="dr__name">Tilbud<small>Butikkernes egne tilbud lige nu</small></span>
 						<?php echo $chev; // phpcs:ignore ?>
 					</a>
 				</li>

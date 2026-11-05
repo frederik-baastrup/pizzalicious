@@ -5,7 +5,7 @@
 		<div class="foot">
 			<div class="foot__about">
 				<img src="<?php echo esc_url( playform_asset( 'logo-white.svg' ) ); ?>" alt="<?php echo esc_attr( playform_site( 'name' ) ); ?>" width="146" height="46">
-				<p>Vi samler <?php echo esc_html( playform_site( 'niche' ) ); ?> fra danske webshops ét sted, så du nemt kan finde rundt i hele udvalget.</p>
+				<p>Vi samler <?php echo esc_html( playform_site( 'niche' ) ); ?> fra danske webshops på ét sted, så du hurtigt finder det, du mangler.</p>
 				<span><?php echo esc_html( playform_site( 'email' ) ); ?></span>
 			</div>
 			<div class="foot__col">
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="foot__bottom">
-			<span><?php echo esc_html( playform_site( 'domain' ) ); ?> indeholder annoncer. Når du klikker videre og handler hos en af vores partnere, kan vi modtage en provision. Det koster ikke dig noget ekstra. Priser og lagerstatus kan have ændret sig siden seneste opdatering.</span>
+			<span><?php echo esc_html( playform_site( 'domain' ) ); ?> viser annoncer. Klikker du videre og køber hos en af vores partnerbutikker, kan vi tjene en provision. Du betaler ikke mere af den grund. Pris og lagerstatus kan have ændret sig siden sidste opdatering.</span>
 			<span>© <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php echo esc_html( playform_site( 'domain' ) . ' · ' . playform_site( 'company' ) . ' · CVR ' . playform_site( 'cvr' ) ); ?> · <button type="button" class="foot__link" data-cc-open>Cookie-indstillinger</button></span>
 		</div>
 	</div>

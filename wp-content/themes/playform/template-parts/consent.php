@@ -9,7 +9,7 @@ $cookie_url = home_url( '/cookies/' );
 <div class="cc" id="cookie-banner" data-cc data-version="<?php echo (int) PLAYFORM_CONSENT_VERSION; ?>" tabindex="-1" role="dialog" aria-labelledby="cc-title" aria-describedby="cc-text" hidden>
 	<div class="cc__view" data-cc-view="main">
 		<h2 class="cc__title" id="cc-title">Cookies på <?php echo esc_html( playform_site( 'name' ) ); ?></h2>
-		<p class="cc__text" id="cc-text">Vi bruger de nødvendige cookies, for at siden virker. Statistik og markedsføring sætter vi kun, hvis du siger ja. Du kan altid ændre dit valg. Læs mere i vores <a href="<?php echo esc_url( $cookie_url ); ?>">cookiepolitik</a>.</p>
+		<p class="cc__text" id="cc-text">Siden bruger nødvendige cookies for at fungere. Statistik- og markedsføringscookies sætter vi kun med dit ja. Du kan til enhver tid ændre dit valg – læs mere i vores <a href="<?php echo esc_url( $cookie_url ); ?>">cookiepolitik</a>.</p>
 		<div class="cc__btns">
 			<button type="button" class="cc__btn cc__btn--solid" data-cc-act="reject">Kun nødvendige</button>
 			<button type="button" class="cc__btn cc__btn--solid" data-cc-act="accept">Acceptér alle</button>
@@ -20,19 +20,19 @@ $cookie_url = home_url( '/cookies/' );
 		<h2 class="cc__title">Dine cookie-valg</h2>
 		<ul class="cc__list">
 			<li>
-				<span><b>Nødvendige</b><small>Får siden til at virke og husker dit valg her. Kan ikke slås fra.</small></span>
+				<span><b>Nødvendige</b><small>Holder siden kørende og husker det valg, du træffer her. Kan ikke slås fra.</small></span>
 				<span class="cc__sw is-locked" aria-hidden="true"></span>
 			</li>
 			<li>
-				<label for="cc-stat"><b>Statistik</b><small><?php echo class_exists( 'WpMatomo' ) ? 'Matomo på vores egen server tæller besøg, så vi kan se, hvad der bliver brugt. Ingen data deles med tredjepart.' : 'Viser os, hvad der bliver brugt, så vi kan forbedre siden. Bruges ikke lige nu.'; ?></small></label>
+				<label for="cc-stat"><b>Statistik</b><small><?php echo class_exists( 'WpMatomo' ) ? 'Besøg tælles af Matomo på vores egen server, så vi kan se, hvad der bliver brugt – uden at data deles med tredjepart.' : 'Giver os et billede af, hvad der bliver brugt, så vi kan forbedre siden. Bruges ikke lige nu.'; ?></small></label>
 				<input type="checkbox" id="cc-stat" class="cc__sw" data-cc-cat="statistik" role="switch">
 			</li>
 			<li>
-				<label for="cc-mark"><b>Markedsføring</b><small>Bruges til annoncer og målretning. Bruges ikke lige nu.</small></label>
+				<label for="cc-mark"><b>Markedsføring</b><small>Bruges til målrettede annoncer. Bruges ikke lige nu.</small></label>
 				<input type="checkbox" id="cc-mark" class="cc__sw" data-cc-cat="marketing" role="switch">
 			</li>
 		</ul>
-		<p class="cc__note">Når du klikker "Gå til butik", sætter Partner-ads og butikken deres egne cookies hos dem. Det styrer du i deres politikker.</p>
+		<p class="cc__note">Når du går videre med "Gå til butik", sætter Partner-ads og butikken selv cookies på deres sider. Dem styrer du i deres cookiepolitikker.</p>
 		<div class="cc__btns">
 			<button type="button" class="cc__btn cc__btn--solid" data-cc-act="reject">Afvis alle</button>
 			<button type="button" class="cc__btn cc__btn--solid" data-cc-act="accept">Acceptér alle</button>

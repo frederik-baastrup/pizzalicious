@@ -13,10 +13,10 @@
 <?php
 $pf_money = home_url( '/saadan-tjener-vi-penge/' );
 $pf_usps  = [
-	[ 'grid', 'Flere danske shops', 'samlet ét sted' ],
-	[ 'tag', 'Aktuelle tilbud', 'fra butikkerne' ],
-	[ 'refresh', 'Friske priser', 'to gange dagligt' ],
-	[ 'store', 'Køb direkte', 'hos butikken' ],
+	[ 'grid', 'Danske shops', 'samlet ét sted' ],
+	[ 'tag', 'Aktuelle tilbud', 'direkte fra butikkerne' ],
+	[ 'refresh', 'Priser opdateret', 'to gange dagligt' ],
+	[ 'store', 'Køb direkte', 'hos shoppen' ],
 ];
 ?>
 <div class="topbar">
@@ -30,7 +30,7 @@ $pf_usps  = [
 	</div>
 	<?php // Mobil: én linje, hvor fordelene skifter roligt ?>
 	<div class="topbar__mob">
-		<a class="topbar__tag" href="<?php echo esc_url( $pf_money ); ?>" title="Siden indeholder reklamelinks (affiliate-links)">Reklamelinks</a>
+		<a class="topbar__tag" href="<?php echo esc_url( $pf_money ); ?>" title="Siden indeholder affiliate-links (reklamelinks)">Reklamelinks</a>
 		<span class="topbar__rot" aria-live="off">
 			<?php foreach ( $pf_usps as $i => [ $icon, $lead, $rest ] ) : ?>
 				<span class="topbar__msg<?php echo $i === 0 ? ' is-on' : ''; ?>"><?php echo playform_icon( $icon, 13, 1.5 ); // phpcs:ignore ?><b><?php echo esc_html( $lead ); ?></b> <?php echo esc_html( $rest ); ?></span>
@@ -95,7 +95,7 @@ $pf_usps  = [
 										<?php endif; ?>
 										<a href="<?php echo esc_url( $p['tilbud'] ); ?>" class="mm__promo">
 											<img src="<?php echo esc_url( $p['img'] ); ?>"<?php echo playform_srcset( (string) $p['img'], '320px' ); // phpcs:ignore ?> alt="" loading="lazy">
-											<span class="mm__promo-body"><span class="mm__promo-title">Tilbud på <?php echo esc_html( mb_strtolower( $p['label'] ) ); ?></span><span class="mm__promo-sub">Butikkernes aktuelle tilbud</span></span>
+											<span class="mm__promo-body"><span class="mm__promo-title">Tilbud på <?php echo esc_html( mb_strtolower( $p['label'] ) ); ?></span><span class="mm__promo-sub">Butikkernes egne tilbud lige nu</span></span>
 											<span class="mm__promo-arrow" aria-hidden="true"><?php echo playform_icon( 'arrow-right', 18, 1.4 ); // phpcs:ignore ?></span>
 										</a>
 									</div>

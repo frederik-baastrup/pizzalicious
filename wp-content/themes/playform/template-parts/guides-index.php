@@ -11,7 +11,7 @@ $topics  = get_categories( [ 'hide_empty' => true, 'orderby' => 'count', 'order'
 $total   = (int) wp_count_posts( 'post' )->publish;
 $paged   = max( 1, (int) get_query_var( 'paged' ) );
 $title   = $current ? $current->name : 'Viden & guides';
-$intro   = $current && trim( $current->description ) ? wp_strip_all_tags( $current->description ) : 'Købsguides og svar på de spørgsmål, der dukker op, når du skal vælge og bruge dit ' . playform_site( 'niche' ) . '.';
+$intro   = $current && trim( $current->description ) ? wp_strip_all_tags( $current->description ) : 'Købsguides og svar på det, du sidder og spekulerer på, når du skal vælge og bruge dit ' . playform_site( 'niche' ) . '.';
 $crumbs  = [ [ 'Forside', home_url( '/' ) ], [ 'Viden & guides', $current ? $blog : '' ] ];
 if ( $current ) {
 	$crumbs[] = [ $current->name, '' ];
@@ -71,7 +71,7 @@ $featured = $paged === 1 && $posts ? array_shift( $posts ) : null;
 		</div>
 	<?php endif; ?>
 	<?php if ( ! $featured && ! $posts ) : ?>
-		<p class="muted">Der er ingen guides her endnu.</p>
+		<p class="muted">Her ligger ingen guides endnu.</p>
 	<?php endif; ?>
 	<?php the_posts_pagination( [ 'prev_text' => '‹', 'next_text' => '›' ] ); ?>
 </section>

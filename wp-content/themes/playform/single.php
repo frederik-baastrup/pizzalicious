@@ -22,7 +22,7 @@ while ( have_posts() ) :
 			playform_breadcrumbs( [ [ 'Forside', home_url( '/' ) ], $is_best ? [ 'Købsguides', playform_guide_url() ] : [ 'Viden & guides', $blog ], [ get_the_title(), '' ] ] );
 			?>
 			<?php if ( get_post_meta( get_the_ID(), '_pf_hidden', true ) ) : // Solgte/sponsorerede artikler skal tydeligt markeres som reklame (markedsføringsloven § 6, stk. 4). ?>
-				<p class="sponsored-note"><b>Annonce</b>Artiklen er sponsoreret indhold og indeholder betalte links.</p>
+				<p class="sponsored-note"><b>Annonce</b>Dette er sponsoreret indhold med betalte links.</p>
 			<?php endif; ?>
 			<h1><?php the_title(); ?></h1>
 			<?php if ( has_excerpt() ) : ?><p class="guide__lead"><?php echo esc_html( get_the_excerpt() ); ?></p><?php endif; ?>
@@ -67,7 +67,7 @@ while ( have_posts() ) :
 			</aside>
 			<div class="guide__body prose">
 				<?php if ( ! playform_picks() && ( str_contains( $html, 'sponsored' ) || str_contains( $html, 'pcard' ) ) ) : // anbefalinger har deres egen boks om metode og provision ?>
-				<p class="guide__note">Guiden indeholder links til butikker. Køber du via et link, kan vi få en provision – det koster ikke dig noget ekstra. Anbefalingerne er valgt ud fra produktdata og anmeldelser, ikke ud fra provision.</p>
+				<p class="guide__note">I guiden finder du links til butikker. Køber du gennem et af dem, kan vi tjene en provision, uden at det koster dig ekstra. Anbefalingerne bygger på produktdata og anmeldelser – provisionen spiller ingen rolle for valget.</p>
 				<?php endif; ?>
 				<?php echo $html; // phpcs:ignore -- indholdet er allerede filtreret af the_content ?>
 				<?php
@@ -88,8 +88,8 @@ while ( have_posts() ) :
 					<p class="author-card__bio"><?php echo esc_html( $author['bio'] ); ?></p>
 					<ul class="author-card__stats">
 						<li><b><?php echo esc_html( number_format( $n_guides, 0, ',', '.' ) ); ?></b><span>guides skrevet</span></li>
-						<li><b><?php echo esc_html( number_format( $n_prods, 0, ',', '.' ) ); ?></b><span>produkter vi følger</span></li>
-						<li><b><?php echo esc_html( (string) $n_shops ); ?></b><span>danske butikker</span></li>
+						<li><b><?php echo esc_html( number_format( $n_prods, 0, ',', '.' ) ); ?></b><span>produkter i oversigten</span></li>
+						<li><b><?php echo esc_html( (string) $n_shops ); ?></b><span>danske webshops</span></li>
 					</ul>
 					<ul class="author-card__rules">
 						<?php if ( ! get_post_meta( get_the_ID(), '_pf_hidden', true ) ) : ?><li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Ingen betalte placeringer</li><?php endif; ?>
