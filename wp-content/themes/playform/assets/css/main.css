@@ -1445,3 +1445,10 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 
 /* Annonce-notits under købsknappen i købsguides (som på produktsiden) */
 .pick__adnote { margin-top: 10px; }
+
+/* Kort i Viden/Købsguides: metadata på én linje (ombrydes kun mellem punkterne), ingen "hængende" hover-understregning på touch. */
+.gcard__meta { flex-wrap: wrap; row-gap: 6px; }
+.gcard__meta > span { white-space: nowrap; }
+.gcard__meta .avatar-pf, .gcard__meta img { flex: 0 0 auto; }
+@media (hover: none) { .gcard:hover .gcard__title { text-decoration: none; } .gcard:hover .gcard__img img { transform: none; } }
+@media (max-width: 640px) { .gcard__meta { gap: 6px 8px; font-size: 12.5px; } .gcard--big .gcard__meta .avatar-pf, .gcard--big .gcard__meta img { width: 24px; height: 24px; } }
