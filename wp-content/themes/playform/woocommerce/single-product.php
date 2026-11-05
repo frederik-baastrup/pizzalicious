@@ -165,17 +165,24 @@ while ( have_posts() ) :
 	?>
 	<div>
 		<h2>Sammenlign priser</h2>
-		<p class="muted"><?php echo (int) $shops_n; ?> butikker har produktet. Vi viser den laveste pris øverst.</p>
+		<p class="muted"><?php echo (int) $shops_n; ?> butikker har produktet. Vi viser den laveste pris inkl. fragt øverst – er fragten ikke oplyst, regner vi den som 0 kr.</p>
 		<div class="offers">
-			<?php foreach ( $offers as $i => $o ) : ?>
-				<div class="offer<?php echo $i === 0 ? ' offer--best' : ''; ?>">
+			<?php
+			// Samlet pris = pris + fragt (fragt kendes ikke altid). "Billigst" sættes på alle butikker med den laveste samlede pris.
+			$totals   = array_map( static fn( $o ) => (float) $o['price'] + (float) ( $o['shipping'] ?? 0 ), $offers );
+			$in_stock = array_filter( $offers, static fn( $o ) => ! empty( $o['in_stock'] ) );
+			$best_tot = $in_stock ? min( array_intersect_key( $totals, $in_stock ) ) : ( $totals ? min( $totals ) : 0 );
+			foreach ( $offers as $i => $o ) :
+				$is_best = ! empty( $o['in_stock'] ) && abs( $totals[ $i ] - $best_tot ) < 0.5;
+				?>
+				<div class="offer<?php echo $is_best ? ' offer--best' : ''; ?>">
 					<span class="offer__shop">
 						<b><?php echo esc_html( $o['shop'] ); ?></b>
-						<?php if ( $i === 0 ) : ?><span class="badge badge--accent" title="Laveste pris inkl. fragt">Billigst<span class="gt-long"> inkl. fragt</span></span><?php endif; ?>
+						<?php if ( $is_best ) : ?><span class="badge badge--accent" title="Laveste pris inkl. fragt">Billigst<span class="gt-long"> inkl. fragt</span></span><?php endif; ?>
 						<span class="stock<?php echo $o['in_stock'] ? ' stock--in' : ''; ?>"><span class="stock__dot"></span><?php echo $o['in_stock'] ? 'På lager' : 'Ikke på lager'; ?></span>
 					</span>
 					<span class="offer__meta"><?php echo esc_html( trim( ( $o['delivery'] ? 'Levering ' . $o['delivery'] : '' ) ) ); ?><br><?php echo $o['shipping'] === null ? '' : esc_html( $o['shipping'] > 0 ? 'Fragt ' . playform_kr( $o['shipping'] ) : 'Gratis fragt' ); ?></span>
-					<span class="offer__price"><?php echo esc_html( playform_kr( $o['price'] ) ); ?></span>
+					<span class="offer__price"><?php echo esc_html( playform_kr( $o['price'] ) ); ?><small class="offer__ship"><?php echo $o['shipping'] === null ? 'fragt: se butik' : esc_html( $o['shipping'] > 0 ? '+ fragt ' . playform_kr( $o['shipping'] ) : 'gratis fragt' ); ?></small></span>
 					<a href="<?php echo esc_url( playform_aff_url( $o['url'], get_post_field( 'post_name', $id ), 'produktside-prisliste' ) ); ?>" class="btn-out" rel="sponsored nofollow noopener" referrerpolicy="strict-origin-when-cross-origin" target="_blank">Gå til butik</a>
 				</div>
 			<?php endforeach; ?>
