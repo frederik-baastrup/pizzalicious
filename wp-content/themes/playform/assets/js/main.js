@@ -174,12 +174,22 @@
 			drawer.setAttribute('aria-hidden', 'false');
 			drawer.classList.add('is-open');
 			if (drawerBg) { drawerBg.hidden = false; requestAnimationFrame(function () { drawerBg.classList.add('is-open'); }); }
+			// Når siden er låst (overflow: hidden), holder "sticky" ikke længere – særligt i Safari på iPhone. Så sidder
+			// headeren (med logoet) fast foroven, mens menuen er åben, også når man har scrollet ned.
+			if (header) {
+				var ht = Math.max(0, header.getBoundingClientRect().top);
+				header.style.position = 'fixed';
+				header.style.top = ht + 'px';
+				header.style.left = '0';
+				header.style.right = '0';
+			}
 			document.documentElement.classList.add('dr-lock');
 			toggle.setAttribute('aria-expanded', 'true');
 			toggle.setAttribute('aria-label', 'Luk menu');
 		};
 		var closeDrawer = function () {
 			drawer.classList.remove('is-open');
+			if (header) { header.style.position = ''; header.style.top = ''; header.style.left = ''; header.style.right = ''; }
 			if (drawerBg) { drawerBg.classList.remove('is-open'); setTimeout(function () { if (!drawer.classList.contains('is-open')) drawerBg.hidden = true; }, 300); }
 			drawer.setAttribute('aria-hidden', 'true');
 			drawer.setAttribute('inert', '');
