@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit;
 return [
 	'black-friday' => <<<'HTML'
 <h2>Black Friday på pizzaovne og pizzaudstyr</h2>
-<p>Black Friday er blevet til en hel måned med tilbud, og pizzaudstyr er ingen undtagelse. Mange danske webshops sætter priserne ned på pizzaovne, pizzasten og tilbehør i løbet af november – og de samme varer findes ofte hos flere butikker til forskellige priser. Her samler vi butikkernes egne tilbud ét sted, så du hurtigt kan se, hvor du sparer mest. Du handler direkte hos butikken.</p>
+<p>Drømmer du om leopardpletter på kanten og en bund, der er bagt på under to minutter, er november et godt tidspunkt at slå til. Black Friday varer i dag det meste af måneden, og i den periode nedsætter flere webshops pizzaovne, pizzasten og tilbehør. Ofte sælges den samme ovn af mere end én butik – til forskellige priser. På denne side har vi samlet de tilbud, butikkerne selv har lagt ud, så du kan sammenligne dem side om side. Selve købet foregår hos butikken.</p>
 
 <h3>Black Friday-tilbud på pizzaovne</h3>
 <p>En pizzaovn er det største køb, når du vil lave rigtig pizza derhjemme, og derfor er det her, tilbuddene gør den største forskel. Under {cat:pizzaovne|pizzaovne} finder du {cat:gas-pizzaovn|gas pizzaovne}, der er hurtige at tænde og nemme at styre, {cat:pizzaovn-traepiller|pizzaovne til træpiller} til den klassiske røgsmag, {cat:elektrisk-pizzaovn|elektriske pizzaovne} og {cat:pizzaovn-til-koekkenet|pizzaovne til køkkenet}, og {cat:pizzaovn-til-grill|pizzaovne til grillen}, hvis du allerede har en gas- eller kamadogrill.</p>
@@ -22,16 +22,16 @@ return [
 <h3>Tilbud på æltemaskiner og alt til dejen</h3>
 <p>En god pizza starter med dejen. Under {cat:dej|dej og æltning} finder du {cat:aeltemaskine|æltemaskiner og røremaskiner}, der klarer selv store portioner dej, og {cat:dejkasse|dejkasser}, så dejboldene kan hæve i ro. Under {cat:ingredienser|ingredienser} finder du {cat:pizzamel|pizzamel} og {cat:tomater|tomater og pizzasauce}.</p>
 
-<h3>Gode råd til Black Friday</h3>
+<h3>Før du bestiller: fem ting at tænke over</h3>
 <ul>
-<li>Beslut dig for ovntypen først: gas, træ eller el. Det betyder mere end mærket.</li>
-<li>Sammenlign prisen hos flere butikker – samme ovn kan koste forskelligt.</li>
-<li>Husk tilbehøret: en pizzaspade og et infrarødt termometer gør starten meget lettere.</li>
-<li>Tjek leveringstid og returret, hvis det er en julegave.</li>
-<li>Kig på vores <a href="/koebsguide/">købsguides</a>, hvis du er i tvivl om, hvilken model du skal vælge.</li>
+<li>Vælg brændsel, før du vælger mærke: gas, træpiller eller strøm afgør, hvordan ovnen bruges i hverdagen.</li>
+<li>Den samme pizzaovn kan have to forskellige priser i to butikker, så sammenlign, før du klikker videre.</li>
+<li>Budgettér med en spade og et infrarødt termometer – de første pizzaer bliver langt nemmere.</li>
+<li>Skal ovnen ligge under juletræet, så se på leveringstiden og hvor længe du kan returnere den.</li>
+<li>Er du i tvivl mellem to modeller, så læs vores <a href="/koebsguide/">købsguides</a> først.</li>
 </ul>
 
-<h3>Hvornår er Black Friday?</h3>
-<p>Black Friday er den sidste fredag i november. Weekenden efter kaldes Black Weekend, og mandagen efter er Cyber Monday. Mange butikker kører dog tilbud hele november, og derfor opdaterer vi siden hele måneden. Tilbuddene skifter løbende, så kig forbi igen – og tjek altid den endelige pris hos butikken, før du køber.</p>
+<h3>Hvornår falder Black Friday?</h3>
+<p>Black Friday ligger sidst i november, dagen efter amerikansk Thanksgiving. Lørdag og søndag efter hedder Black Weekend, og mandagen derpå er Cyber Monday. Da en stor del af butikkerne har tilbud gennem hele november, holder vi siden ajour hele måneden. Der kommer nye tilbud til, og andre slutter, så kom gerne tilbage. Tjek prisen i butikken, inden du betaler – det er den, der gælder.</p>
 HTML,
 ];

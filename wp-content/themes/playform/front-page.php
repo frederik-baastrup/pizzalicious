@@ -134,10 +134,10 @@ $has_deals = count( $deals ) >= 4;
 	</div>
 
 	<div class="usp">
-		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'grid', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Alt udstyr ét sted</b><span>Produkter fra flere danske shops</span></span></div>
-		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'refresh', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Opdateret 2× dagligt</b><span>Aktuelle priser og lagerstatus</span></span></div>
-		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'store', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Køb direkte i butikken</b><span>Du handler hos shoppen som normalt</span></span></div>
-		<a class="usp__item" href="<?php echo esc_url( playform_tilbud_url() ); ?>"><span class="usp__icon"><?php echo playform_icon( 'tag', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Butikkernes tilbud</b><span>Aktuelle tilbud samlet ét sted</span></span></a>
+		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'grid', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Alt til pizza</b><span>Ovne, sten og tilbehør fra flere shops</span></span></div>
+		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'refresh', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Opdateret 2× dagligt</b><span>Friske priser og lagertal</span></span></div>
+		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'store', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Handl hos webshoppen</b><span>Vi sender dig videre til butikken</span></span></div>
+		<a class="usp__item" href="<?php echo esc_url( playform_tilbud_url() ); ?>"><span class="usp__icon"><?php echo playform_icon( 'tag', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Butikkernes tilbud</b><span>Se de nedsatte priser</span></span></a>
 	</div>
 </section>
 
@@ -164,7 +164,7 @@ foreach ( playform_front_categories() as $cslug => [ $ctitle, $cmin ] ) {
 	<div class="news">
 		<div>
 			<h2>Få besked, når prisen falder</h2>
-			<p>Ugens bedste tilbud på <?php echo esc_html( playform_site( 'niche' ) ); ?> og nye guides direkte i din indbakke. Ca. én mail om ugen.</p>
+			<p>Nye tilbud på <?php echo esc_html( playform_site( 'niche' ) ); ?>, købsguides og idéer til pizzaaftenen – højst omkring én mail om ugen.</p>
 		</div>
 		<form class="news__form" method="post" action="#" data-newsletter data-endpoint="<?php echo esc_url( rest_url( 'playform/v1/newsletter' ) ); ?>">
 			<input type="text" name="website" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true">
@@ -173,7 +173,7 @@ foreach ( playform_front_categories() as $cslug => [ $ctitle, $cmin ] ) {
 				<input id="nl-email" type="email" name="email" placeholder="navn@eksempel.dk" required>
 				<button type="submit">Tilmeld</button>
 			</div>
-			<span class="news__note" role="status" aria-live="polite">Du får en mail, hvor du bekræfter tilmeldingen. Du kan altid afmelde dig igen. Læs vores <a href="<?php echo esc_url( home_url( '/privatlivspolitik/' ) ); ?>">privatlivspolitik</a>.</span>
+			<span class="news__note" role="status" aria-live="polite">Tjek din indbakke og bekræft tilmeldingen i den mail, vi sender. Du kan til enhver tid framelde dig. Læs mere i vores <a href="<?php echo esc_url( home_url( '/privatlivspolitik/' ) ); ?>">privatlivspolitik</a>.</span>
 		</form>
 	</div>
 </section>
@@ -235,6 +235,6 @@ if ( $posts ) {
 
 <?php
 $front   = get_post( (int) get_option( 'page_on_front' ) );
-$seo     = $front && trim( $front->post_content ) ? apply_filters( 'the_content', $front->post_content ) : '<h2>Pizzaovne og pizzaudstyr fra danske webshops – samlet ét sted</h2><p>' . esc_html( playform_site( 'name' ) ) . ' samler pizzaovne, pizzasten, pizzaspader og alt det andet, du skal bruge til hjemmelavet pizza, fra flere danske webshops ét sted. Vi henter priser og lagerstatus to gange i døgnet, så du hurtigt kan se, hvad det koster, og hvem der har det på lager. Når du har fundet det rigtige, sender vi dig videre til butikken, hvor du handler som normalt.</p><h3>Gas, træ eller el?</h3><p>Det første valg er brændslet. En gas pizzaovn er hurtig at tænde og nem at styre. En ovn til træ eller træpiller giver røgsmag og den klassiske oplevelse, men kræver lidt mere øvelse. En elektrisk pizzaovn kan stå i køkkenet og bruges hele året. Har du ikke plads til en pizzaovn, giver en pizzasten eller et bagestål en sprød bund i den almindelige ovn.</p><h3>Det skal du også bruge</h3><p>En pizzaspade til at sætte pizzaen ind og en mindre spade til at vende den, et infrarødt termometer til at måle stenens temperatur og en pizzaskærer. Til dejen er godt mel og tid vigtigere end udstyr – men en æltemaskine og et par dejkasser gør det nemmere at lave mange pizzaer på én gang.</p>';
+$seo     = $front && trim( $front->post_content ) ? apply_filters( 'the_content', $front->post_content ) : '<h2>Pizzaovne og pizzaudstyr fra danske webshops – samlet ét sted</h2><p>' . esc_html( playform_site( 'name' ) ) . ' er stedet for dig, der vil bage pizza derhjemme. Her finder du pizzaovne, pizzasten, pizzaspader, mel og meget mere fra en række danske webshops. Priser og lagerstatus bliver hentet morgen og aften, så du kan se, hvad ovnen koster i dag, og hvilken butik der har den på lager. Klik videre, og afslut købet hos butikken, som du plejer.</p><h3>Gas, træ eller el?</h3><p>Det første valg er brændslet. En gas pizzaovn er hurtig at tænde og nem at styre. En ovn til træ eller træpiller giver røgsmag og den klassiske oplevelse, men kræver lidt mere øvelse. En elektrisk pizzaovn kan stå i køkkenet og bruges hele året. Har du ikke plads til en pizzaovn, giver en pizzasten eller et bagestål en sprød bund i den almindelige ovn.</p><h3>Det skal du også bruge</h3><p>En pizzaspade til at sætte pizzaen ind og en mindre spade til at vende den, et infrarødt termometer til at måle stenens temperatur og en pizzaskærer. Til dejen er godt mel og tid vigtigere end udstyr – men en æltemaskine og et par dejkasser gør det nemmere at lave mange pizzaer på én gang.</p>';
 get_template_part( 'template-parts/seo-text', null, [ 'html' => $seo, 'right' => true ] );
 get_footer();

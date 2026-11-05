@@ -10,10 +10,45 @@ function playform_has_seo_plugin(): bool {
 	return defined( 'RANK_MATH_VERSION' ) || defined( 'WPSEO_VERSION' );
 }
 
+/** Faste sider, der ikke skal i Google (slugs, se playform_setup_site() og inc/legal.php). */
+function playform_noindex_pages(): array {
+	return [ 'privatlivspolitik', 'cookies' ];
+}
+
+// Sider med noindex hører heller ikke hjemme i WordPress' sitemap.
+add_filter(
+	'wp_sitemaps_posts_query_args',
+	static function ( array $args, string $post_type ): array {
+		if ( 'page' !== $post_type ) {
+			return $args;
+		}
+		$ids = [];
+		foreach ( playform_noindex_pages() as $slug ) {
+			$page = get_page_by_path( $slug );
+			if ( $page ) {
+				$ids[] = (int) $page->ID;
+			}
+		}
+		if ( $ids ) {
+			$args['post__not_in'] = array_merge( (array) ( $args['post__not_in'] ?? [] ), $ids );
+		}
+		return $args;
+	},
+	10,
+	2
+);
+
 /** Filtre, sortering og fritekst skaber uendeligt mange URL'er – de skal ikke i Google. */
 add_filter(
 	'wp_robots',
 	static function ( array $robots ): array {
+		// Privatlivs- og cookiepolitik er standardtekster, der står næsten ens på alle vores sites – ikke i Google.
+		if ( is_page( playform_noindex_pages() ) ) {
+			$robots['noindex'] = true;
+			$robots['follow']  = true;
+			unset( $robots['max-image-preview'] );
+			return $robots;
+		}
 		if ( ! playform_is_catalog() ) {
 			return $robots;
 		}
@@ -43,9 +78,9 @@ add_filter(
 			$parts['title'] = playform_campaign_defs()[ $c ]['name'] . ' ' . wp_date( 'Y', playform_campaign_next_period( $c )[0]->getTimestamp() ) . ' – tilbud på ' . playform_site( 'niche' );
 		} elseif ( playform_is_tilbud_page() ) {
 			$t              = get_queried_object();
-			$parts['title'] = $t instanceof WP_Term ? 'Tilbud på ' . mb_strtolower( playform_cat_label( $t ) ) . ' – aktuelle tilbud fra danske shops' : 'Tilbud på ' . playform_site( 'niche' ) . ' – aktuelle tilbud fra danske shops';
+			$parts['title'] = $t instanceof WP_Term ? 'Tilbud på ' . mb_strtolower( playform_cat_label( $t ) ) . ' – nedsatte priser hos danske webshops' : 'Tilbud på ' . playform_site( 'niche' ) . ' – nedsatte priser hos danske webshops';
 		} elseif ( is_tax( 'product_cat' ) ) {
-			$parts['title'] = 'Køb ' . mb_strtolower( playform_cat_label( get_queried_object() ) ) . ' – stort udvalg fra danske shops';
+			$parts['title'] = 'Køb ' . mb_strtolower( playform_cat_label( get_queried_object() ) ) . ' – priser fra danske webshops';
 		} elseif ( is_singular( 'product' ) ) {
 			$parts['title'] = get_the_title() . ' – se pris';		} elseif ( is_search() ) {
 			$parts['title'] = 'Søgeresultater for “' . get_search_query() . '”';
@@ -67,12 +102,12 @@ add_action(
 		}
 		$desc = '';
 		if ( is_front_page() ) {
-			$desc = 'Find pizzaovne, pizzasten, pizzaspader og alt til hjemmelavet pizza fra danske webshops ét sted. Sammenlign priser, se tilbud og læs vores købsguides.';
+			$desc = 'Find pizzaovne, pizzasten, pizzaspader og alt til hjemmelavet pizza fra danske webshops. Se priser og tilbud side om side, og få hjælp i vores købsguides.';
 		} elseif ( function_exists( 'playform_current_campaign' ) && playform_current_campaign() ) {
 			$desc = playform_campaign_page_text( playform_current_campaign() )['intro'];
 		} elseif ( playform_is_tilbud_page() ) {
 			$t    = get_queried_object();
-			$desc = sprintf( 'Se %s, som danske webshops har sat på tilbud lige nu. Vi samler butikkernes egne tilbud ét sted, og du handler direkte hos butikken.', $t instanceof WP_Term ? mb_strtolower( playform_cat_label( $t ) ) : playform_site( 'niche' ) );
+			$desc = sprintf( 'Tilbud på %s fra danske webshops lige nu – butikkernes egne nedsatte priser på én side. Du køber direkte hos butikken.', $t instanceof WP_Term ? mb_strtolower( playform_cat_label( $t ) ) : playform_site( 'niche' ) );
 		} elseif ( is_tax( 'product_cat' ) ) {
 			$desc = wp_strip_all_tags( term_description() );
 		} elseif ( is_singular( 'product' ) ) {
@@ -83,7 +118,7 @@ add_action(
 		} elseif ( is_singular( 'post' ) ) {
 			$desc = (string) get_the_excerpt();
 		} elseif ( is_home() ) {
-			$desc = 'Viden og guides om ' . playform_site( 'niche' ) . ': købsguides, råd og forklaringer, der gør det nemmere at vælge rigtigt.';
+			$desc = 'Guides og viden om ' . playform_site( 'niche' ) . ': hvilken pizzaovn, sten eller spade passer til dig, og hvordan får du mest ud af den?';
 		} elseif ( is_category() ) {
 			$desc = wp_strip_all_tags( term_description() ) ?: single_cat_title( '', false ) . ': guides og artikler om ' . playform_site( 'niche' ) . ' på ' . playform_site( 'name' ) . '.';
 		} elseif ( is_page() ) {

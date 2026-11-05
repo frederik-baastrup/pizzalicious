@@ -3,7 +3,8 @@
  * Siden "Sådan fungerer {navn}" (/saadan-fungerer-det/): hvor produkterne kommer fra (butikkernes egne feeds via
  * Partner-ads), hvordan vi tjener penge, og hvad loven siger om at vise mærkevarer. Ejerens ønske 5. nov. 2026:
  * en side, han kan sende til butikker og leverandører, der spørger, om vi må vise produkterne.
- * Teksten ligger her i koden (ikke i databasen), så den er ens på alle sites og kan rettes ét sted.
+ * Teksten ligger her i koden (ikke i databasen). Den er bevidst formuleret forskelligt på hvert site (samme fakta),
+ * så søgemaskiner ikke ser dublet-indhold på tværs af domænerne. Ret fakta på alle sites, men kopiér ikke teksten.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -28,12 +29,22 @@ function playform_ensure_how_page(): void {
 				'post_status'  => 'publish',
 				'post_name'    => PLAYFORM_HOW_SLUG,
 				'post_title'   => playform_how_title(),
-				'post_excerpt' => 'Hvor produkterne kommer fra, hvordan vi tjener penge, og hvorfor vi må vise dem.',
+				'post_excerpt' => 'Om produktfeeds, provision og reglerne for at vise mærkevarer.',
 				'post_content' => '',
 			]
 		);
-	} elseif ( $page->post_title !== playform_how_title() ) {
-		wp_update_post( [ 'ID' => $page->ID, 'post_title' => playform_how_title() ] );
+	} else {
+		$upd = [];
+		if ( $page->post_title !== playform_how_title() ) {
+			$upd['post_title'] = playform_how_title();
+		}
+		// Uddraget (bruges som metabeskrivelse) skiftes kun, hvis det stadig er den gamle fælles tekst.
+		if ( $page->post_excerpt === 'Hvor produkterne kommer fra, hvordan vi tjener penge, og hvorfor vi må vise dem.' ) {
+			$upd['post_excerpt'] = 'Om produktfeeds, provision og reglerne for at vise mærkevarer.';
+		}
+		if ( $upd ) {
+			wp_update_post( [ 'ID' => $page->ID ] + $upd );
+		}
 	}
 }
 
@@ -48,41 +59,41 @@ function playform_how_html(): string {
 	$co     = esc_html( playform_site( 'company' ) . ', CVR ' . playform_site( 'cvr' ) );
 
 	return <<<HTML
-<p class="lead">$name er en sammenligningstjeneste for $niche, ikke en butik. Vi sælger ikke selv noget, vi har intet lager, og vi importerer ingen varer. Alt, du ser her, er tilbud fra $shopsl. Når du klikker på "Gå til butik", handler du direkte med butikken.</p>
+<p class="lead">Hos $name kan du sammenligne $niche, men du kan ikke købe noget direkte hos os. Vi er ingen butik: Vi har intet lager, sælger ikke selv og importerer ingen varer. Hvert produkt på siden kommer fra en af de $shopsl, vi samarbejder med, og når du trykker på "Gå til butik", er det butikken, du handler med.</p>
 
-<h2 id="feeds">Hvor kommer produkterne fra?</h2>
-<p>Butikkerne stiller selv deres produkter til rådighed i et såkaldt produktfeed: en fil med navn, pris, lagerstatus, billeder og beskrivelse af de varer, butikken ønsker at markedsføre. Feedet leveres gennem det danske affiliate-netværk Partner-ads, og butikken laver det netop for, at sider som $name må vise produkterne.</p>
+<h2 id="feeds">Hvor kommer pizzaovnene og tilbehøret fra?</h2>
+<p>Alle data kommer fra butikkerne selv. Hver butik laver et produktfeed – en fil med navn, pris, lagerstatus, billeder og beskrivelse af de varer, den vil markedsføre – og deler det via Partner-ads, som er et dansk affiliate-netværk. Hele idéen med feedet er, at sider som $name må vise produkterne.</p>
 <ul>
-<li>Vi viser kun produkter fra butikker, der har et affiliate-program med produktfeed, og som har godkendt $name som partner.</li>
-<li>Vi viser kun de produkter, butikken selv har lagt i sit feed, til den pris og med den lagerstatus, butikken oplyser.</li>
-<li>Vi henter feedsne to gange i døgnet. Ændrer butikken en pris eller fjerner et produkt fra feedet, slår det igennem her ved næste opdatering.</li>
-<li>Billeder og produktdata stammer fra butikkens feed. Billederne gemmes på vores egen server, så siden er hurtig, og så dine besøg ikke deles med andre.</li>
+<li>Kun butikker med et affiliate-program og et produktfeed, som har sagt ja til $name som partner, er med.</li>
+<li>Vi viser alene de varer, butikken har lagt i feedet, med den pris og lagerstatus, der står i feedet.</li>
+<li>To gange i døgnet henter vi nye data. En ny pris eller en vare, der er fjernet fra feedet, bliver derfor opdateret her ved næste kørsel.</li>
+<li>Produktbilleder og -data er butikkens egne. Vi lægger billederne på vores egen server, så siden indlæses hurtigt, og så andre ikke får oplysninger om dine besøg.</li>
 </ul>
 
 <h2 id="penge">Sådan tjener vi penge</h2>
-<p>$name er gratis at bruge. Når du klikker videre til en butik og handler, får vi en provision fra butikken. Det koster ikke dig noget ekstra. Derfor er alle links til butikkerne annoncer, og siden er tydeligt mærket med, at den indeholder reklamelinks. Læs mere under <a href="$money">Sådan tjener vi penge</a>.</p>
-<p>Som tilbud viser vi kun butikkernes egne tilbud, og kun i højst 14 dage. Har vi selv fulgt prisen hos butikken i de 30 dage før tilbuddet, viser vi den laveste pris i perioden som førpris. Ellers viser vi butikkens egen førpris, tydeligt mærket som butikkens.</p>
+<p>Du bruger $name gratis. Vi lever af provision: Når du går videre til en butik og køber noget, betaler butikken os en andel af salget – uden at prisen stiger for dig. Links til butikkerne er derfor annoncer, og det fremgår tydeligt af siden, at den indeholder reklamelinks. Mere om det på <a href="$money">Sådan tjener vi penge</a>.</p>
+<p>På tilbudssiderne finder du kun tilbud, som butikkerne selv har sat op, og de vises i højst 14 dage. Hvis vi har registreret butikkens pris i de 30 dage før tilbuddet, er førprisen den laveste pris i den periode. Hvis ikke, viser vi butikkens egen førpris, og så står der tydeligt, at det er butikkens.</p>
+
+<h2 id="lovgivning">Hvad siger reglerne?</h2>
+<p>Et spørgsmål, vi møder en gang imellem, er, om en importør eller distributør kan stoppe et mærke i at blive vist eller solgt i Danmark. Svaret i korte træk: Er originale varer først solgt lovligt i EU, har mærkeejeren ikke kontrol over, hvem der videresælger dem. Reglerne bag ser sådan ud:</p>
+<h3>Videresalg af originale varer (konsumption)</h3>
+<p>Er en vare sat i omsætning i EU/EØS af varemærkeindehaveren eller med dennes samtykke, er varemærkeretten til netop den vare konsumeret. Mærkeejeren kan altså ikke bruge varemærket til at stoppe videresalg eller markedsføring af varen under mærkets navn. Det fremgår af § 10 a i varemærkeloven og artikel 15 i EU's varemærkedirektiv. Kun hvis der er en rimelig grund, gælder det ikke – det kan være, at varen er ændret eller forringet.</p>
+<h3>Fri bevægelighed i EU</h3>
+<p>Som hovedregel må en vare, der er lovligt solgt i ét EU-land, også sælges i de andre EU-lande (artikel 34 i Traktaten om Den Europæiske Unions Funktionsmåde). En eksklusiv distributionsaftale for Danmark forpligter kun de parter, der har indgået den, og den giver ikke distributøren nogen ret til at stoppe andres salg af varer, der er indkøbt lovligt i et andet EU-land.</p>
+<h3>Salg og annoncering online</h3>
+<p>Med EU's konkurrenceregler for leverandøraftaler (gruppefritagelsesforordningen for vertikale aftaler, forordning 2022/720) kan en leverandør som udgangspunkt ikke forbyde forhandlerne at sælge online eller lukke dem helt ude fra en hel annoncekanal som fx prissammenligningstjenester. Krav til, hvordan varen præsenteres, må leverandøren gerne stille – men de hører hjemme i forholdet mellem leverandøren og butikken.</p>
+<h3>Mærkenavne og billeder</h3>
+<p>Et mærkenavn må bruges til at vise, hvilken vare der sælges, forudsat at det sker i tråd med god markedsføringsskik og ikke antyder en forbindelse til mærkeejeren, som ikke er der (artikel 14 i EU's varemærkedirektiv). Billederne og teksterne har vi fra butikkens feed, som butikken stiller til rådighed præcis til det formål.</p>
+<h3>Markedsføring og priser</h3>
+<p>Reklame skal kunne genkendes som reklame efter markedsføringsloven, og efter prismærkningsreglerne skal førprisen ved et tilbud være den laveste pris fra de 30 dage før. Begge dele følger vi.</p>
+<p class="note">Ovenstående er en generel orientering og kan ikke erstatte juridisk rådgivning.</p>
 
 <h2 id="leverandoerer">Til leverandører, distributører og mærkeejere</h2>
-<p>Hvert produkt på $name er et tilbud fra en navngiven dansk butik, som selv har valgt at markedsføre varen gennem sit feed. Vi køber og sælger ikke varerne. Spørgsmål om, hvorvidt en bestemt butik må forhandle et produkt, hører derfor hjemme mellem leverandøren og butikken. Fjerner butikken produktet fra sit feed, forsvinder det også fra $name ved næste opdatering.</p>
-<p>Vi skriver aldrig, at vi er forhandler, officiel partner eller autoriseret af et mærke. Mærkenavne bruges kun til at fortælle, hvilken vare der er tale om.</p>
+<p>$name køber og sælger ikke varer. Hvert produkt her er et tilbud fra en navngiven dansk butik, der selv har besluttet at markedsføre varen gennem sit feed. Har du spørgsmål til, om en bestemt butik må forhandle et produkt, skal det derfor afklares mellem leverandøren og butikken. Så snart butikken fjerner varen fra feedet, forsvinder den fra $name ved den efterfølgende opdatering.</p>
+<p>Vi præsenterer os aldrig som forhandler, officiel partner eller autoriseret af et mærke. Mærkenavne står der kun for at vise, hvilken vare det er.</p>
 
-<h2 id="lovgivning">Hvad siger loven?</h2>
-<p>Vi får af og til spørgsmålet, om en importør eller distributør kan forhindre, at et mærke vises eller sælges i Danmark. Kort fortalt: Når originale varer først er solgt lovligt i EU, kan mærkeejeren ikke styre, hvem der sælger dem videre. Her er de vigtigste regler:</p>
-<h3>Videresalg af originale varer (konsumption)</h3>
-<p>Når en vare er bragt i omsætning i EU/EØS af varemærkeindehaveren eller med dennes samtykke, er varemærkeretten til den enkelte vare "brugt op". Mærkeejeren kan derfor ikke bruge sit varemærke til at forhindre, at varen sælges videre eller markedsføres under mærkets navn. Det følger af varemærkeloven § 10 a og artikel 15 i EU's varemærkedirektiv. Undtagelsen er, hvis der er en rimelig grund, fx at varen er ændret eller forringet.</p>
-<h3>Fri bevægelighed i EU</h3>
-<p>Varer, der er lovligt solgt i ét EU-land, må som udgangspunkt sælges i de andre (artikel 34 i Traktaten om Den Europæiske Unions Funktionsmåde). En eksklusiv distributionsaftale for Danmark binder kun aftalens parter. Den giver ikke distributøren ret til at forhindre andre i at sælge varer, der er købt lovligt et andet sted i EU.</p>
-<h3>Salg og annoncering online</h3>
-<p>EU's konkurrenceregler for leverandøraftaler (gruppefritagelsesforordningen for vertikale aftaler, forordning 2022/720) betyder, at en leverandør som udgangspunkt ikke må forbyde sine forhandlere at sælge online eller helt afskære dem fra en hel annoncekanal som prissammenligningstjenester. Leverandøren kan godt stille kvalitetskrav til, hvordan varen præsenteres, men det er et forhold mellem leverandøren og butikken.</p>
-<h3>Mærkenavne og billeder</h3>
-<p>Det er lovligt at bruge et mærkenavn til at angive, hvilken vare der sælges, så længe det sker i overensstemmelse med god markedsføringsskik og ikke giver indtryk af en forbindelse til mærkeejeren, som ikke findes (artikel 14 i EU's varemærkedirektiv). Billeder og tekster kommer fra butikkens eget feed, som butikken stiller til rådighed til netop denne brug.</p>
-<h3>Markedsføring og priser</h3>
-<p>Vi følger markedsføringslovens krav om, at reklame skal kunne genkendes som reklame, og prismærkningsreglernes krav om, at en førpris skal være den laveste pris i de 30 dage før et tilbud.</p>
-<p class="note">Teksten er en generel orientering og ikke juridisk rådgivning.</p>
-
-<h2 id="kontakt">Mener du, et produkt ikke bør vises?</h2>
-<p>Er du butik, leverandør eller rettighedshaver og mener, at et produkt, et billede eller en tekst ikke bør vises på $name, så skriv til $mail med et link til produktet og en kort begrundelse. Vi svarer hurtigt og fjerner indholdet, hvis der er grund til det. Er du butik og vil have dine produkter med, er du også velkommen til at skrive.</p>
+<h2 id="kontakt">Bør et produkt ikke vises her?</h2>
+<p>Skriv til $mail, hvis du som butik, leverandør eller rettighedshaver mener, at et produkt, et billede eller en tekst ikke bør stå på $name. Send et link til produktet og en kort begrundelse med. Vi svarer hurtigt, og er der grund til det, fjerner vi indholdet. Vil din butik gerne have sine produkter med på siden, er du også velkommen til at kontakte os.</p>
 <p>$name drives af $co.</p>
 HTML;
 }
