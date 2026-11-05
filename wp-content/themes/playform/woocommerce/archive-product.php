@@ -246,9 +246,14 @@ global $wp_query;
 						<span>Vi viser kun tilbud, som butikkerne selv har markeret, og som højst er 14 dage gamle. Prøv at fjerne et filter.</span>
 						<a class="btn" href="<?php echo esc_url( playform_reset_url() ); ?>">Nulstil filtre</a>
 					<?php else : ?>
+					<?php elseif ( function_exists( 'playform_active_filters' ) && playform_active_filters() ) : ?>
 						<b>Ingen produkter matcher dine filtre</b>
 						<span>Prøv at fjerne et eller flere filtre.</span>
 						<a class="btn" href="<?php echo esc_url( playform_reset_url() ); ?>">Nulstil filtre</a>
+					<?php else : ?>
+						<b>Ingen produkter i kategorien lige nu</b>
+						<span>Butikkerne har ikke varer på lager her i øjeblikket. Udvalget opdateres to gange i døgnet – kig forbi igen.</span>
+						<a class="btn" href="<?php echo esc_url( home_url( '/' ) ); ?>">Til forsiden</a>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>

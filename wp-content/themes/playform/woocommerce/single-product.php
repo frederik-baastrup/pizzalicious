@@ -111,7 +111,7 @@ while ( have_posts() ) :
 									<span class="pricebox__ref">Førpris <s><?php echo esc_html( playform_kr( $d['was'] ) ); ?></s> · laveste pris hos <?php echo esc_html( $d['shop'] ); ?> de 30 dage før tilbuddet</span>
 								<?php endif; ?>
 							<?php elseif ( $d['drop'] && $d['ref'] ) : ?>
-								<span class="pricebox__ref">Laveste pris de 30 dage før: <s><?php echo esc_html( playform_kr( $d['ref'] ) ); ?></s></span>
+								<span class="pricebox__ref">Laveste pris de 30 dage før, målt af os: <?php echo esc_html( playform_kr( $d['ref'] ) ); ?></span>
 							<?php endif; ?>
 						</div>
 						<span class="stock<?php echo $best && $best['in_stock'] ? ' stock--in' : ''; ?>"><span class="stock__dot"></span><?php echo esc_html( $stock_txt ); ?></span>

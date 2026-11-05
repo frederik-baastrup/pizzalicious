@@ -574,7 +574,7 @@ function playform_best_html( array $a ): string {
 		$h .= "[fitbase_metode]\n[fitbase_kort]\n";
 		foreach ( $a['picks'] as $i => $pk ) {
 			$n  = $i + 1;
-			$h .= '<h2 id="valg-' . $n . '">' . esc_html( $pk['role'] ) . ': ' . esc_html( $pk['name'] ) . "</h2>\n";
+			$h .= '<h2 id="valg-' . $n . '">' . esc_html( (string) ( $pk['role'] ?? '' ) ) . ': ' . esc_html( (string) ( $pk['name'] ?? '' ) ) . "</h2>\n";
 			$h .= '[fitbase_valg nr="' . $n . '"]' . "\n";
 			if ( ! empty( $pk['verdict'] ) ) {
 				$h .= '<p class="pick-verdict"><b>Kort sagt</b>' . esc_html( $pk['verdict'] ) . "</p>\n";
