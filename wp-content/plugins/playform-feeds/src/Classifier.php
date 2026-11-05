@@ -18,9 +18,16 @@ final class Classifier {
 			return 'exclude';
 		}
 		// Butikker med fast kategori-oversættelse (fx cykelbutikker): kun de nævnte butikskategorier kommer med.
-		$map = Config::shops()[ $offer['shop'] ]['category_map'] ?? null;
+		$shop = Config::shops()[ $offer['shop'] ] ?? [];
+		$map  = $shop['category_map'] ?? null;
 		if ( is_array( $map ) ) {
-			return $map[ $cat ] ?? 'exclude';
+			$mapped = $map[ $cat ] ?? 'exclude';
+			// 'refine': butikken sælger kun nichens varer – vores egne regler må placere varen mere præcist
+			// (fx en pizzasaks i butikkens "Andet pizzaudstyr"), ellers bruges butikkens kategori.
+			if ( 'exclude' !== $mapped && ! empty( $shop['refine'] ) ) {
+				return self::first_match( $match_name ) ?: $mapped;
+			}
+			return $mapped;
 		}
 		foreach ( Config::exclude() as $pattern ) {
 			if ( self::m( $pattern, $name ) || self::m( $pattern, $cat ) ) {

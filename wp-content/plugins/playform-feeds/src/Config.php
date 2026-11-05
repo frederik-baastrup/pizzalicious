@@ -37,6 +37,50 @@ final class Config {
 			'bagestaalet'      => [ 'name' => 'Bagestålet.dk', 'url' => "$base&bannerid=90982&feedid=2362" ],
 			'gourmetshoppen'   => [ 'name' => 'Gourmetshoppen.com', 'url' => "$base&bannerid=80950&feedid=1925" ],
 			'cibumic'          => [ 'name' => 'Cibumic.dk', 'url' => "$base&bannerid=59757&feedid=1113" ],
+			// Køkkenbutikker med pizzaudstyr (kun pizzavarerne kommer med via reglerne).
+			'kitchentech'      => [ 'name' => 'Kitchentech.dk', 'url' => "$base&bannerid=114562&feedid=4050" ],
+			'kirlund'          => [ 'name' => 'Kirlund', 'url' => "$base&bannerid=116914&feedid=4306" ],
+			'ushi'             => [ 'name' => 'Ushi.dk', 'url' => "$base&bannerid=90749&feedid=2345" ],
+			'kitchen-gadget'   => [ 'name' => 'Kitchen Gadget', 'url' => "$base&bannerid=107557&feedid=3406" ],
+			// Pizzanørderi: ren pizzabutik. Fast oversættelse af butikkens kategorier; 'refine' lader vores regler
+			// placere varen mere præcist (fx pizzasaks i "Andet pizzaudstyr"). Kurser, vin, øl, bøger og merchandise udelukkes.
+			'pizzanoerderi'    => [
+				'name'         => 'Pizzanørderi',
+				'url'          => "$base&bannerid=113940&feedid=3994",
+				'refine'       => true,
+				'category_map' => [
+					'pizzaovne'                              => 'pizzaovne',
+					'pizzaovn tilbehør'                      => 'tilbehoer',
+					'andet pizzaudstyr > pizzaovn tilbehør'  => 'tilbehoer',
+					'pakketilbud > pizzaovn tilbehør'        => 'tilbehoer',
+					'andet pizzaudstyr'                      => 'tilbehoer',
+					'andet pizzaudstyr > pakketilbud'        => 'tilbehoer',
+					'pakketilbud'                            => 'tilbehoer',
+					'pakketilbud > pizzakits'                => 'tilbehoer',
+					'termometre'                             => 'tilbehoer',
+					'køkkenvægte'                            => 'tilbehoer',
+					'pizzaspader'                            => 'pizzaspader',
+					'hævekasser'                             => 'dej',
+					'hævekasser > pakketilbud'               => 'dej',
+					'andet pizzaudstyr > hævekasser'         => 'dej',
+					'dejmaskiner'                            => 'dej',
+					'pizzamel'                               => 'ingredienser',
+					'pizzamel > too good to go'              => 'ingredienser',
+					'gær & melblandinger'                    => 'ingredienser',
+					'gær & melblandinger > pizzamel'         => 'ingredienser',
+					'tomater & saucer'                       => 'ingredienser',
+					'pizzakondimenter > tomater & saucer'    => 'ingredienser',
+					'pakketilbud > tomater & saucer'         => 'ingredienser',
+					'pizzaost'                               => 'ingredienser',
+					'pizzaost > too good to go'              => 'ingredienser',
+					'pizzatoppings'                          => 'ingredienser',
+					'pizzatoppings > too good to go'         => 'ingredienser',
+					'pizzakondimenter'                       => 'ingredienser',
+					'pizzakondimenter > pizzatoppings'       => 'ingredienser',
+					'pizzakondimenter > too good to go'      => 'ingredienser',
+					'olie & balsamico'                       => 'ingredienser',
+				],
+			],
 			// Moreland: kun pizzaovne og pizzatilbehør (fast oversættelse; alt andet udelukkes).
 			'moreland'         => [
 				'name'         => 'Moreland',
@@ -57,12 +101,12 @@ final class Config {
 	public static function categories(): array {
 		return [
 			'ingredienser'    => [ 'name' => 'Ingredienser', 'match' => 'pizzamel|tipo ?0|\bsemola|manitoba|caputo|san marzano|passata|pelati|pizzasauce|pizza sauce|pizzatopping|pizza topping|pizzakrydderi|\boregano\b(?!.*(tæppe|gulv))|chiliolie|olio santo|pizzagær' ],
-			'pizzaovne'       => [ 'name' => 'Pizzaovne', 'match' => 'pizzaovn|pizza ?ovn|pizza oven|pizzaiolo|pizza ?maker|pizzetta|\booni (karu|koda|volt|fyra|pro)\b|gozney|roccbox|effeuno|rotisseri (&|og) pizzaovn|pizzaovnsindsats', 'not' => 'overtræk|cover|taske|termometer|børste|bord|handsk|spade|sten|gasbrænder|brænder til|indsats til|træpiller|brænde eg|\\bgreb\\b|dør til|glasdør|fod|krog' ],
+			'pizzaovne'       => [ 'name' => 'Pizzaovne', 'match' => 'pizzaovn|pizza ?ovn|pizza oven|pizzaiolo|pizza ?maker|pizzetta|\booni (karu|koda|volt|fyra|pro)\b|gozney|roccbox|effeuno|rotisseri (&|og) pizzaovn|pizzaovnsindsats', 'not' => 'overtræk|cover|taske|termometer|børste|bord|handsk|spade|sten|gasbrænder|brænder til|indsats til|træpiller|brænde eg|\\bgreb\\b|dør til|glasdør|fod|krog|pære|regulator|steamer|beslag|reservedel' ],
 			'pizzasten'       => [ 'name' => 'Pizzasten & bagestål', 'match' => 'pizzasten|pizza ?sten|bagesten|bagest[åa]l|pizzastål|pizzaplade|pizzapande|pizzaform|detroit style|pizzamåtte' ],
 			'pizzaspader'     => [ 'name' => 'Pizzaspader', 'match' => 'pizzaspade|pizza ?spade|pizza paddle|pizza pagaj|pizzaskovl|pizzavender|bagespade|pizza- og bagespatel' ],
-			'pizzaskaerere'   => [ 'name' => 'Pizzaskærere', 'match' => 'pizzaskærer|pizza ?skærer|pizzahjul|pizza ?hjul|pizza slicer|pizzasaks|pizzakniv|pizza- og steakknive|pizza/steak' ],
-			'dej'             => [ 'name' => 'Dej & æltning', 'match' => 'æltemaskine\\b|spiral ?mixer|røremaskine\\b|køkkenmaskine\\b|køkkenassistent\\b|stand ?mixer\\b|dejkasse|pizzadejsæske|dejsæske|dejæske|dejbakke|dejdeler|pizzarulle|pizzavægt|hævekurv', 'not' => 'skål til|piskeris til|dejkrog til|tilbehør til|låg til|reservedel|overtræk til|cover til' ],
-			'tilbehoer'       => [ 'name' => 'Tilbehør', 'match' => '\booni\b|pizzaovnstermometer|termometer til pizzaovn|infrarødt termometer|pizzaovnsbørste|børste til pizzaovn|pizzahandsker|overtræk til pizza|cover til pizzaovn|taske til pizzaovn|pizzavogn|toppingstation|topping station|pizzasæt|pizzakit|pizza kit|pizzabræt|pizza ?board|pizzatallerken|pizza tallerken|pizzabestik|pizza serveringssæt|pizza serveringsbræt' , 'not' => 'melooni|krus' ],
+			'pizzaskaerere'   => [ 'name' => 'Pizzaskærere', 'match' => 'pizzaskærer|pizza ?skærer|pizzahjul|pizza ?hjul|pizza slicer|pizza ?cutter|pizzasaks|pizzakniv|pizza- og steakknive|pizza/steak' ],
+			'dej'             => [ 'name' => 'Dej & æltning', 'match' => 'æltemaskine\\b|spiral ?mixer|røremaskine\\b|køkkenmaskine\\b|køkkenassistent\\b|stand ?mixer\\b|dejkasse|pizzadejsæske|dejsæske|dejæske|dejbakke|dejdeler|dejskærer|hævekasse|pizzarulle|pizzavægt|hævekurv', 'not' => 'skål til|piskeris til|dejkrog til|tilbehør til|låg til|reservedel|overtræk til|cover til' ],
+			'tilbehoer'       => [ 'name' => 'Tilbehør', 'match' => '\booni\b|pizzaovnstermometer|termometer til pizzaovn|infrarød\\w* termometer|pizzaovnsbørste|børste til pizzaovn|pizzahandsker|overtræk til pizza|cover til pizzaovn|taske til pizzaovn|pizzavogn|toppingstation|topping station|pizzasæt|pizzakit|pizza kit|pizzabræt|pizza ?board|pizzatallerken|pizza tallerken|pizzabestik|pizza serveringssæt|pizza serveringsbræt' , 'not' => 'melooni|krus' ],
 		];
 	}
 
@@ -89,7 +133,10 @@ final class Config {
 			],
 			'ingredienser' => [
 				'pizzamel'           => [ 'name' => 'Pizzamel', 'match' => 'mel\b|tipo|semola|manitoba|caputo' ],
-				'tomater'            => [ 'name' => 'Tomater & pizzasauce', 'match' => 'tomat|passata|pelati|sauce|san marzano' ],
+				'tomater'            => [ 'name' => 'Tomater & pizzasauce', 'match' => 'tomat|passata|pelati|sauce|salsa|san marzano|pomodor' ],
+				'pizzaost'           => [ 'name' => 'Pizzaost', 'match' => 'mozzarella|fior di latte|burrata|ricotta|scamorza|provola|pecorino|parmigiano|stracciatella' ],
+				'pizzatoppings'      => [ 'name' => 'Pizzatoppings', 'match' => 'salam[ei]|prosciutto|nduja|guanciale|pancetta|pepperoni|topping|grillede|ansjos|tun i|oliven|kapers|artiskok' ],
+				'olie'               => [ 'name' => 'Olie & chiliolie', 'match' => 'olie|olio|hot honey|chili' ],
 			],
 		];
 	}
