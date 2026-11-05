@@ -98,7 +98,9 @@ add_shortcode(
 				. '<span class="tldr__price">' . ( $d['in_stock'] ? esc_html( playform_kr( $d['price'] ) ) : 'Ikke på lager' ) . '</span></a>';
 		}
 		$n = count( playform_picks() );
-		return $out ? '<div class="tldr"><span class="tldr__title">' . ( $n === 3 ? 'Vores top 3 kort fortalt' : 'Vores valg kort fortalt' ) . '</span>' . $out . '</div>' : '';
+		$kw = (string) get_post_meta( get_the_ID(), '_pf_keyword', true );
+		$t  = ( $n === 3 ? 'Vores top 3' : 'Vores valg' ) . ( $kw ? ': bedste ' . $kw . ' kort fortalt' : ' kort fortalt' );
+		return $out ? '<div class="tldr"><span class="tldr__title">' . esc_html( $t ) . '</span>' . $out . '</div>' : '';
 	}
 );
 
@@ -462,7 +464,7 @@ function playform_seed_best(): void {
 			'post_type'     => 'post',
 			'post_status'   => 'publish',
 			'post_name'     => $a['slug'],
-			'post_title'    => $a['title'],
+			'post_title'    => playform_guide_title( $a ),
 			'post_excerpt'  => $a['excerpt'],
 			'post_content'  => $html,
 			'post_category' => $cat ? [ (int) $cat->term_id ] : [],
@@ -487,10 +489,53 @@ function playform_seed_best(): void {
 			update_post_meta( $id, '_pf_seed_hash', md5( $saved ) );
 		}
 		update_post_meta( $id, '_pf_picks', $a['picks'] ?? [] );
+		update_post_meta( $id, '_pf_keyword', playform_guide_keyword( $a ) );
 		update_post_meta( $id, '_pf_more_cat', (string) ( $a['more_cat'] ?? '' ) );
 		$root[ $a['slug'] ] = (int) $id;
 	}
 	update_option( 'playform_root_posts', $root, true );
+}
+
+/**
+ * Søgeordet, guiden skal findes på ("bedste <søgeord>"): 'keyword' i artikelfilen, ellers titlen før kolon.
+ * Folk søger typisk "bedste gasgrill" og "gasgrill test" (ejerens ønske 5. nov. 2026).
+ */
+function playform_guide_keyword( array $a ): string {
+	if ( ! empty( $a['keyword'] ) ) {
+		return (string) $a['keyword'];
+	}
+	$kw = trim( explode( ':', (string) ( $a['title'] ?? '' ) )[0] );
+	$kw = preg_replace( '/^bedste\s+/iu', '', $kw );
+	return mb_strtolower( mb_substr( $kw, 0, 1 ) ) . mb_substr( $kw, 1 );
+}
+
+/** Titlen begynder med "Bedste <søgeord>" – det, folk skriver i Google. */
+function playform_guide_title( array $a ): string {
+	$t = (string) ( $a['title'] ?? '' );
+	if ( preg_match( '/^bedste\s/iu', $t ) || false === strpos( $t, ':' ) ) {
+		return $t;
+	}
+	return 'Bedste ' . playform_guide_keyword( $a ) . substr( $t, strpos( $t, ':' ) );
+}
+
+/**
+ * Nederst i guiden: folk søger "<søgeord> test", men vi har ikke testet selv. Det siger vi ærligt – og bruger ordene.
+ */
+function playform_guide_test_note( array $a ): string {
+	$kw  = esc_html( playform_guide_keyword( $a ) );
+	$rev = false;
+	foreach ( (array) ( $a['picks'] ?? [] ) as $pk ) {
+		$rev = $rev || ! empty( $pk['reviews'] );
+	}
+	$h  = '<h2>' . esc_html( mb_strtoupper( mb_substr( playform_guide_keyword( $a ), 0, 1 ) ) . mb_substr( playform_guide_keyword( $a ), 1 ) ) . " test – er det her en test?</h2>\n";
+	$h .= '<p>Mange søger efter en <b>' . $kw . ' test</b> eller "bedste ' . $kw . ' i test", når de skal vælge. Det her er ikke en ' . $kw . ' test – vi har ikke selv testet produkterne. '
+		. 'Til gengæld har vi gjort forarbejdet for dig: Vores bud på bedste ' . $kw . ' bygger på butikkernes produktdata, priser og lagerstatus'
+		. ( $rev ? ' og på uafhængige anmeldelser og tests fra andre medier af præcis de samme modeller' : '' ) . ".</p>\n";
+	$h .= '<p>' . ( $rev
+		? 'Vil du læse en egentlig ' . $kw . ' test, så følg linkene til anmeldelserne ved de enkelte modeller ovenfor.'
+		: 'Finder du en ' . $kw . ' test fra et uafhængigt medie, er det en god idé at sammenligne den med valgene her. Hvor der findes anmeldelser af præcis samme model, linker vi til dem.' )
+		. ' Priser og lager opdateres to gange i døgnet, så du altid kan se, hvor du får den billigst lige nu.</p>' . "\n";
+	return $h;
 }
 
 /** Bygger indlæggets HTML ud fra artikelfilen. */
@@ -527,7 +572,7 @@ function playform_best_html( array $a ): string {
 			}
 		}
 		if ( count( $a['picks'] ) > 1 ) {
-			$h .= '<h2>Sammenligning af ' . ( count( $a['picks'] ) === 3 ? 'vores top 3' : 'vores valg' ) . "</h2>\n[fitbase_tabel]\n";
+			$h .= '<h2>Bedste ' . esc_html( playform_guide_keyword( $a ) ) . ': sammenligning af ' . ( count( $a['picks'] ) === 3 ? 'vores top 3' : 'vores valg' ) . "</h2>\n[fitbase_tabel]\n";
 		}
 	}
 	if ( ! empty( $a['more_cat'] ) ) {
@@ -539,6 +584,9 @@ function playform_best_html( array $a ): string {
 		foreach ( $a['faq'] as [ $q, $ans ] ) {
 			$h .= '<h3>' . esc_html( $q ) . '</h3><p>' . esc_html( $ans ) . "</p>\n";
 		}
+	}
+	if ( ! empty( $a['picks'] ) ) {
+		$h .= playform_guide_test_note( $a );
 	}
 	return $h;
 }
@@ -587,4 +635,23 @@ add_action(
 		}
 		echo '</ul></div>';
 	}
+);
+
+/** Sidetitel i Google for købsguides: "Bedste <søgeord> 2026 → Vores top 4". */
+add_filter(
+	'document_title_parts',
+	static function ( array $parts ): array {
+		if ( ! is_singular( 'post' ) || ( function_exists( 'playform_has_seo_plugin' ) && playform_has_seo_plugin() ) ) {
+			return $parts;
+		}
+		$id = get_queried_object_id();
+		$kw = (string) get_post_meta( $id, '_pf_keyword', true );
+		if ( '' === $kw ) {
+			return $parts;
+		}
+		$n              = count( (array) get_post_meta( $id, '_pf_picks', true ) );
+		$parts['title'] = 'Bedste ' . $kw . ' ' . wp_date( 'Y' ) . ( $n > 1 ? ' → Se vores top ' . $n : ' – købsguide' );
+		return $parts;
+	},
+	20
 );
