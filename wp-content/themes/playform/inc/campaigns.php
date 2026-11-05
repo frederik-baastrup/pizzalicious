@@ -28,12 +28,14 @@ function playform_black_friday( int $year ): DateTimeImmutable {
  * @return array<string,array{name:string,title:string,intro:string,period:callable}>
  */
 function playform_campaign_defs(): array {
-	$niche = playform_site( 'niche' );
+	$niche   = playform_site( 'niche' );
+	// Vi viser kun tilbud fra de butikker, vi samarbejder med – ikke hele markedet. Det skal teksten sige.
+	$from    = "fra de danske webshops, vi samarbejder med";
 	return [
 		'black-friday'    => [
 			'name'   => 'Black Friday',
 			'title'  => "Black Friday – Tilbud på $niche",
-			'intro'  => "Find de bedste Black Friday-tilbud på $niche ét sted. Vi samler tilbuddene fra danske webshops hele november, så du hurtigt kan se, hvor du sparer mest – og slipper for at lede rundt på mange forskellige sider. Klik videre og køb direkte hos butikken.",
+			'intro'  => "Se Black Friday-tilbud på $niche samlet ét sted. Hele november samler vi butikkernes egne tilbud $from, så du nemt kan sammenligne dem. Klik videre og køb direkte hos butikken.",
 			'period' => static function ( int $y ): array {
 				$tz  = wp_timezone();
 				$cm  = playform_black_friday( $y )->modify( '+3 days' ); // Cyber Monday
@@ -44,19 +46,19 @@ function playform_campaign_defs(): array {
 		'januarudsalg'    => [
 			'name'   => 'Januarudsalg',
 			'title'  => "Januarudsalg – Tilbud på $niche",
-			'intro'  => "Find de bedste januartilbud på $niche ét sted. Vi samler udsalget fra danske webshops, så du hurtigt kan se, hvor du sparer mest. Klik videre og køb direkte hos butikken.",
+			'intro'  => "Se januartilbud på $niche samlet ét sted. Vi samler butikkernes udsalg $from, så du nemt kan sammenligne dem. Klik videre og køb direkte hos butikken.",
 			'period' => static fn( int $y ): array => [ new DateTimeImmutable( "$y-01-01", wp_timezone() ), new DateTimeImmutable( "$y-01-31", wp_timezone() ) ],
 		],
 		'sommerudsalg'    => [
 			'name'   => 'Sommerudsalg',
 			'title'  => "Sommerudsalg – Tilbud på $niche",
-			'intro'  => "Find de bedste sommertilbud på $niche ét sted. Vi samler udsalget fra danske webshops, så du hurtigt kan se, hvor du sparer mest. Klik videre og køb direkte hos butikken.",
+			'intro'  => "Se sommertilbud på $niche samlet ét sted. Vi samler butikkernes udsalg $from, så du nemt kan sammenligne dem. Klik videre og køb direkte hos butikken.",
 			'period' => static fn( int $y ): array => [ new DateTimeImmutable( "$y-06-25", wp_timezone() ), new DateTimeImmutable( "$y-08-10", wp_timezone() ) ],
 		],
 		'efteraarstilbud' => [
 			'name'   => 'Efterårstilbud',
 			'title'  => "Efterårstilbud – Tilbud på $niche",
-			'intro'  => "Find de bedste efterårstilbud på $niche ét sted. Vi samler tilbuddene fra danske webshops, så du hurtigt kan se, hvor du sparer mest. Klik videre og køb direkte hos butikken.",
+			'intro'  => "Se efterårstilbud på $niche samlet ét sted. Vi samler butikkernes egne tilbud $from, så du nemt kan sammenligne dem. Klik videre og køb direkte hos butikken.",
 			'period' => static fn( int $y ): array => [ new DateTimeImmutable( "$y-09-15", wp_timezone() ), new DateTimeImmutable( "$y-10-31", wp_timezone() ) ],
 		],
 	];
