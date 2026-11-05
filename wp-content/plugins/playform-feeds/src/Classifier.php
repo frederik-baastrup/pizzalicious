@@ -47,6 +47,9 @@ final class Classifier {
 		if ( ! $found && $brand !== '' && method_exists( Config::class, 'brand_categories' ) ) {
 			$found = Config::brand_categories()[ $brand ] ?? null;
 		}
+		if ( ! $found && method_exists( Config::class, 'skip_uncategorized' ) && Config::skip_uncategorized() ) {
+			return 'exclude'; // fx Outdoorland: kun varer, der passer i en kategori, kommer med
+		}
 		return $found ?: Config::uncategorized_slug();
 	}
 

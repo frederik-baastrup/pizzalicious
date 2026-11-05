@@ -24,6 +24,14 @@ final class Config {
 	}
 
 	/**
+	 * Varer, der ikke matcher en pizzakategori, kommer slet ikke med (før blev de oprettet som "ukategoriseret" og skjult –
+	 * ca. 15.000 unødvendige produkter fra køkkenbutikkerne). Se Classifier::classify().
+	 */
+	public static function skip_uncategorized(): bool {
+		return true;
+	}
+
+	/**
 	 * Partner-ads feeds – de samme som Kitzhen (partnerid 14854, ejerens valg 5. nov. 2026). Kun pizzaudstyr
 	 * og -ingredienser kommer med: alt, der ikke matcher en kategori nedenfor, havner i "ukategoriseret" og vises ikke.
 	 * Kan overstyres med option 'playform_shops'.

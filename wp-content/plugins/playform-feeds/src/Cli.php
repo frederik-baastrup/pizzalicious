@@ -113,37 +113,11 @@ final class Cli {
 
 	/** Kører sorteringsreglerne igen på alle tilbud (efter ændringer i Config). */
 	public function reclassify(): void {
-		global $wpdb;
-		$t       = Offers::table();
-		$rows    = $wpdb->get_results( "SELECT id, product_id, name, brand, shop_category, price, category FROM $t", ARRAY_A );
-		$changed = [];
-		$moves   = [];
-		foreach ( $rows as $r ) {
-			$offer = [ 'name' => $r['name'], 'brand' => $r['brand'], 'shop_category' => $r['shop_category'], 'price' => (float) $r['price'] ];
-			$cat   = Classifier::classify( $offer );
-			if ( $cat === $r['category'] ) {
-				continue;
-			}
-			$moves[ $r['category'] . ' → ' . $cat ] = ( $moves[ $r['category'] . ' → ' . $cat ] ?? 0 ) + 1;
-			if ( $cat === 'exclude' ) {
-				$wpdb->update( $t, [ 'category' => 'exclude', 'active' => 0 ], [ 'id' => $r['id'] ] );
-			} else {
-				$wpdb->update( $t, [ 'category' => $cat ], [ 'id' => $r['id'] ] );
-			}
-			$changed[ (int) $r['product_id'] ] = true;
-		}
-		$today = current_time( 'Y-m-d' );
-		foreach ( array_keys( $changed ) as $id ) {
-			ProductSync::refresh( $id, $today );
-			if ( ! Offers::for_product( $id ) ) {
-				wp_update_post( [ 'ID' => $id, 'post_status' => 'draft' ] );
-			}
-		}
-		arsort( $moves );
-		foreach ( $moves as $k => $n ) {
+		$res = Importer::reclassify();
+		foreach ( $res['moves'] as $k => $n ) {
 			\WP_CLI::log( sprintf( '%5d  %s', $n, $k ) );
 		}
-		\WP_CLI::success( count( $changed ) . ' produkter flyttet.' );
+		\WP_CLI::success( $res['changed'] . ' produkter flyttet.' );
 	}
 
 	/** Genberegner alle produkter ud fra deres tilbud (efter ændringer i koden). */

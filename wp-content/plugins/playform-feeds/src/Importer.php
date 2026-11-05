@@ -144,6 +144,10 @@ final class Importer {
 			if ( ! $product_id ) {
 				$product_id = Offers::product_for_ean( $offer['ean'], $shop_key );
 			}
+			if ( ! $product_id && ! $offer['in_stock'] && method_exists( Config::class, 'create_out_of_stock' ) && ! Config::create_out_of_stock() ) {
+				$stats['excluded']++; // nye, udsolgte varer oprettes ikke (Config::create_out_of_stock)
+				continue;
+			}
 			if ( ! $product_id ) {
 				$product_id = ProductSync::create( $offer, $category );
 			}
@@ -173,14 +177,14 @@ final class Importer {
 	 *
 	 * @return array<string,bool> butikkens produktid for de valgte rækker => true
 	 */
-	private static function variant_reps( string $file ): array {
+	private static function variant_reps( string $file, string $shop = '' ): array {
 		static $cache = [];
 		if ( isset( $cache[ $file ] ) ) {
 			return $cache[ $file ];
 		}
 		$best = [];
 		foreach ( FeedReader::read( $file ) as $row ) {
-			$key   = self::variant_key( $row );
+			$key   = self::variant_key( $row, $shop );
 			$stock = Normalizer::stock( (string) ( $row['lagerantal'] ?? '' ) )[0];
 			$price = Normalizer::price( (string) ( $row['nypris'] ?? '' ) );
 			$id    = (string) ( $row['produktid'] ?? '' );
@@ -196,16 +200,31 @@ final class Importer {
 		return $cache[ $file ];
 	}
 
-	private static function variant_key( array $row ): string {
-		return mb_strtolower( trim( (string) ( $row['brand'] ?? '' ) ) . '|' . trim( (string) ( $row['produktnavn'] ?? '' ) ) );
+	private static function variant_key( array $row, string $shop = '' ): string {
+		return mb_strtolower( trim( (string) ( $row['brand'] ?? '' ) ) . '|' . self::strip_variant( trim( (string) ( $row['produktnavn'] ?? '' ) ), $shop ) );
+	}
+
+	/**
+	 * 'variant_strip' (Config::shops()): mønstre, der fjerner farve/størrelse fra navnet, fx Friluftslands
+	 * "Jakke (Rød (RED))" eller Outdoornus "Jakke Women, dark grey-L". Så samles varianterne til ét produkt.
+	 */
+	public static function strip_variant( string $name, string $shop ): string {
+		foreach ( (array) ( Config::shops()[ $shop ]['variant_strip'] ?? [] ) as $re ) {
+			$name = trim( (string) preg_replace( $re, '', html_entity_decode( $name, ENT_QUOTES, 'UTF-8' ) ) );
+		}
+		return $name;
 	}
 
 	/** Anvender 'group_variants': false = rækken springes over; ellers tilbuddet med fast id. */
 	private static function group_variant( array $row, array $offer, string $file ) {
-		if ( ! isset( self::variant_reps( $file )[ (string) ( $row['produktid'] ?? '' ) ] ) ) {
+		$shop = (string) ( $offer['shop'] ?? '' );
+		if ( ! isset( self::variant_reps( $file, $shop )[ (string) ( $row['produktid'] ?? '' ) ] ) ) {
 			return false;
 		}
-		$offer['shop_product_id'] = 'v-' . substr( md5( self::variant_key( $row ) ), 0, 20 );
+		$offer['shop_product_id'] = 'v-' . substr( md5( self::variant_key( $row, $shop ) ), 0, 20 );
+		if ( ! empty( Config::shops()[ $shop ]['variant_strip'] ) ) {
+			$offer['name'] = self::strip_variant( $offer['name'], $shop );
+		}
 		return $offer;
 	}
 
@@ -250,6 +269,10 @@ final class Importer {
 			}
 			if ( ! $product_id ) {
 				$product_id = Offers::product_for_ean( $offer['ean'], $key );
+			}
+			if ( ! $product_id && ! $offer['in_stock'] && method_exists( Config::class, 'create_out_of_stock' ) && ! Config::create_out_of_stock() ) {
+				$s['excluded']++; // nye, udsolgte varer oprettes ikke (Config::create_out_of_stock)
+				continue;
 			}
 			if ( ! $product_id ) {
 				$product_id = ProductSync::create( $offer, $category );
@@ -297,5 +320,45 @@ final class Importer {
 		if ( $this->log ) {
 			( $this->log )( $msg );
 		}
+	}
+
+	/**
+	 * Kører sorteringsreglerne igen på alle tilbud (efter ændringer i Config). Bruges af `wp playform reclassify`
+	 * og automatisk efter en udrulning, hvor Config.php er ændret (se temaets playform_run_upgrades()).
+	 *
+	 * @return array{changed:int,moves:array<string,int>}
+	 */
+	public static function reclassify(): array {
+		global $wpdb;
+		$t       = Offers::table();
+		$rows    = $wpdb->get_results( "SELECT id, product_id, shop, name, brand, shop_category, price, category FROM $t", ARRAY_A );
+		$changed = [];
+		$moves   = [];
+		foreach ( $rows as $r ) {
+			$offer = [ 'shop' => (string) $r['shop'], 'name' => (string) $r['name'], 'brand' => (string) $r['brand'], 'shop_category' => (string) $r['shop_category'], 'price' => (float) $r['price'] ];
+			$cat   = Classifier::classify( $offer );
+			if ( $cat === $r['category'] ) {
+				continue;
+			}
+			$moves[ $r['category'] . ' → ' . $cat ] = ( $moves[ $r['category'] . ' → ' . $cat ] ?? 0 ) + 1;
+			if ( $cat === 'exclude' ) {
+				$wpdb->update( $t, [ 'category' => 'exclude', 'active' => 0 ], [ 'id' => $r['id'] ] );
+			} else {
+				$wpdb->update( $t, [ 'category' => $cat ], [ 'id' => $r['id'] ] );
+			}
+			$changed[ (int) $r['product_id'] ] = true;
+		}
+		$today = current_time( 'Y-m-d' );
+		foreach ( array_keys( $changed ) as $n => $id ) {
+			ProductSync::refresh( $id, $today );
+			if ( ! Offers::for_product( $id ) ) {
+				wp_update_post( [ 'ID' => $id, 'post_status' => 'draft' ] );
+			}
+			if ( $n % 500 === 0 ) {
+				wp_cache_flush();
+			}
+		}
+		arsort( $moves );
+		return [ 'changed' => count( $changed ), 'moves' => $moves ];
 	}
 }
