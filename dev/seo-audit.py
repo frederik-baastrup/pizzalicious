@@ -3,7 +3,8 @@ import sys, re, json, urllib.request, urllib.parse, html, collections, time, gzi
 BASE = sys.argv[1].rstrip('/'); MAX = int(sys.argv[2]) if len(sys.argv) > 2 else 160
 ctx = ssl.create_default_context()
 def get(url, timeout=40):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; PlayformAudit/1.0)', 'Accept-Encoding': 'gzip'})
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36 PlayformAudit', 'Accept-Encoding': 'gzip'})
+    time.sleep(0.8)  # skaansomt mod SiteGround
     t = time.time()
     try:
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
