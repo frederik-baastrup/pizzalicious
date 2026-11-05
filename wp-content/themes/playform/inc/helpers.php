@@ -49,6 +49,13 @@ function playform_icon( string $name, int $size = 20, float $stroke = 1.6 ): str
 		'clock'       => '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
 		'calendar'    => '<rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>',
 		'product'     => '<rect x="4" y="15" width="15" height="3" rx="1.5"/><path d="M15 15l2-8h3"/><path d="M16 11h3"/>',
+		'cutter'      => '<circle cx="8" cy="8" r="5"/><circle cx="8" cy="8" r="1"/><path d="M11 14l3-3M12.5 12.5l7 7"/>',
+		'dough'       => '<path d="M3 13h18l-1.5 5.5a2 2 0 0 1-2 1.5h-11a2 2 0 0 1-2-1.5z"/><path d="M6.5 13a5.5 5 0 0 1 11 0"/>',
+		'peel'        => '<circle cx="12" cy="8" r="5.5"/><path d="M12 13.5V21M10.5 21h3"/>',
+		'pizzaoven'   => '<path d="M3 19a9 9 0 0 1 18 0z"/><path d="M8.5 19a3.5 3.5 0 0 1 7 0"/><path d="M14.5 10.6V4.5h3v8"/><path d="M2 19h20"/>',
+		'stone'       => '<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M8 10h.01M12 9h.01M16 11h.01M10 14h.01M14.5 15h.01"/>',
+		'tomato'      => '<circle cx="12" cy="13.5" r="7"/><path d="M12 6.5V4M9 6l3 1.5 3-1.5M10 8l2-.5 2 .5"/>',
+		'tools'       => '<path d="M14.5 6.5a3.5 3.5 0 0 1 4.6-3.3l-2.3 2.3.5 1.7 1.7.5 2.3-2.3a3.5 3.5 0 0 1-4.7 4.5L9 17.5a1.9 1.9 0 0 1-2.6-2.6l7.6-7.6z"/>',
 	];
 	return sprintf(
 		'<svg width="%1$d" height="%1$d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="%2$s" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">%3$s</svg>',
