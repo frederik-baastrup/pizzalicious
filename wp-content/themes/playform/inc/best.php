@@ -74,9 +74,22 @@ add_shortcode(
 	'fitbase_metode',
 	static function (): string {
 		$money = esc_url( home_url( '/saadan-tjener-vi-penge/' ) );
+		// Teksten afhænger af, om guiden faktisk har anmeldelseslinks (alle, nogle eller ingen af valgene).
+		$picks = (array) get_post_meta( get_the_ID(), '_pf_picks', true );
+		$with  = count( array_filter( $picks, static fn( $p ) => ! empty( $p['reviews'] ) ) );
+		if ( $picks && $with === count( $picks ) ) {
+			$how = 'Vi har ikke selv testet produkterne. Vores valg bygger på uafhængige anmeldelser fra andre medier – dem linker vi til ved hvert produkt – og på specifikationer, pris og garanti fra butikkerne.';
+			$sel = 'anmeldelser og produktdata';
+		} elseif ( $with > 0 ) {
+			$how = 'Vi har ikke selv testet produkterne. Ved de produkter, der er anmeldt af uafhængige medier, linker vi til anmeldelserne. De øvrige er vores egen vurdering ud fra specifikationer, pris og garanti fra butikkerne – det står ved produktet.';
+			$sel = 'anmeldelser og produktdata';
+		} else {
+			$how = 'Vi har ikke selv testet produkterne, og vi har ikke fundet uafhængige anmeldelser af netop disse modeller. Valgene er derfor vores egen vurdering ud fra specifikationer, materialer, pris og garanti fra butikkerne.';
+			$sel = 'produktdata';
+		}
 		return '<aside class="method"><span class="method__title">' . playform_icon( 'check', 16, 1.6 ) . 'Sådan har vi valgt</span>'
-			. '<p>Vi har ikke selv testet produkterne. Udvalget er vores bud ud fra anmeldelser fra andre medier og brugere, hvor de findes, samt specifikationer, pris og garanti fra butikkernes data. Hvor der ikke findes anmeldelser, står det tydeligt ved produktet.</p>'
-			. '<p>Priser og lagerstatus opdateres to gange i døgnet. Vi får provision, hvis du køber via vores links. Anbefalingerne er valgt ud fra produktdata og anmeldelser, ikke ud fra provision. <a href="' . $money . '">Sådan tjener vi penge</a>.</p></aside>';
+			. '<p>' . $how . '</p>'
+			. '<p>Priser og lagerstatus opdateres to gange i døgnet. Vi får provision, hvis du køber via vores links, men valgene er truffet ud fra ' . $sel . ', ikke ud fra provision. <a href="' . $money . '">Sådan tjener vi penge</a>.</p></aside>';
 	}
 );
 
