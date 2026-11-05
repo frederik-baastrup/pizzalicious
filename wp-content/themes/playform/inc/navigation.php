@@ -228,6 +228,8 @@ function playform_menu(): array {
 		}
 		if ( $cats === null ) {
 			$cats = array_map( static fn( $s ) => $s[1]['sub'], playform_sub_links( $slug ) );
+			// Ingen underkategorier (fx Pizzaskærere): vis kategorien selv, så menupanelet ikke står tomt.
+			$cats = $cats ?: [ $slug ];
 		}
 		$primary = [];
 		foreach ( $cats as $c ) {
