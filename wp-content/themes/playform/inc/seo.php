@@ -87,21 +87,22 @@ add_filter(
 			$parts['title'] = playform_campaign_defs()[ $c ]['name'] . ' ' . wp_date( 'Y', playform_campaign_next_period( $c )[0]->getTimestamp() ) . ' – tilbud på ' . playform_site( 'niche' );
 		} elseif ( playform_is_tilbud_page() ) {
 			$t              = get_queried_object();
-			$parts['title'] = $t instanceof WP_Term ? 'Tilbud på ' . mb_strtolower( playform_cat_label( $t ) ) . ' – nedsatte priser hos danske webshops' : 'Tilbud på ' . playform_site( 'niche' ) . ' – nedsatte priser hos danske webshops';
+			$parts['title'] = playform_seo_title( 'Tilbud på ' . ( $t instanceof WP_Term ? mb_strtolower( playform_cat_label( $t ) ) : playform_site( 'niche' ) ), 'offers' );
 		} elseif ( is_tax( 'product_cat' ) ) {
-			$parts['title'] = 'Køb ' . mb_strtolower( playform_cat_label( get_queried_object() ) ) . ' – priser fra danske webshops';
+			$parts['title'] = playform_seo_title( playform_cat_label( get_queried_object() ), 'cat', (int) get_queried_object()->count );
 		} elseif ( is_singular( 'product' ) ) {
-			$parts['title'] = get_the_title() . ' – se pris';		} elseif ( is_search() ) {
+			$parts['title'] = playform_seo_title( get_the_title(), 'product' );
+		} elseif ( is_search() ) {
 			$parts['title'] = 'Søgeresultater for “' . get_search_query() . '”';
 		} elseif ( is_404() ) {
 			$parts['title'] = 'Siden findes ikke';
 		}
-		$parts['site'] = playform_site( 'name' );
+		$parts['site'] = ucfirst( (string) playform_site( 'domain' ) ); // fx "Pizzalicious.dk"
 		unset( $parts['tagline'] );
 		return $parts;
 	}
 );
-add_filter( 'document_title_separator', static fn() => '|' );
+add_filter( 'document_title_separator', static fn() => '–' );
 
 add_action(
 	'wp_head',
@@ -251,3 +252,30 @@ add_action(
 	},
 	1
 );
+
+/**
+ * Sidetitel: "<søgeord/sidetitel> – <hale> – <hale> – Domæne.dk" (ejerens ønske 6. nov. 2026).
+ * Halerne varierer pr. side (fast pr. side, så titlen ikke skifter fra besøg til besøg) og fjernes bagfra,
+ * hvis titlen bliver for lang (over ca. 70 tegn – Google klipper selv resten). "Stort udvalg" bruges kun, hvor der reelt er et udvalg.
+ */
+function playform_seo_title( string $main, string $type, int $count = 0 ): string {
+	$main  = trim( $main );
+	$big   = $count >= 15;
+	$sets  = [
+		'cat'     => [
+			[ 'Se priserne her', $big ? 'Stort udvalg' : '' ],
+			[ 'Se priserne her', 'Sammenlign butikker' ],
+			[ 'Sammenlign priser her', $big ? 'Stort udvalg' : '' ],
+			[ 'Se priser og tilbud her' ],
+		],
+		'product' => [ [ 'Se prisen her' ], [ 'Sammenlign priser her' ], [ 'Se pris og lager her' ] ],
+		'offers'  => [ [ 'Se priserne her' ], [ 'Butikkernes tilbud lige nu' ] ],
+	];
+	$opts  = $sets[ $type ] ?? [ [] ];
+	$tails = array_values( array_filter( $opts[ abs( crc32( $main . '|' . playform_site( 'domain' ) ) ) % count( $opts ) ] ) );
+	$site  = mb_strlen( (string) playform_site( 'domain' ) ) + 3;
+	while ( $tails && mb_strlen( $main . ' – ' . implode( ' – ', $tails ) ) + $site > 72 ) {
+		array_pop( $tails );
+	}
+	return implode( ' – ', array_merge( [ $main ], $tails ) );
+}
