@@ -63,11 +63,11 @@ final class Cron {
 		} catch ( \Throwable $e ) {
 			$error = 'Sortering: ' . $e->getMessage(); // stop ikke teksterne, fordi sorteringen fejler
 		}
-		if ( (int) get_option( 'playform_ai_texts_per_run', 500 ) === 100 && ! get_option( 'playform_ai_per_run_v2' ) ) {
-			update_option( 'playform_ai_texts_per_run', 500 ); // den gamle standard (100) hæves én gang til den nye
-			update_option( 'playform_ai_per_run_v2', 1, false );
+		if ( ! get_option( 'playform_ai_per_run_v3' ) ) {
+			update_option( 'playform_ai_texts_per_run', 100 ); // 6. nov. 2026: tilbage til 100 pr. import (200 i døgnet)
+			update_option( 'playform_ai_per_run_v3', 1, false );
 		}
-		$n    = (int) get_option( 'playform_ai_texts_per_run', 500 ); // 2 importer i døgnet × 500 = dagens loft på 1.000
+		$n    = (int) get_option( 'playform_ai_texts_per_run', 100 ); // 2 importer i døgnet × 100 = dagens loft på 200
 		$done = self::write_texts( $n, $error );
 		return $done;
 	}

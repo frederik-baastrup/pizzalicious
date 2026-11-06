@@ -46,7 +46,7 @@ TXT;
 	}
 
 	/** Loft over antal tekster pr. døgn, så et fejlbehæftet job aldrig kan løbe løbsk. */
-	public const DAILY_CAP_DEFAULT = 1000; // ejerens valg 5. nov. 2026 (før 200)
+	public const DAILY_CAP_DEFAULT = 200; // ejerens valg 6. nov. 2026 (var 1.000 i et døgn)
 
 	public static function generate( int $product_id ): array {
 		$cap   = (int) get_option( 'playform_ai_daily_cap', self::DAILY_CAP_DEFAULT );
