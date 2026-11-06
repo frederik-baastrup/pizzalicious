@@ -680,6 +680,7 @@ add_filter(
 		}
 		$n              = count( (array) get_post_meta( $id, '_pf_picks', true ) );
 		$parts['title'] = 'Bedste ' . $kw . ' ' . wp_date( 'Y' ) . ( $n > 1 ? ' → Se vores top ' . $n : ' – købsguide' );
+		unset( $parts['site'] ); // købsguides uden domæne i titlen (ejerens ønske 6. nov. 2026)
 		return $parts;
 	},
 	20
