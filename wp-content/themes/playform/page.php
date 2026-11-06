@@ -16,8 +16,12 @@ while ( have_posts() ) :
 			</ul>
 			<p>Læs også <a href="<?php echo esc_url( playform_how_url() ); ?>"><?php echo esc_html( playform_how_title() ); ?></a>, hvis du vil vide, hvor produkterne kommer fra, og hvad der giver os lov til at vise dem.</p>
 		<?php endif; ?>
+		<?php if ( get_post_field( 'post_name' ) === PLAYFORM_METHOD_SLUG ) : ?>
+			<div class="how"><?php echo playform_method_html(); // phpcs:ignore ?></div>
+		<?php endif; ?>
 		<?php if ( get_post_field( 'post_name' ) === PLAYFORM_HOW_SLUG ) : ?>
 			<div class="how"><?php echo playform_how_html(); // phpcs:ignore ?></div>
+			<p class="how__more">Vil du vide, hvordan pizzaudstyret i vores guides bliver udvalgt, så læs <a href="<?php echo esc_url( playform_method_url() ); ?>">Sådan vælger vi produkter</a>.</p>
 		<?php endif; ?>
 	</article>
 	<?php

@@ -19,6 +19,7 @@ require_once __DIR__ . '/inc/product-texts.php';
 require_once __DIR__ . '/inc/seo.php';
 require_once __DIR__ . '/inc/legal.php';
 require_once __DIR__ . '/inc/how.php';
+require_once __DIR__ . '/inc/method.php';
 require_once __DIR__ . '/inc/guides.php';
 require_once __DIR__ . '/inc/authors.php';
 require_once __DIR__ . '/inc/best.php';

@@ -208,6 +208,7 @@ function playform_run_upgrades(): void {
 	playform_refresh_multishop();
 	playform_update_legal_pages();
 	playform_ensure_how_page();
+	playform_ensure_method_page();
 	playform_vary_default_texts();
 	playform_fix_default_site_name();
 	playform_author_profile();

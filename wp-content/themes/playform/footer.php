@@ -29,6 +29,7 @@
 			<div class="foot__col">
 				<span class="foot__title">Om <?php echo esc_html( playform_site( 'name' ) ); ?></span>
 				<a href="<?php echo esc_url( playform_how_url() ); ?>"><?php echo esc_html( playform_how_title() ); ?></a>
+				<a href="<?php echo esc_url( playform_method_url() ); ?>">Sådan vælger vi produkter</a>
 				<a href="<?php echo esc_url( home_url( '/vores-butikker/' ) ); ?>">Vores butikker</a>
 				<a href="<?php echo esc_url( home_url( '/saadan-tjener-vi-penge/' ) ); ?>">Sådan tjener vi penge</a>
 				<a href="<?php echo esc_url( home_url( '/privatlivspolitik/' ) ); ?>">Privatlivspolitik</a>
