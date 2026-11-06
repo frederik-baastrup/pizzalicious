@@ -680,7 +680,13 @@ add_filter(
 		}
 		$n              = count( (array) get_post_meta( $id, '_pf_picks', true ) );
 		$parts['title'] = 'Bedste ' . $kw . ' ' . wp_date( 'Y' ) . ( $n > 1 ? ' → Se vores top ' . $n : ' – købsguide' );
-		unset( $parts['site'] ); // købsguides uden domæne i titlen (ejerens ønske 6. nov. 2026)
+		// Domænet kommer kun med, når der er plads (ca. 65 tegn i alt) – ejerens ønske 6. nov. 2026.
+		$site = ucfirst( (string) playform_site( 'domain' ) );
+		if ( mb_strlen( $parts['title'] . ' – ' . $site ) > 65 ) {
+			unset( $parts['site'] );
+		} else {
+			$parts['site'] = $site;
+		}
 		return $parts;
 	},
 	20
