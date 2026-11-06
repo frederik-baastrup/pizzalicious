@@ -1465,3 +1465,7 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 /* Fragt under prisen i prislisten */
 .offer__price { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2; }
 .offer__ship { font-size: 11.5px; font-weight: 400; color: var(--muted-2); white-space: nowrap; }
+
+/* Produktside: Sammenlign priser, Prishistorik, Om produktet og Specifikationer samme størrelse som "Lignende …" */
+.two h2 { font-size: 30px; }
+@media (max-width: 900px) { .two h2 { font-size: 24px; } }
