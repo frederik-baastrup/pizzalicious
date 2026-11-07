@@ -324,3 +324,22 @@ add_filter(
 	'body_class',
 	static fn( array $classes ): array => array_map( static fn( $c ) => 'search' === $c ? 'is-search-page' : $c, $classes )
 );
+
+/**
+ * "Reklamelinks" ved en artikel i lister (forside, Viden & guides, "Flere guides" …), så den kommercielle hensigt ses,
+ * før man åbner artiklen (markedsføringsloven § 6, stk. 4; Forbrugerombudsmanden kritiserede manglende markering
+ * fra forside og kategorisider i sagen mod Obsidian Media). Tom streng for artikler uden reklame.
+ */
+function playform_post_ad_label( $p ): string {
+	$p = get_post( $p );
+	if ( ! $p ) {
+		return '';
+	}
+	if ( get_post_meta( $p->ID, '_pf_hidden', true ) || get_post_meta( $p->ID, '_pf_sponsored', true ) ) {
+		return 'Annonce';
+	}
+	if ( get_post_meta( $p->ID, '_pf_picks', true ) || str_contains( $p->post_content, 'sponsored' ) || str_contains( $p->post_content, 'fitbase_valg' ) || str_contains( $p->post_content, 'playform_produkter' ) ) {
+		return 'Reklamelinks';
+	}
+	return '';
+}

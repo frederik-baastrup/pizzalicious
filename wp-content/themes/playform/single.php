@@ -111,7 +111,7 @@ while ( have_posts() ) :
 				<?php foreach ( $more as $m ) : ?>
 					<a href="<?php echo esc_url( get_permalink( $m ) ); ?>" class="guide-row">
 						<img src="<?php echo esc_url( get_the_post_thumbnail_url( $m, 'thumbnail' ) ?: playform_asset( 'cat-placeholder.svg' ) ); ?>" alt="" loading="lazy">
-						<span><b><?php echo esc_html( get_the_title( $m ) ); ?></b><span><?php echo esc_html( get_the_date( 'j. M Y', $m ) ); ?></span></span>
+						<span><b><?php echo esc_html( get_the_title( $m ) ); ?></b><span><?php echo esc_html( get_the_date( 'j. M Y', $m ) . ( playform_post_ad_label( $m ) ? ' · ' . playform_post_ad_label( $m ) : '' ) ); ?></span></span>
 					</a>
 				<?php endforeach; ?>
 			</div>

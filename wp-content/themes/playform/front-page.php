@@ -191,6 +191,7 @@ if ( $posts ) {
 			'img'   => playform_post_image( $post_item, 700 ) ?: playform_asset( 'cat-placeholder.svg' ),
 			'url'   => get_permalink( $post_item ),
 			'date'  => get_the_date( 'j. M Y', $post_item ),
+			'ad'    => playform_post_ad_label( $post_item ),
 		];
 	}
 }
@@ -210,7 +211,7 @@ if ( $posts ) {
 			<span class="guide-big__body">
 				<span class="tag-accent"><?php echo esc_html( $g['tag'] ); ?></span>
 				<span class="guide-big__title"><?php echo esc_html( $g['title'] ); ?></span>
-				<?php if ( $g['date'] ) : ?><span class="guide-big__meta"><?php echo esc_html( $g['date'] ); ?></span><?php endif; ?>
+				<?php if ( $g['date'] ) : ?><span class="guide-big__meta"><?php echo esc_html( $g['date'] . ( $g['ad'] ? ' · ' . $g['ad'] : '' ) ); ?></span><?php endif; ?>
 			</span>
 		</a>
 		<?php if ( isset( $items[1] ) ) : $g = $items[1]; ?>
@@ -218,7 +219,7 @@ if ( $posts ) {
 				<img src="<?php echo esc_url( $g['img'] ); ?>" alt="" loading="lazy">
 				<span class="guide-side__tag"><?php echo esc_html( $g['tag'] ); ?></span>
 				<span class="guide-side__title"><?php echo esc_html( $g['title'] ); ?></span>
-				<?php if ( $g['date'] ) : ?><span class="guide-side__meta"><?php echo esc_html( $g['date'] ); ?></span><?php endif; ?>
+				<?php if ( $g['date'] ) : ?><span class="guide-side__meta"><?php echo esc_html( $g['date'] . ( $g['ad'] ? ' · ' . $g['ad'] : '' ) ); ?></span><?php endif; ?>
 			</a>
 		<?php endif; ?>
 	</div>
@@ -226,7 +227,7 @@ if ( $posts ) {
 		<?php foreach ( array_slice( $items, 2, 6 ) as $g ) : ?>
 			<a href="<?php echo esc_url( $g['url'] ); ?>" class="guide-row">
 				<img src="<?php echo esc_url( $g['img'] ); ?>" alt="" loading="lazy">
-				<span><b><?php echo esc_html( $g['title'] ); ?></b><span><?php echo esc_html( trim( $g['tag'] . ( $g['date'] ? ' · ' . $g['date'] : '' ) ) ); ?></span></span>
+				<span><b><?php echo esc_html( $g['title'] ); ?></b><span><?php echo esc_html( trim( $g['tag'] . ( $g['date'] ? ' · ' . $g['date'] : '' ) . ( $g['ad'] ? ' · ' . $g['ad'] : '' ) ) ); ?></span></span>
 			</a>
 		<?php endforeach; ?>
 	</div>

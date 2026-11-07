@@ -31,7 +31,7 @@ $card = static function ( WP_Post $p, bool $big = false ): void {
 			<?php if ( has_excerpt( $p ) ) : ?><span class="gcard__excerpt"><?php echo esc_html( get_the_excerpt( $p ) ); ?></span><?php endif; ?>
 			<span class="gcard__meta">
 				<?php if ( $big ) : ?><?php echo playform_author_avatar( $a, 28 ); // phpcs:ignore ?><span><?php echo esc_html( $a['name'] ); ?></span><i></i><?php endif; ?>
-				<span><?php echo esc_html( get_the_modified_date( 'j. M Y', $p ) ); ?></span><i></i><span><?php echo (int) $min; ?> min. læsning</span>
+				<span><?php echo esc_html( get_the_modified_date( 'j. M Y', $p ) ); ?></span><i></i><span><?php echo (int) $min; ?> min. læsning</span><?php if ( $ad = playform_post_ad_label( $p ) ) : ?><i></i><span class="adtag"><?php echo esc_html( $ad ); ?></span><?php endif; ?>
 			</span>
 		</span>
 	</a>
