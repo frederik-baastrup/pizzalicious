@@ -213,6 +213,7 @@ while ( have_posts() ) :
 		<?php
 		if ( $text ) {
 			the_content();
+			echo '<p class="ai-note">Denne tekst er lavet med AI ud fra butikkens oplysninger om produktet; tallene er tjekket automatisk.</p>';
 		} else {
 			// Butikkens egen tekst vises ikke (duplicate content) – kun vores egne tekster.
 			echo '<p class="muted">Vores egen tekst om produktet kommer snart. Kig i specifikationerne herunder – der står det, butikken har oplyst.</p>';

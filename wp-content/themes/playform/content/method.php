@@ -32,6 +32,9 @@ return [
 <h2>Hvad der ikke påvirker valget</h2>
 <p>Provision, hvilken butik der har varen, og betaling for at blive nævnt. Man kan ikke købe sig til en plads i vores guides. Se, <a href="/saadan-tjener-vi-penge/">hvordan vi tjener penge</a>.</p>
 
+<h2>Vi bruger AI</h2>
+<p>Vores guides og produkttekster laves med hjælp fra AI. Den læser butikkernes produktoplysninger, leder efter anmeldelser af netop den model og skriver et udkast. Den må ikke digte egenskaber, og før en tekst udgives, tjekkes det automatisk, at alle tal står i butikkens data. Frederik Baastrup er ansvarlig redaktør – skriv endelig, hvis du finder en fejl.</p>
+
 <h2>Det kan vi ikke vurdere</h2>
 <p>Om ovnen holder varmen jævnt, hvor hurtigt stenen bliver varm igen mellem to pizzaer, og hvordan lakken ser ud efter en vinter udenfor – det kræver, at man har brugt den. Læs gerne andres erfaringer, og tjek den endelige pris og leveringstid hos butikken.</p>
 

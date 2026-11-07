@@ -30,7 +30,7 @@ while ( have_posts() ) :
 			<div class="guide__meta">
 				<a class="byline" href="<?php echo esc_url( $author['url'] ); ?>" rel="author">
 					<?php echo playform_author_avatar( $author, 44 ); // phpcs:ignore ?>
-					<span class="byline__txt"><b><span>Af</span> <?php echo esc_html( $author['name'] ); ?></b><em><?php echo esc_html( $author['role'] ); ?> hos <?php echo esc_html( playform_site( 'name' ) ); ?></em></span>
+					<?php if ( playform_picks() ) : // købsguides er lavet med AI – bylinen må ikke antyde, at redaktøren har skrevet dem ?><span class="byline__txt"><b><span>Redaktør</span> <?php echo esc_html( $author['name'] ); ?></b><em>Lavet med hjælp fra AI</em></span><?php else : ?><span class="byline__txt"><b><span>Af</span> <?php echo esc_html( $author['name'] ); ?></b><em><?php echo esc_html( $author['role'] ); ?> hos <?php echo esc_html( playform_site( 'name' ) ); ?></em></span><?php endif; ?>
 				</a>
 				<div class="guide__chips">
 				<ul class="guide__facts">
@@ -79,7 +79,7 @@ while ( have_posts() ) :
 					<div class="author-card__head">
 						<?php echo playform_author_avatar( $author, 64 ); // phpcs:ignore ?>
 						<div class="author-card__who">
-							<span class="author-card__label">Skrevet af</span>
+							<span class="author-card__label"><?php echo playform_picks() ? 'Ansvarlig redaktør' : 'Skrevet af'; ?></span>
 							<a class="author-card__name" href="<?php echo esc_url( $author['url'] ); ?>" rel="author"><?php echo esc_html( $author['name'] ); ?></a>
 							<span class="author-card__role"><?php echo esc_html( $author['role'] ); ?> hos <?php echo esc_html( playform_site( 'name' ) ); ?></span>
 						</div>

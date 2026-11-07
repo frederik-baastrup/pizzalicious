@@ -1487,3 +1487,6 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 /* "Annonce" i øverste højre hjørne af hvert produktvalg (ejerens ønske 7. nov. 2026). */
 .pick { position: relative; }
 .pick__ad { position: absolute; top: 14px; right: 14px; z-index: 1; padding: 3px 8px 2px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 10.5px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--ink); background: #fff; line-height: 1.4; }
+
+/* AI-oplysning under produkttekster (7. nov. 2026). */
+.ai-note { margin-top: 14px; font-size: 13px; color: var(--muted); }
