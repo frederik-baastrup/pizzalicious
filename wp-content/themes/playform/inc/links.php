@@ -82,7 +82,7 @@ function playform_related_block( WP_Term $term, string $heading = '' ): void {
 		<div class="rel__grid">
 			<?php if ( $guides ) : ?>
 				<div class="rel__col">
-					<span class="rel__h">Købsguides <small>· med reklamelinks</small></span>
+					<span class="rel__h">Købsguides</span>
 					<?php foreach ( $guides as $g ) : ?>
 						<a href="<?php echo esc_url( get_permalink( $g ) ); ?>"><?php echo esc_html( preg_replace( '/:.*$/u', '', get_the_title( $g ) ) ); ?></a>
 					<?php endforeach; ?>
