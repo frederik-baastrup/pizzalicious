@@ -53,6 +53,11 @@ final class Cron {
 		} catch ( \Throwable $e ) {
 			error_log( Config::site()['name'] . ' linktjek: ' . $e->getMessage() ); // phpcs:ignore
 		}
+		try {
+			ProductSync::heal_stock(); // lagerstatus, der ikke passer til tilbuddene
+		} catch ( \Throwable $e ) {
+			error_log( 'Lagertjek: ' . $e->getMessage() ); // phpcs:ignore
+		}
 		if ( ! Ai::enabled() ) {
 			update_option( 'playform_ai_status', [ 'time' => current_time( 'mysql' ), 'done' => 0, 'error' => 'Der er ingen API-nøgle.' ], false );
 			return 0;

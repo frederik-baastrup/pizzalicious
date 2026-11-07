@@ -136,7 +136,13 @@ add_shortcode(
 		$p     = $pick ? playform_pick_product( $pick ) : null;
 		// Udsolgt eller væk: vis et alternativ i samme kategori og prisklasse, indtil artiklen er opdateret.
 		$alt_html = '';
-		if ( ! $p || ! get_post_meta( $p->get_id(), '_pf_in_stock', true ) ) {
+		// Lagerstatus efter tilbuddene (ikke kun metafeltet): ingen butik på lager med en levende side = ikke på lager.
+		$offer = $p ? playform_pick_offer( $p->get_id() ) : null;
+		if ( $p && ! $offer && get_post_meta( $p->get_id(), '_pf_in_stock', true ) && class_exists( '\\Playform\\Feeds\\ProductSync' ) && ! get_transient( 'pf_heal_' . $p->get_id() ) ) {
+			set_transient( 'pf_heal_' . $p->get_id(), 1, HOUR_IN_SECONDS );
+			\Playform\Feeds\ProductSync::refresh( $p->get_id(), current_time( 'Y-m-d' ) ); // ret metafelterne med det samme
+		}
+		if ( ! $p || ! $offer ) {
 			$used = array_filter( array_map( static fn( $pk ) => ( $x = playform_pick_product( $pk ) ) ? $x->get_id() : 0, $picks ) );
 			$alts = function_exists( 'playform_pick_alternatives' ) ? playform_pick_alternatives( playform_pick_category( $p, get_the_ID() ), $p ? (float) $p->get_price() : (float) ( $pick['price'] ?? 0 ), $used, 1 ) : [];
 			if ( $alts ) {
@@ -153,7 +159,7 @@ add_shortcode(
 		}
 		$id    = $p->get_id();
 		$d     = playform_card_data( $p );
-		$offer = $d['in_stock'] ? playform_pick_offer( $id ) : null;
+		$d['in_stock'] = (bool) $offer;
 		$facts = playform_pick_facts( $id );
 		$rev   = (array) ( $pick['reviews'] ?? [] );
 		ob_start();

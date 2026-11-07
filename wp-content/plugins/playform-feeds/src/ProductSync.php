@@ -120,6 +120,27 @@ final class ProductSync {
 		}
 	}
 
+	/**
+	 * Retter produkter, hvor lagerstatus/pris/butik (metafelterne) ikke længere passer til tilbuddene –
+	 * fx "Hos Pro Outdoor" på lager, men butikkens tilbud er udsolgt eller dets side er væk. Køres efter hver import.
+	 * @return int antal rettede produkter
+	 */
+	public static function heal_stock(): int {
+		global $wpdb;
+		$t    = Offers::table();
+		$live = "o.product_id = m.post_id AND o.active = 1 AND o.in_stock = 1 AND ( o.link_dead_url IS NULL OR o.link_dead_url <> o.url )";
+		$ids  = array_map( 'intval', (array) $wpdb->get_col(
+			"SELECT m.post_id FROM {$wpdb->postmeta} m WHERE m.meta_key = '" . self::META_IN_STOCK . "' AND (
+				( m.meta_value = '1' AND NOT EXISTS ( SELECT 1 FROM $t o WHERE $live ) )
+				OR ( m.meta_value <> '1' AND EXISTS ( SELECT 1 FROM $t o WHERE $live ) ) )"
+		) );
+		$today = current_time( 'Y-m-d' );
+		foreach ( $ids as $id ) {
+			self::refresh( $id, $today );
+		}
+		return count( $ids );
+	}
+
 	public static function save_texts_and_attributes( int $product_id, array $offer, string $category ): void {
 		$current = get_post_meta( $product_id, self::META_FEED_DESC, true );
 		if ( strlen( $offer['description'] ) > strlen( (string) $current ) ) {

@@ -986,3 +986,17 @@ function playform_fix_brand_case(): void {
 	}
 	update_option( 'playform_brand_case_v', '1', false );
 }
+
+// Engangsretning 7. nov. 2026: produkter vist "på lager", selvom ingen butik har et levende tilbud på lager.
+add_action(
+	'init',
+	static function () {
+		if ( get_option( 'playform_heal_stock_v' ) || ! class_exists( '\\Playform\\Feeds\\ProductSync' ) || ! method_exists( '\\Playform\\Feeds\\ProductSync', 'heal_stock' ) ) {
+			return;
+		}
+		update_option( 'playform_heal_stock_v', 1, false );
+		wp_schedule_single_event( time() + 30, 'playform_heal_stock' );
+	},
+	30
+);
+add_action( 'playform_heal_stock', static fn() => \Playform\Feeds\ProductSync::heal_stock() );
