@@ -1490,3 +1490,7 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 
 /* AI-oplysning under produkttekster (7. nov. 2026). */
 .ai-note { margin-top: 14px; font-size: 13px; color: var(--muted); }
+
+/* "Annonce" i øverste venstre hjørne af billedet på guide-kort med reklamelinks (7. nov. 2026). */
+.gcard__img { position: relative; }
+.gcard__ad { position: absolute; top: 12px; left: 12px; z-index: 1; padding: 4px 9px 3px; border-radius: 999px; font-size: 10.5px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; line-height: 1.4; color: var(--ink); background: rgba(255,255,255,.92); box-shadow: 0 1px 3px rgba(0,0,0,.12); }

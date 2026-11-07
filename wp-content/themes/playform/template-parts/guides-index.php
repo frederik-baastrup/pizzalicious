@@ -24,14 +24,14 @@ $card = static function ( WP_Post $p, bool $big = false ): void {
 	$a    = playform_author( (int) $p->post_author );
 	?>
 	<a href="<?php echo esc_url( get_permalink( $p ) ); ?>" class="gcard<?php echo $big ? ' gcard--big' : ''; ?>">
-		<span class="gcard__img"><img src="<?php echo esc_url( $img ); ?>" alt="" loading="<?php echo $big ? 'eager' : 'lazy'; ?>"></span>
+		<span class="gcard__img"><img src="<?php echo esc_url( $img ); ?>" alt="" loading="<?php echo $big ? 'eager' : 'lazy'; ?>"><?php if ( playform_post_ad_label( $p ) ) : ?><span class="gcard__ad">Annonce</span><?php endif; ?></span>
 		<span class="gcard__body">
 			<?php if ( $cats ) : ?><span class="kicker kicker--sm"><i aria-hidden="true"></i><?php echo esc_html( $cats[0]->name ); ?></span><?php endif; ?>
 			<span class="gcard__title"><?php echo esc_html( get_the_title( $p ) ); ?></span>
 			<?php if ( has_excerpt( $p ) ) : ?><span class="gcard__excerpt"><?php echo esc_html( get_the_excerpt( $p ) ); ?></span><?php endif; ?>
 			<span class="gcard__meta">
 				<?php if ( $big ) : ?><?php echo playform_author_avatar( $a, 28 ); // phpcs:ignore ?><span><?php echo esc_html( $a['name'] ); ?></span><i></i><?php endif; ?>
-				<span><?php echo esc_html( get_the_modified_date( 'j. M Y', $p ) ); ?></span><i></i><span><?php echo (int) $min; ?> min. læsning</span><?php if ( $ad = playform_post_ad_label( $p ) ) : ?><i></i><span class="adtag"><?php echo esc_html( $ad ); ?></span><?php endif; ?>
+				<span><?php echo esc_html( get_the_modified_date( 'j. M Y', $p ) ); ?></span><i></i><span><?php echo (int) $min; ?> min. læsning</span>
 			</span>
 		</span>
 	</a>
