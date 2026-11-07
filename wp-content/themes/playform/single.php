@@ -21,7 +21,7 @@ while ( have_posts() ) :
 			$is_best = (int) ( playform_root_posts()[ get_post_field( 'post_name' ) ] ?? 0 ) === get_the_ID();
 			playform_breadcrumbs( [ [ 'Forside', home_url( '/' ) ], $is_best ? [ 'Købsguides', playform_guide_url() ] : [ 'Viden & guides', $blog ], [ get_the_title(), '' ] ] );
 			?>
-			<?php if ( get_post_meta( get_the_ID(), '_pf_hidden', true ) ) : // Solgte/sponsorerede artikler skal tydeligt markeres som reklame (markedsføringsloven § 6, stk. 4). ?>
+			<?php if ( get_post_meta( get_the_ID(), '_pf_hidden', true ) || get_post_meta( get_the_ID(), '_pf_sponsored', true ) ) : // Solgte/sponsorerede artikler skal tydeligt markeres som reklame (markedsføringsloven § 6, stk. 4). ?>
 				<p class="sponsored-note"><b>Annonce</b>Dette er sponsoreret indhold med betalte links.</p>
 			<?php endif; ?>
 			<h1><?php the_title(); ?></h1>
@@ -92,7 +92,7 @@ while ( have_posts() ) :
 						<li><b><?php echo esc_html( (string) $n_shops ); ?></b><span>danske webshops</span></li>
 					</ul>
 					<ul class="author-card__rules">
-						<?php if ( ! get_post_meta( get_the_ID(), '_pf_hidden', true ) ) : ?><li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Ingen betalte placeringer</li><?php endif; ?>
+						<?php if ( ! get_post_meta( get_the_ID(), '_pf_hidden', true ) && ! get_post_meta( get_the_ID(), '_pf_sponsored', true ) ) : ?><li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Ingen betalte placeringer</li><?php endif; ?>
 						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Fakta fra butikkernes egne data</li>
 						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Priser opdateres to gange i døgnet</li>
 					</ul>

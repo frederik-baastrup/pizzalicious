@@ -1000,3 +1000,28 @@ add_action(
 	30
 );
 add_action( 'playform_heal_stock', static fn() => \Playform\Feeds\ProductSync::heal_stock() );
+
+/**
+ * Solgte artikler, der vises i lister ('sponsored' i content/legacy-posts.php), markeres som annonce (_pf_sponsored):
+ * markedsføringsloven § 6, stk. 4 – reklame skal tydeligt fremgå (jf. Forbrugerombudsmandens sag mod Obsidian Media, okt. 2026).
+ */
+add_action(
+	'init',
+	static function () {
+		$file = get_template_directory() . '/content/legacy-posts.php';
+		$list = is_readable( $file ) ? (array) require $file : [];
+		$want = array_keys( array_filter( $list, static fn( $o ) => ! empty( $o['sponsored'] ) ) );
+		$hash = md5( implode( ',', $want ) );
+		if ( get_option( 'playform_sponsored_hash' ) === $hash ) {
+			return;
+		}
+		foreach ( $list as $slug => $o ) {
+			$p = get_page_by_path( (string) $slug, OBJECT, 'post' );
+			if ( $p ) {
+				in_array( $slug, $want, true ) ? update_post_meta( $p->ID, '_pf_sponsored', 1 ) : delete_post_meta( $p->ID, '_pf_sponsored' );
+			}
+		}
+		update_option( 'playform_sponsored_hash', $hash, false );
+	},
+	40
+);
