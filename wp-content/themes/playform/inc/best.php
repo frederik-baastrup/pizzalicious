@@ -165,6 +165,7 @@ add_shortcode(
 		ob_start();
 		?>
 		<div class="pick">
+			<?php if ( $offer ) : ?><span class="pick__ad">Annonce</span><?php endif; // reklame tydeligt markeret på hele kortet (markedsføringsloven § 6, stk. 4) ?>
 			<a class="pick__media" href="<?php echo esc_url( $d['url'] ); ?>">
 				<?php if ( $d['image'] ) : ?><img src="<?php echo esc_url( $d['image'] ); ?>" alt="<?php echo esc_attr( $d['name'] ); ?>" loading="lazy"><?php endif; ?>
 				<span class="pick__rank"><?php echo (int) $n; ?></span>

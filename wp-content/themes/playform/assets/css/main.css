@@ -1483,3 +1483,7 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .review-card__go { color: var(--ink); opacity: .5; }
 .review-card__go svg { width: 15px; height: 15px; }
 @media (max-width: 640px) { .review-card { padding: 10px 12px; gap: 10px; } .review-card__icon { width: 22px; height: 22px; } .review-card__body b { font-size: 14px; } }
+
+/* "Annonce" i øverste højre hjørne af hvert produktvalg (ejerens ønske 7. nov. 2026). */
+.pick { position: relative; }
+.pick__ad { position: absolute; top: 14px; right: 14px; z-index: 1; padding: 3px 8px 2px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 10.5px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--ink); background: #fff; line-height: 1.4; }
