@@ -1470,14 +1470,6 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .two h2 { font-size: 30px; }
 @media (max-width: 900px) { .two h2 { font-size: 24px; } }
 
-/* "Sådan har vi valgt" som sort boks: det skal være tydeligt, at vi ikke har testet produkterne (7. nov. 2026). */
-.method { background: #0B0B0A; color: rgba(255,255,255,.82); }
-.method__kicker { display: block; font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: rgba(255,255,255,.6); }
-.method__title { display: block; margin-top: 6px; font-size: 20px; line-height: 1.25; font-weight: 600; letter-spacing: -.2px; text-transform: none; color: #fff; }
-.method p { color: rgba(255,255,255,.82); }
-.method a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,.5); text-underline-offset: 3px; }
-.method a:hover { text-decoration-color: #fff; }
-
 /* Anmeldelseslinks i købsguides: kompakt og lys (ejerens ønske 7. nov. 2026) – fylder én linje, ikke en sort boks. */
 .review-card { margin: 8px 0; padding: 10px 14px; gap: 10px; border-radius: 12px; background: var(--soft); border: 1px solid var(--line, rgba(11,11,10,.08)); color: var(--ink); }
 .review-card + .review-card { margin-top: 6px; }
