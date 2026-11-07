@@ -87,16 +87,16 @@ add_shortcode(
 		$picks = (array) get_post_meta( get_the_ID(), '_pf_picks', true );
 		$with  = count( array_filter( $picks, static fn( $p ) => ! empty( $p['reviews'] ) ) );
 		if ( $picks && $with === count( $picks ) ) {
-			$how = 'Vi har ikke testet produkterne selv. I stedet bygger vores valg på uafhængige anmeldelser fra andre medier (linket ved hvert produkt) og på butikkernes oplysninger om specifikationer, pris og garanti.';
+			$how = 'Vores valg bygger på uafhængige anmeldelser fra andre medier (linket ved hvert produkt) og på butikkernes oplysninger om specifikationer, pris og garanti.';
 			$sel = 'anmeldelser og produktdata';
 		} elseif ( $with > 0 ) {
-			$how = 'Vi har ikke testet produkterne selv. Er et produkt anmeldt af et uafhængigt medie, linker vi til anmeldelsen ved produktet. De andre har vi selv vurderet ud fra butikkernes oplysninger om specifikationer, pris og garanti – det fremgår ved hvert produkt.';
+			$how = 'Er et produkt anmeldt af et uafhængigt medie, linker vi til anmeldelsen ved produktet. De andre har vi selv vurderet ud fra butikkernes oplysninger om specifikationer, pris og garanti – det fremgår ved hvert produkt.';
 			$sel = 'anmeldelser og produktdata';
 		} else {
-			$how = 'Vi har ikke testet produkterne selv. Valgene bygger på vores egen vurdering af specifikationer, materialer, pris og garanti, som butikkerne oplyser dem.';
+			$how = 'Valgene bygger på vores egen vurdering af specifikationer, materialer, pris og garanti, som butikkerne oplyser dem.';
 			$sel = 'produktdata';
 		}
-		return '<aside class="method"><span class="method__title">' . playform_icon( 'check', 16, 1.6 ) . 'Sådan har vi valgt</span>'
+		return '<aside class="method"><span class="method__kicker">Sådan har vi valgt</span><strong class="method__title">Vi har ikke selv testet modellerne</strong>'
 			. '<p>' . $how . ' <a href="' . esc_url( playform_method_url() ) . '">Sådan vælger vi produkter</a>.</p>'
 			. '<p>Priser og lager opdateres to gange om dagen. Vi tjener provision, når du køber gennem vores links, men det er ' . $sel . ', der afgør valgene – ikke provisionen. <a href="' . $money . '">Sådan tjener vi penge</a>.</p></aside>';
 	}
