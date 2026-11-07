@@ -1477,3 +1477,17 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .method p { color: rgba(255,255,255,.82); }
 .method a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,.5); text-underline-offset: 3px; }
 .method a:hover { text-decoration-color: #fff; }
+
+/* Anmeldelseslinks i købsguides: kompakt og lys (ejerens ønske 7. nov. 2026) – fylder én linje, ikke en sort boks. */
+.review-card { margin: 8px 0; padding: 10px 14px; gap: 10px; border-radius: 12px; background: var(--soft); border: 1px solid var(--line, rgba(11,11,10,.08)); color: var(--ink); }
+.review-card + .review-card { margin-top: 6px; }
+.review-card:hover, .review-card:focus-visible { transform: none; box-shadow: none; border-color: rgba(11,11,10,.25); color: var(--ink); }
+.review-card__icon { width: 22px; height: 22px; background: var(--accent); color: var(--on-accent, #0B0B0A); }
+.review-card__icon svg { width: 13px; height: 13px; }
+.review-card__body { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+.review-card__body small { font-size: 10.5px; color: var(--muted, #6B6B66); }
+.review-card__body b { font-size: 14.5px; color: var(--ink); text-decoration: underline; text-decoration-color: rgba(11,11,10,.3); text-underline-offset: 3px; }
+.review-card__body span { display: none; }
+.review-card__go { color: var(--ink); opacity: .5; }
+.review-card__go svg { width: 15px; height: 15px; }
+@media (max-width: 640px) { .review-card { padding: 10px 12px; gap: 10px; } .review-card__icon { width: 22px; height: 22px; } .review-card__body b { font-size: 14px; } }
