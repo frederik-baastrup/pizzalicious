@@ -17,6 +17,9 @@ function playform_pick_product( array $pick ): ?WC_Product {
 	static $cache = [];
 	// 'ean' og evt. 'eans' (fx andre farver af samme model): den første, der er på lager, ellers den første, der findes.
 	$eans = array_values( array_filter( array_map( 'strval', array_merge( [ $pick['ean'] ?? '' ], (array) ( $pick['eans'] ?? [] ) ) ) ) );
+	// Importen gemmer EAN som 13 cifre (UPC-12 får et 0 foran, Normalizer::ean()) – guiden kan skrive begge former.
+	$eans = array_values( array_unique( array_map( static fn( $e ) => ( strlen( $e = preg_replace( '/\D/', '', $e ) ) === 8 || ! $e ) ? $e : str_pad( ltrim( $e, '0' ), 13, '0', STR_PAD_LEFT ), $eans ) ) );
+	$eans = array_values( array_filter( $eans ) );
 	$key  = implode( ',', $eans ) . '|' . ( $pick['slug'] ?? '' );
 	if ( array_key_exists( $key, $cache ) ) {
 		return $cache[ $key ];
