@@ -509,6 +509,10 @@ function playform_seed_best(): void {
 			'post_category' => $cat ? [ (int) $cat->term_id ] : [],
 			'post_author'   => $author ? (int) $author[0] : 1,
 		];
+		if ( ! empty( $a['date'] ) ) { // oprindelig udgivelsesdato fra det gamle site
+			$data['post_date']     = $a['date'];
+			$data['post_date_gmt'] = get_gmt_from_date( $a['date'] );
+		}
 		if ( $existing ) {
 			$post = $existing[0];
 			if ( get_post_meta( $post->ID, '_pf_seed_hash', true ) !== md5( $post->post_content ) ) {
