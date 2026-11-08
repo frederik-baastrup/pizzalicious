@@ -6,12 +6,12 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'slug'     => 'bedste-pizzaovn',
-	'title'    => 'Pizzaovn: Vores bud på de 4 bedste til haven',
-	'excerpt'  => 'En pizzaovn til haven bager en pizza på få minutter ved en varme, en almindelig ovn ikke kan nå. Her er vores bud på de 4 bedste pizzaovne til gas og træ fra danske butikker.',
+	'title'    => 'Pizzaovn: Vores bud på de 5 bedste til haven',
+	'excerpt'  => 'En pizzaovn til haven bager en pizza på få minutter ved en varme, en almindelig ovn ikke kan nå. Her er vores bud på de 5 bedste pizzaovne til gas og træ fra de butikker, vi samarbejder med.',
 	'more_cat' => 'pizzaovne',
 	'intro'    => <<<'HTML'
 <p>Den største forskel på pizza fra en pizzeria og pizza fra køkkenovnen er varmen. En almindelig ovn stopper omkring 250–275 grader, mens en pizzaovn til haven kommer langt højere op. Det giver en bund, der er sprød på undersiden og blød indeni, og en kant, der hæver og får de små sorte pletter, man kender fra Napoli – på et par minutter.</p>
-<p>Der findes pizzaovne til gas, til træ og træpiller og ovne, der kan begge dele. Herunder er vores bud på de 4 bedste hos danske butikker lige nu, og nederst kan du læse, hvad du skal tænke over, før du vælger.</p>
+<p>Der findes pizzaovne til gas, til træ og træpiller og ovne, der kan begge dele. Herunder er vores bud på de 5 bedste hos de butikker, vi samarbejder med, lige nu, og nederst kan du læse, hvad du skal tænke over, før du vælger.</p>
 HTML,
 	'picks'    => [
 		[
@@ -69,6 +69,21 @@ HTML,
 HTML,
 			'good'    => [ 'Lavt budget', 'Store pizzaer', 'Nem start med gas' ],
 			'less'    => [ 'Dig, der vil lave meget andet end pizza' ],
+		],
+		[
+			'ean'     => '5061015190259',
+			'price'   => 2399,
+			'name'    => 'DeliVita Diavolo gas',
+			'role'    => 'Bærbar med tilbehør',
+			'reviews' => [],
+			'verdict' => 'Kompakt gaspizzaovn, der når 500 °C på 20 minutter – med pizzaspade, bæretaske og temperaturpistol i kassen.',
+			'why'     => <<<'HTML'
+<p>DeliVita Diavolo er gasovnen til dig, der vil have pizzaen med på farten. Den er kompakt og lavet til både udekøkkenet og campingturen. Den når 500 °C på cirka 20 minutter, og ved den varme er en tynd pizza færdig på omkring 60 sekunder.</p>
+<p>Det gode ved Diavolo er, at du får det vigtigste tilbehør med. En foldbar pizzaspade, der fylder lidt i bagagen, en bæretaske til transport og en temperaturpistol, så du kan se, når stenen er klar. Det er tre ting, du ellers skulle købe ved siden af.</p>
+<p>Regulator og gasslange følger ikke med, så dem skal du sørge for selv.</p>
+HTML,
+			'good'    => [ 'Camping og udekøkken', 'Dig, der vil have tilbehøret med fra start' ],
+			'less'    => [ 'Regulator og slange skal købes separat' ],
 		],
 	],
 	'guide'    => <<<'HTML'

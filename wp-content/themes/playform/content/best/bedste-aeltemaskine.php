@@ -6,12 +6,12 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'slug'     => 'bedste-aeltemaskine',
-	'title'    => 'Æltemaskine: Vores bud på de 4 bedste til pizzadej',
-	'excerpt'  => 'En god pizzadej skal æltes længe, og det er hårdt arbejde i hånden. Her er vores bud på de 4 bedste æltemaskiner til pizzadej fra danske butikker.',
+	'title'    => 'Æltemaskine: Vores bud på de 5 bedste til pizzadej',
+	'excerpt'  => 'En god pizzadej skal æltes længe, og det er hårdt arbejde i hånden. Her er vores bud på de 5 bedste æltemaskiner til pizzadej fra de butikker, vi samarbejder med.',
 	'more_cat' => 'aeltemaskine',
 	'intro'    => <<<'HTML'
 <p>Pizzadej skal æltes, til glutenen er udviklet, og dejen er glat og elastisk. Det kan sagtens gøres i hånden, men laver du pizza til mange – eller ofte – er en æltemaskine en stor hjælp. Pizzadej er fast, så maskinen skal have kræfter og en skål, der kan rumme en stor portion.</p>
-<p>Herunder er vores bud på de 4 bedste æltemaskiner til pizzadej hos danske butikker lige nu.</p>
+<p>Herunder er vores bud på de 5 bedste æltemaskiner til pizzadej hos de butikker, vi samarbejder med, lige nu.</p>
 HTML,
 	'picks'    => [
 		[
@@ -70,6 +70,21 @@ HTML,
 HTML,
 			'good'    => [ 'Både dej og kager', 'Design' ],
 			'less'    => [ 'Meget store portioner pizzadej' ],
+		],
+		[
+			'ean'     => '5011423191324',
+			'price'   => 2268,
+			'name'    => 'Kenwood Chef XL KVL4100S',
+			'role'    => 'Bedst til prisen',
+			'reviews' => [],
+			'verdict' => 'Kraftig køkkenmaskine med 1200 W og 6,7 liters skål, der kan ælte 2,5 kg brøddej ad gangen.',
+			'why'     => <<<'HTML'
+<p>Kenwood Chef XL er til dig, der vil have en rigtig køkkenmaskine til pizzadejen uden at bruge det samme som på de store svenske maskiner. Motoren på 1200 W har kræfter til fast dej, og skålen på 6,7 liter kan klare 2,5 kg brøddej. Det er nok til pizza til en stor familie eller et helt hold dej til fryseren.</p>
+<p>I kassen får du dejkrog, piskeris og K-pisker i aluminium, så den også klarer kagedej og flødeskum. Hastigheden er trinløs, og der er en pulsfunktion. Stænkskærmen holder mel og dej i skålen, når du starter.</p>
+<p>Dele af maskinen tåler opvaskemaskine, og der er 2 års garanti. Den vejer 13 kg, så giv den en fast plads på bordet.</p>
+HTML,
+			'good'    => [ 'Pizzadej til familien', 'Dej, kager og flødeskum i én maskine', 'Dig med et mellemstort budget' ],
+			'less'    => [ 'Små køkkener – den er tung og fylder' ],
 		],
 	],
 	'guide'    => <<<'HTML'

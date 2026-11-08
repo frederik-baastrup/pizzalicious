@@ -6,12 +6,12 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'slug'     => 'bedste-pizzaskaerer',
-	'title'    => 'Pizzaskærer: Vores bud på de 4 bedste',
-	'excerpt'  => 'Pizzahjul, vippekniv eller pizzasaks? Her er vores bud på de 4 bedste pizzaskærere fra danske butikker – og hvilken type der passer til din pizza.',
+	'title'    => 'Pizzaskærer: Vores bud på de 5 bedste',
+	'excerpt'  => 'Pizzahjul, vippekniv eller pizzasaks? Her er vores bud på de 5 bedste pizzaskærere fra de butikker, vi samarbejder med – og hvilken type der passer til din pizza.',
 	'more_cat' => 'pizzaskaerere',
 	'intro'    => <<<'HTML'
 <p>En god pizzaskærer skærer rent igennem bunden i ét træk uden at trække osten og fyldet med. Der findes tre typer: det klassiske pizzahjul, den store vippekniv, som pizzeriaer bruger, og pizzasaksen, der skærer som en saks og løfter stykket på samme tid.</p>
-<p>Herunder er vores bud på de 4 bedste pizzaskærere hos danske butikker lige nu.</p>
+<p>Herunder er vores bud på de 5 bedste pizzaskærere hos de butikker, vi samarbejder med, lige nu.</p>
 HTML,
 	'picks'    => [
 		[
@@ -69,6 +69,21 @@ HTML,
 HTML,
 			'good'    => [ 'Lavt budget', 'Hverdagspizza' ],
 			'less'    => [ 'Meget store pizzaer' ],
+		],
+		[
+			'ean'     => '4009839402081',
+			'price'   => 159,
+			'name'    => 'Zwilling Pro pizzaskærer',
+			'role'    => 'Solid i rustfrit stål',
+			'reviews' => [],
+			'verdict' => 'Pizzahjul helt i rustfrit stål fra knivmærket Zwilling – ergonomisk greb, og den kan komme i opvaskemaskinen.',
+			'why'     => <<<'HTML'
+<p>Zwilling Pro er pizzahjulet til dig, der vil have et redskab, der føles solidt og holder i mange år. Det kommer fra knivmærket Zwilling og er lavet i rustfrit stål, der giver stabilitet og lang holdbarhed.</p>
+<p>Grebet er formet ergonomisk og ligger godt i hånden, så du kan trykke hjulet sikkert gennem bunden og få pæne, lige stykker. Den er 20 cm lang og vejer kun lidt, så den er nem at styre – også når der skal skæres mange pizzaer.</p>
+<p>Når I har spist, ryger den bare i opvaskemaskinen. Det blanke stål ser også pænt ud i redskabsskuffen ved siden af dine andre køkkenredskaber.</p>
+HTML,
+			'good'    => [ 'Dig, der vil have noget solidt', 'Nem rengøring i opvaskemaskinen' ],
+			'less'    => [ 'Pizza i nonstick-pander, hvor metal kan ridse' ],
 		],
 	],
 	'guide'    => <<<'HTML'

@@ -6,12 +6,12 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'slug'     => 'bedste-elektrisk-pizzaovn',
-	'title'    => 'Elektrisk pizzaovn: Vores bud på de 4 bedste til køkkenet',
-	'excerpt'  => 'En elektrisk pizzaovn kan stå i køkkenet og bage pizza ved langt højere varme end en almindelig ovn – hele året og uden gas eller røg. Her er vores bud på de 4 bedste.',
+	'title'    => 'Elektrisk pizzaovn: Vores bud på de 5 bedste til køkkenet',
+	'excerpt'  => 'En elektrisk pizzaovn kan stå i køkkenet og bage pizza ved langt højere varme end en almindelig ovn – hele året og uden gas eller røg. Her er vores bud på de 5 bedste.',
 	'more_cat' => 'elektrisk-pizzaovn',
 	'intro'    => <<<'HTML'
 <p>Ikke alle har en have eller lyst til at stå udenfor i november. En elektrisk pizzaovn sættes i stikkontakten på køkkenbordet og bliver langt varmere end en almindelig ovn. Der er ingen gasflaske, intet brænde og ingen røg, og du kan bage pizza hele året.</p>
-<p>Prisen spænder vidt – fra små bordovne til avancerede ovne, der kommer tæt på en pizzaovn til haven. Herunder er vores bud på de 4 bedste elektriske pizzaovne hos danske butikker lige nu.</p>
+<p>Prisen spænder vidt – fra små bordovne til avancerede ovne, der kommer tæt på en pizzaovn til haven. Herunder er vores bud på de 5 bedste elektriske pizzaovne hos de butikker, vi samarbejder med, lige nu.</p>
 HTML,
 	'picks'    => [
 		[
@@ -69,6 +69,21 @@ HTML,
 HTML,
 			'good'    => [ 'Lavt budget', 'Første pizzaovn' ],
 			'less'    => [ 'Dig, der bager pizza flere gange om ugen' ],
+		],
+		[
+			'ean'     => '4011833001382',
+			'price'   => 1499,
+			'name'    => 'Steba Power pizzaovn 1800 W',
+			'role'    => 'Op til 400 °C i køkkenet',
+			'reviews' => [],
+			'verdict' => 'Tysk bordpizzaovn på 1800 W, hvor du styrer varmen fra 150 til 400 °C – til pizza, tarte flambée og gratiner.',
+			'why'     => <<<'HTML'
+<p>Steba Power er til dig, der vil have rigtig pizzavarme i køkkenet uden at bruge mange penge. Ovnen kommer fra det tyske mærke Steba og trækker 1800 W, så den når op på 400 °C. Det er et godt stykke over, hvad din almindelige ovn kan, og det giver en sprød bund og en kant med farve.</p>
+<p>Temperaturen justerer du fra 150 til 400 °C. Så kan du skrue helt op til tynde pizzaer og ned, når der skal laves tarte flambée, gratiner eller andet bagværk. Ovnen er sort og kompakt og passer på køkkenbordet.</p>
+<p>Sammenlignet med Nordic Sense har den mere effekt, og den koster langt mindre end de store modeller fra Sage, Ooni og Witt.</p>
+HTML,
+			'good'    => [ 'Første elektriske pizzaovn', 'Pizza og andet bagværk', 'Køkkener med lidt plads' ],
+			'less'    => [ 'Dig, der vil have den mest avancerede styring' ],
 		],
 	],
 	'guide'    => <<<'HTML'

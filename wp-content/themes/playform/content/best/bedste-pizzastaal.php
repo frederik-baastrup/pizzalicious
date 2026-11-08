@@ -6,12 +6,12 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'slug'     => 'bedste-pizzastaal',
-	'title'    => 'Pizzastål: Vores bud på de 4 bedste til pizza i almindelig ovn',
-	'excerpt'  => 'Et pizzastål giver en sprød bund i den almindelige ovn – og knækker ikke som en pizzasten. Her er vores bud på de 4 bedste pizzastål fra danske butikker.',
+	'title'    => 'Pizzastål: Vores bud på de 5 bedste til pizza i almindelig ovn',
+	'excerpt'  => 'Et pizzastål giver en sprød bund i den almindelige ovn – og knækker ikke som en pizzasten. Her er vores bud på de 5 bedste pizzastål fra de butikker, vi samarbejder med.',
 	'more_cat' => 'bagestaal',
 	'intro'    => <<<'HTML'
 <p>Et pizzastål er en tyk stålplade, du lægger i ovnen og varmer op, før pizzaen kommer på. Stål leder varmen hurtigere end sten, så bunden får et kraftigt skub af varme med det samme. Det er den nemmeste måde at få en sprød pizza ud af en almindelig ovn, der ikke kan blive lige så varm som en pizzaovn.</p>
-<p>Et pizzastål kan heller ikke knække, hvis det bliver for hurtigt varmt eller koldt, som en pizzasten kan. Herunder er vores bud på de 4 bedste pizzastål hos danske butikker lige nu.</p>
+<p>Et pizzastål kan heller ikke knække, hvis det bliver for hurtigt varmt eller koldt, som en pizzasten kan. Herunder er vores bud på de 5 bedste pizzastål hos de butikker, vi samarbejder med, lige nu.</p>
 HTML,
 	'picks'    => [
 		[
@@ -68,6 +68,21 @@ HTML,
 HTML,
 			'good'    => [ 'Lavt budget', 'Pizza i almindelig ovn' ],
 			'less'    => [ 'Dig, der vil have det tykkeste stål' ],
+		],
+		[
+			'ean'     => '5700437334246',
+			'price'   => 579,
+			'name'    => 'Bagestålet',
+			'role'    => 'Dansk og 6 mm tykt',
+			'reviews' => [],
+			'verdict' => 'Det danske pizzastål: 6 mm højkonduktivt stål, der giver pizzabunden et hurtigt varmeskub – med 10 års brudgaranti.',
+			'why'     => <<<'HTML'
+<p>Drømmer du om en pizza med sprød, plettet bund fra din helt almindelige ovn, er Bagestålet et oplagt bud. Det er et dansk produkt, og stålet er 6 mm tykt kvalitetsstål fra svenske SSAB. Det leder varmen hurtigt, så bunden får fart på, så snart pizzaen lander.</p>
+<p>Pladen er firkantet og findes i flere størrelser, så den udnytter hele ristens flade. Dermed er der også plads til pizza på plade, focaccia og brød, når du ikke bager runde pizzaer. Den er lavet til ovnen, men du kan også tage den med ud på grillen.</p>
+<p>Stålet er fødevaregodkendt, og du får 10 års brudgaranti. Med tiden bliver overfladen mørkere, og det er bare et tegn på, at den bliver brugt.</p>
+HTML,
+			'good'    => [ 'Sprød pizzabund i almindelig ovn', 'Dig, der også bager brød', 'Ovn og grill' ],
+			'less'    => [ 'Runde kamadogrills' ],
 		],
 	],
 	'guide'    => <<<'HTML'

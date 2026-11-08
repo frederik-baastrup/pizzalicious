@@ -6,12 +6,12 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'slug'     => 'bedste-pizzaspade',
-	'title'    => 'Pizzaspade: Vores bud på de 4 bedste i træ og metal',
-	'excerpt'  => 'Pizzaspaden er det vigtigste stykke værktøj ved pizzaovnen. Her er vores bud på de 4 bedste pizzaspader i bambus og aluminium fra danske butikker.',
+	'title'    => 'Pizzaspade: Vores bud på de 5 bedste i træ og metal',
+	'excerpt'  => 'Pizzaspaden er det vigtigste stykke værktøj ved pizzaovnen. Her er vores bud på de 5 bedste pizzaspader i bambus og aluminium fra de butikker, vi samarbejder med.',
 	'more_cat' => 'pizzaspader',
 	'intro'    => <<<'HTML'
 <p>Uden en pizzaspade kommer pizzaen ikke ind i ovnen – i hvert fald ikke i ét stykke. Spaden bruges til at flytte den rå pizza over på den varme sten og til at tage den ud igen. Der findes spader i træ og bambus, som dejen hænger mindre fast i, og spader i aluminium, der er tynde og glider let ind under den færdige pizza.</p>
-<p>Herunder er vores bud på de 4 bedste pizzaspader hos danske butikker lige nu.</p>
+<p>Herunder er vores bud på de 5 bedste pizzaspader hos de butikker, vi samarbejder med, lige nu.</p>
 HTML,
 	'picks'    => [
 		[
@@ -68,6 +68,21 @@ HTML,
 HTML,
 			'good'    => [ 'Lavt budget', 'Pizzaovne på 12–13"' ],
 			'less'    => [ 'De største pizzaer' ],
+		],
+		[
+			'ean'     => '7350100570075',
+			'price'   => 213,
+			'name'    => 'Gourmetstål pizzaspade i aluminium',
+			'role'    => 'Let og billig i aluminium',
+			'reviews' => [],
+			'verdict' => 'Let aluminiumsspade med træskaft, der vejer 0,5 kg og glider ind under pizzaen i både ovn og grill.',
+			'why'     => <<<'HTML'
+<p>Gourmetståls pizzaspade er til dig, der vil have en enkel spade i metal uden at bruge mange penge. Bladet er i kraftigt aluminium, der glider let ind under den færdige pizza, og skaftet er i træ, så det er behageligt at holde. Den er lige så god ved grillen som ved ovnen.</p>
+<p>Spaden er 30,5 cm bred og 58 cm lang og vejer kun 0,5 kg. Det gør den nem at styre, også når pizzaen skal hurtigt ud af en varm ovn.</p>
+<p>På skaftet sidder en krog, så du kan hænge spaden op, når den ikke er i brug. Vask den i hånden – den tåler ikke opvaskemaskine.</p>
+HTML,
+			'good'    => [ 'Pizza på grillen og i ovnen', 'Lavt budget', 'Dig, der vil hænge spaden op' ],
+			'less'    => [ 'Kan ikke komme i opvaskemaskinen' ],
 		],
 	],
 	'guide'    => <<<'HTML'

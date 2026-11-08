@@ -6,12 +6,12 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'slug'     => 'bedste-bagestaal',
-	'title'    => 'Bagestål: Vores bud på de 4 bedste til sprød pizza og brød',
-	'excerpt'  => 'Et bagestål fylder hele ovnristen og bager både pizza, brød og focaccia med en sprød bund. Her er vores bud på de 4 bedste bagestål fra danske butikker.',
+	'title'    => 'Bagestål: Vores bud på de 5 bedste til sprød pizza og brød',
+	'excerpt'  => 'Et bagestål fylder hele ovnristen og bager både pizza, brød og focaccia med en sprød bund. Her er vores bud på de 5 bedste bagestål fra de butikker, vi samarbejder med.',
 	'more_cat' => 'bagestaal',
 	'intro'    => <<<'HTML'
 <p>Et bagestål er en stor, firkantet stålplade, der ligger i ovnen som en ekstra bund. Det fungerer som en pizzasten, men leder varmen hurtigere og kan ikke knække. Fordi det fylder det meste af ovnristen, er det lige så godt til brød, focaccia og pizza på plade som til runde pizzaer.</p>
-<p>Herunder er vores bud på de 4 bedste bagestål hos danske butikker lige nu. Er du mest til runde pizzaer, så se også vores guide til <a href="/bedste-pizzastaal/">pizzastål</a>.</p>
+<p>Herunder er vores bud på de 5 bedste bagestål hos de butikker, vi samarbejder med, lige nu. Er du mest til runde pizzaer, så se også vores guide til <a href="/bedste-pizzastaal/">pizzastål</a>.</p>
 HTML,
 	'picks'    => [
 		[
@@ -69,6 +69,21 @@ HTML,
 HTML,
 			'good'    => [ 'Grill og bål', 'Pizza på plade' ],
 			'less'    => [ 'Runde napolitanske pizzaer' ],
+		],
+		[
+			'ean'     => '5700437334246',
+			'price'   => 579,
+			'name'    => 'Bagestålet',
+			'role'    => 'Bedst dansk',
+			'reviews' => [],
+			'verdict' => 'Dansk bagestål i 6 mm SSAB-stål med 10 års brudgaranti – fås i tre størrelser, så det passer til din ovn.',
+			'why'     => <<<'HTML'
+<p>Bagestålet er udviklet i Danmark og lavet til den almindelige ovn. Pladen er 6 mm tyk og skåret af svensk kvalitetsstål fra SSAB, der leder varmen hurtigt ind i dejen. Det giver sprøde pizzabunde, men også rundstykker, baguettes og brød med en god skorpe.</p>
+<p>Du vælger selv størrelsen: 35x40 cm passer i de fleste danske ovne, 33x38 cm i de nyere, smallere ovne og 30x40 cm i næsten alle. Mål den flade del af bageristen, så finder du den rigtige.</p>
+<p>Stålet er fødevaregodkendt og har 10 års brudgaranti. Det bliver mørkere med årene og er lavet til at holde i generationer. Det er designet til ovnen, men kan også bruges på grillen.</p>
+HTML,
+			'good'    => [ 'Brød, boller og pizza i den almindelige ovn', 'Dig, der vil vælge en størrelse efter ovnen', 'Dig, der vil støtte et dansk produkt' ],
+			'less'    => [ 'Dig, der helst vil have et rundt stål til kuglegrillen' ],
 		],
 	],
 	'guide'    => <<<'HTML'
