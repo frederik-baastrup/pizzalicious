@@ -30,7 +30,7 @@ while ( have_posts() ) :
 			<div class="guide__meta">
 				<a class="byline" href="<?php echo esc_url( $author['url'] ); ?>" rel="author">
 					<?php echo playform_author_avatar( $author, 44 ); // phpcs:ignore ?>
-					<?php if ( playform_picks() ) : // købsguides er lavet med AI – bylinen må ikke antyde, at redaktøren har skrevet dem ?><span class="byline__txt"><b><span>Redaktør</span> <?php echo esc_html( $author['name'] ); ?></b><em>Lavet med hjælp fra AI</em></span><?php else : ?><span class="byline__txt"><b><span>Af</span> <?php echo esc_html( $author['name'] ); ?></b><em><?php echo esc_html( $author['role'] ); ?> hos <?php echo esc_html( playform_site( 'name' ) ); ?></em></span><?php endif; ?>
+					<?php if ( playform_picks() ) : // købsguides er lavet med AI – bylinen må ikke antyde, at redaktøren har skrevet dem ?><span class="byline__txt"><b><span>Redaktør</span> <?php echo esc_html( $author['name'] ); ?></b><em><?php echo esc_html( $author['role'] ); ?> hos <?php echo esc_html( playform_site( 'name' ) ); ?></em></span><?php else : ?><span class="byline__txt"><b><span>Af</span> <?php echo esc_html( $author['name'] ); ?></b><em><?php echo esc_html( $author['role'] ); ?> hos <?php echo esc_html( playform_site( 'name' ) ); ?></em></span><?php endif; ?>
 				</a>
 				<div class="guide__chips">
 				<ul class="guide__facts">
