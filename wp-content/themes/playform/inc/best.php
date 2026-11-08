@@ -124,7 +124,7 @@ add_shortcode(
 		}
 		$n = count( playform_picks() );
 		$kw = (string) get_post_meta( get_the_ID(), '_pf_keyword', true );
-		$t  = ( $n === 3 ? 'Top 3' : 'Vores valg' ) . ( $kw ? ' – bedste ' . $kw . ' i overblik' : ' i overblik' );
+		$t  = ( $n === 3 ? 'Top 3' : 'Vores valg' ) . ( $kw ? ' – bedste ' . playform_best_kw( $kw ) . ' i overblik' : ' i overblik' );
 		return $out ? '<div class="tldr"><span class="tldr__title">' . esc_html( $t ) . '</span>' . $out . '</div>' : '';
 	}
 );
@@ -552,13 +552,37 @@ function playform_guide_keyword( array $a ): string {
 	return mb_strtolower( mb_substr( $kw, 0, 1 ) ) . mb_substr( $kw, 1 );
 }
 
+/**
+ * Søgeordet i bestemt form efter "bedste": foldbar træningsbænk → foldbare træningsbænk,
+ * elektrisk bordgrill → elektriske bordgrill, tykbundet gryde → tykbundede gryde. Kun de førende tillægsord ændres.
+ */
+function playform_best_kw( string $kw ): string {
+	$w = explode( ' ', $kw );
+	$n = count( $w );
+	for ( $i = 0; $i < $n - 1; $i++ ) {
+		$l = mb_strtolower( $w[ $i ] );
+		if ( in_array( $l, [ 'flad', 'stor', 'lang', 'bred', 'tyk', 'tynd', 'høj', 'lav', 'let', 'billig', 'god', 'sort', 'hvid', 'rød' ], true ) ) {
+			$w[ $i ] .= ( 'let' === $l ? 'te' : 'e' );
+		} elseif ( preg_match( '/(sk|bar|lig|ig)$/u', $l ) ) {
+			$w[ $i ] .= 'e';
+		} elseif ( preg_match( '/bart$/u', $l ) ) {
+			$w[ $i ] = mb_substr( $w[ $i ], 0, -1 ) . 'e';
+		} elseif ( preg_match( '/[^e]et$/u', $l ) ) {
+			$w[ $i ] = mb_substr( $w[ $i ], 0, -1 ) . 'de';
+		} elseif ( ! preg_match( '/e$/u', $l ) ) {
+			break; // første navneord – resten røres ikke
+		}
+	}
+	return implode( ' ', $w );
+}
+
 /** Titlen begynder med "Bedste <søgeord>" – det, folk skriver i Google. */
 function playform_guide_title( array $a ): string {
 	$t = (string) ( $a['title'] ?? '' );
 	if ( preg_match( '/^bedste\s/iu', $t ) || false === strpos( $t, ':' ) ) {
 		return $t;
 	}
-	return 'Bedste ' . playform_guide_keyword( $a ) . substr( $t, strpos( $t, ':' ) );
+	return 'Bedste ' . playform_best_kw( playform_guide_keyword( $a ) ) . substr( $t, strpos( $t, ':' ) );
 }
 
 /**
@@ -572,8 +596,8 @@ function playform_guide_test_note( array $a ): string {
 	}
 	// Overskriften uden ordet "test" (Google viser ofte overskrifter i søgeresultatet – jf. Forbrugerombudsmandens sag mod Obsidian Media).
 	$h  = '<h2>Har vi selv prøvet modellerne?</h2>\n';
-	$h .= '<p>Mange googler <b>' . $kw . ' test</b> eller "bedste ' . $kw . ' i test", inden de vælger. Det her er ikke en ' . $kw . ' test: Produkterne har vi ikke testet selv. '
-		. 'Forarbejdet har vi til gengæld gjort for dig – vores bud på bedste ' . $kw . ' bygger på butikkernes produktdata, aktuelle priser og lagerstatus'
+	$h .= '<p>Mange googler <b>' . $kw . ' test</b> eller "bedste ' . playform_best_kw( $kw ) . ' i test", inden de vælger. Det her er ikke en ' . $kw . ' test: Produkterne har vi ikke testet selv. '
+		. 'Forarbejdet har vi til gengæld gjort for dig – vores bud på bedste ' . playform_best_kw( $kw ) . ' bygger på butikkernes produktdata, aktuelle priser og lagerstatus'
 		. ( $rev ? ' samt uafhængige anmeldelser og tests fra andre medier af nøjagtig de samme modeller' : '' ) . ".</p>\n";
 	$h .= '<p>' . ( $rev
 		? 'Leder du efter en egentlig ' . $kw . ' test, finder du linkene til anmeldelserne ved de enkelte modeller længere oppe.'
@@ -694,7 +718,7 @@ add_filter(
 			return $parts;
 		}
 		$n              = count( (array) get_post_meta( $id, '_pf_picks', true ) );
-		$parts['title'] = 'Bedste ' . $kw . ' ' . wp_date( 'Y' ) . ( $n > 1 ? ' → Se vores top ' . $n : ' – købsguide' );
+		$parts['title'] = 'Bedste ' . playform_best_kw( $kw ) . ' ' . wp_date( 'Y' ) . ( $n > 1 ? ' → Se vores top ' . $n : ' – købsguide' );
 		// Domænet kommer kun med, når der er plads (ca. 65 tegn i alt) – ejerens ønske 6. nov. 2026.
 		$site = ucfirst( (string) playform_site( 'domain' ) );
 		if ( mb_strlen( $parts['title'] . ' – ' . $site ) > 65 ) {
