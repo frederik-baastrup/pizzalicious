@@ -26,6 +26,7 @@ while ( have_posts() ) :
 			<?php endif; ?>
 			<h1><?php the_title(); ?></h1>
 			<?php if ( has_excerpt() ) : ?><p class="guide__lead"><?php echo esc_html( get_the_excerpt() ); ?></p><?php endif; ?>
+			<?php if ( playform_picks() && function_exists( 'playform_method_url' ) ) : // kort note om udvælgelsen lige under introen ?><p class="guide__basis"><?php echo playform_icon( 'info', 15, 1.6 ); // phpcs:ignore ?><span>Vores bud bygger på produktdata, pris og garanti – vi har ikke selv testet dem. <a href="<?php echo esc_url( playform_method_url() ); ?>">Læs mere</a></span></p><?php endif; ?>
 			<?php $checked = (string) get_post_meta( get_the_ID(), '_pf_checked', true ); ?>
 			<div class="guide__meta">
 				<a class="byline" href="<?php echo esc_url( $author['url'] ); ?>" rel="author">

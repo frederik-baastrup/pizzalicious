@@ -37,6 +37,7 @@ function playform_icon( string $name, int $size = 20, float $stroke = 1.6 ): str
 		'search'      => '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
 		'external'    => '<path d="M7 17L17 7M9 7h8v8"/>',
 		'check'       => '<path d="M5 12l5 5 9-10"/>',
+		'info'        => '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/>',
 		'close'       => '<path d="M6 6l12 12M18 6L6 18"/>',
 		'plus'        => '<path d="M12 5v14M5 12h14"/>',
 		'grid'        => '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',

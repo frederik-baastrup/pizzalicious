@@ -1494,3 +1494,8 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 /* "Annonce" i øverste venstre hjørne af billedet på guide-kort med reklamelinks (7. nov. 2026). */
 .gcard__img { position: relative; }
 .gcard__ad { position: absolute; top: 12px; left: 12px; z-index: 1; padding: 4px 9px 3px; border-radius: 999px; font-size: 10.5px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; line-height: 1.4; color: var(--ink); background: rgba(255,255,255,.92); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+/* Kort note om udvælgelsen under introen i købsguides (7. nov. 2026). */
+.guide__basis { display: flex; align-items: flex-start; gap: 7px; margin: 14px 0 0; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+.guide__basis svg { flex: none; margin-top: 2px; }
+.guide__basis a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
