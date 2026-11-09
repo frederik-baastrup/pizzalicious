@@ -561,7 +561,9 @@ function playform_best_kw( string $kw ): string {
 	$n = count( $w );
 	for ( $i = 0; $i < $n - 1; $i++ ) {
 		$l = mb_strtolower( $w[ $i ] );
-		if ( in_array( $l, [ 'flad', 'stor', 'lang', 'bred', 'tyk', 'tynd', 'høj', 'lav', 'let', 'billig', 'god', 'sort', 'hvid', 'rød' ], true ) ) {
+		if ( in_array( $l, [ 'manuel', 'enkel' ], true ) ) {
+			$w[ $i ] = 'manuel' === $l ? $w[ $i ] . 'le' : mb_substr( $w[ $i ], 0, -2 ) . 'le'; // manuelle, enkle
+		} elseif ( in_array( $l, [ 'flad', 'stor', 'lang', 'bred', 'tyk', 'tynd', 'høj', 'lav', 'let', 'billig', 'god', 'sort', 'hvid', 'rød' ], true ) ) {
 			$w[ $i ] .= ( 'let' === $l ? 'te' : 'e' );
 		} elseif ( preg_match( '/(sk|bar|lig|ig)$/u', $l ) ) {
 			$w[ $i ] .= 'e';
