@@ -1499,3 +1499,19 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .guide__basis { display: flex; align-items: flex-start; gap: 6px; margin: 12px 0 0; font-size: 12px; line-height: 1.45; color: var(--muted-2); }
 .guide__basis svg { flex: none; margin-top: 1px; width: 13px; height: 13px; opacity: .8; }
 .guide__basis a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Prislisten på produktsiden (computer): hvide kort med blød skygge i stedet for en ren kant; det billigste
+   tilbud får en accentstreg, en let accentkant og en udfyldt knap (ejerens ønske 9. nov. 2026). */
+@media (min-width: 761px) {
+	.offers { gap: 12px; }
+	.offer { position: relative; padding: 20px 24px; background: #fff; border: 1px solid rgba(17, 17, 17, .06); border-radius: var(--r-l); box-shadow: 0 1px 2px rgba(17, 17, 17, .04), 0 8px 24px rgba(17, 17, 17, .05); transition: box-shadow .2s ease, transform .2s ease; }
+	.offer:hover { transform: translateY(-1px); box-shadow: 0 2px 4px rgba(17, 17, 17, .05), 0 14px 32px rgba(17, 17, 17, .08); }
+	.offer--best { border-color: color-mix(in srgb, var(--accent) 40%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent), 0 12px 30px color-mix(in srgb, var(--accent) 14%, transparent); }
+	.offer--best::before { content: ""; position: absolute; left: -1px; top: 18px; bottom: 18px; width: 4px; border-radius: 0 4px 4px 0; background: var(--accent); }
+	.offer__shop b { font-size: 16px; letter-spacing: -.01em; }
+	.offer__meta { color: var(--muted); }
+	.offer__price { font-size: 22px; letter-spacing: -.02em; }
+	.offer .btn-out { background: var(--soft); border-color: transparent; }
+	.offer .btn-out:hover, .offer--best .btn-out { background: var(--accent); border-color: var(--accent); color: var(--on-accent, #111); }
+	.offer--best .btn-out:hover { filter: brightness(.94); }
+}
