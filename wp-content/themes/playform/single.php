@@ -44,7 +44,7 @@ while ( have_posts() ) :
 					<?php endif; ?>
 				</ul>
 				<?php if ( playform_picks() || str_contains( $html, 'sponsored' ) || str_contains( $html, 'pcard' ) ) : ?>
-					<a class="guide__trust" href="<?php echo esc_url( home_url( '/saadan-tjener-vi-penge/' ) ); ?>"><?php echo playform_icon( 'tag', 14, 1.6 ); // phpcs:ignore ?><span class="gt-long">Indeholder affiliate-links</span><span class="gt-short">Affiliate-links</span></a>
+					<a class="guide__trust" href="<?php echo esc_url( home_url( '/saadan-tjener-vi-penge/' ) ); ?>"><?php echo playform_icon( 'tag', 14, 1.6 ); // phpcs:ignore ?><span class="gt-long">Indeholder reklamelinks</span><span class="gt-short">Reklamelinks</span></a>
 				<?php endif; ?>
 				</div>
 			</div>
