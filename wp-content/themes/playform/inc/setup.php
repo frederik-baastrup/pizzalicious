@@ -675,7 +675,8 @@ add_action(
 			$home = $domain;
 		}
 		// Efter flytningen sendes den midlertidige adresse videre til domænet.
-		if ( $home === $domain && $host !== '' && str_ends_with( $host, '.sg-host.com' ) ) {
+		// (Uden importpluginnet er "domænet" blot WordPress-adressen – så må den midlertidige adresse ikke sende videre til sig selv.)
+		if ( $home === $domain && ! str_ends_with( $domain, '.sg-host.com' ) && $host !== '' && str_ends_with( $host, '.sg-host.com' ) ) {
 			wp_redirect( 'https://' . $domain . ( $_SERVER['REQUEST_URI'] ?? '/' ), 301 ); // phpcs:ignore
 			exit;
 		}
