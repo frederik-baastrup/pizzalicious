@@ -177,10 +177,10 @@ global $wp_query;
 			$pf_base  = remove_query_arg( [ 'paged', 'tilbud', 'pris' ], get_pagenum_link( 1, false ) );
 			if ( count( $pf_bands ) > 1 ) :
 				?>
-				<nav class="pricepills" aria-label="Prisklasse">
-					<a href="<?php echo esc_url( $pf_base ); ?>" class="pricepill<?php echo $pf_on ? '' : ' is-active'; ?>" rel="nofollow"<?php echo $pf_on ? '' : ' aria-current="true"'; ?>>Alle priser</a>
+				<nav class="pricepills" id="produkter" aria-label="Prisklasse">
+					<a href="<?php echo esc_url( $pf_base . '#produkter' ); ?>" class="pricepill<?php echo $pf_on ? '' : ' is-active'; ?>" rel="nofollow"<?php echo $pf_on ? '' : ' aria-current="true"'; ?>>Alle priser</a>
 					<?php foreach ( $pf_bands as $o ) : $on = [ (string) $o['key'] ] === array_map( 'strval', $pf_on ); ?>
-						<a href="<?php echo esc_url( add_query_arg( 'pris', $o['key'], $pf_base ) ); ?>" class="pricepill<?php echo $on ? ' is-active' : ''; ?>" rel="nofollow"<?php echo $on ? ' aria-current="true"' : ''; ?>><?php echo esc_html( $o['label'] ); ?></a>
+						<a href="<?php echo esc_url( add_query_arg( 'pris', $o['key'], $pf_base ) . '#produkter' ); ?>" class="pricepill<?php echo $on ? ' is-active' : ''; ?>" rel="nofollow"<?php echo $on ? ' aria-current="true"' : ''; ?>><?php echo esc_html( $o['label'] ); ?></a>
 					<?php endforeach; ?>
 				</nav>
 			<?php endif; ?>

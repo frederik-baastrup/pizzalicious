@@ -354,10 +354,20 @@
 		});
 	});
 
-	// Filtre er foldet sammen på mobil
+	// Filtre er foldet sammen på mobil. Kommer man fra en prisknap (#produkter), forbliver panelet lukket.
 	if (window.matchMedia('(max-width: 900px)').matches) {
 		var f = document.querySelector('.filters__mobile');
-		if (f && !document.querySelector('.tags')) f.removeAttribute('open');
+		if (f && (!document.querySelector('.tags') || location.hash === '#produkter')) f.removeAttribute('open');
+	}
+	// Prisknapperne: rul rækken, så den valgte knap står synligt (i midten) i stedet for at starte forfra
+	var pp = document.querySelector('.pricepills');
+	var ppOn = pp && pp.querySelector('.is-active');
+	if (ppOn && pp.scrollWidth > pp.clientWidth) {
+		pp.scrollLeft = Math.max(0, ppOn.offsetLeft - (pp.clientWidth - ppOn.offsetWidth) / 2);
+	}
+	if (pp && location.hash === '#produkter') {
+		// Hop ned til knapperne og produkterne, når panelet er lukket (browserens eget hop sker før JS lukker det)
+		requestAnimationFrame(function () { pp.scrollIntoView({ block: 'start' }); });
 	}
 	// Knappen "Filtrer" ved siden af sorteringen åbner/lukker filterlisten på mobil
 	var fbtn = document.querySelector('[data-filter-btn]');

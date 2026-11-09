@@ -1523,3 +1523,5 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .pricepill:hover { border-color: var(--ink); }
 .pricepill.is-active { background: var(--ink); border-color: var(--ink); color: #fff; }
 @media (max-width: 760px) { .pricepills { margin: 0 -16px 14px; padding: 0 16px; } .pricepill { padding: 8px 14px 7px; font-size: 13.5px; } }
+
+.pricepills { position: relative; scroll-margin-top: 96px; } /* offsetLeft regnes fra rækken; plads til den faste header ved hop */
