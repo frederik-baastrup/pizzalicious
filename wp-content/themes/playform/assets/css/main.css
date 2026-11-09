@@ -1515,3 +1515,11 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.offer .btn-out:hover, .offer--best .btn-out { background: var(--accent); border-color: var(--accent); color: var(--on-accent, #111); }
 	.offer--best .btn-out:hover { filter: brightness(.94); }
 }
+
+/* Prisklasser som runde knapper over produkterne (alle produkt- og tilbudssider). Rulles vandret på mobil. */
+.pricepills { display: flex; gap: 8px; margin: 0 0 16px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.pricepills::-webkit-scrollbar { display: none; }
+.pricepill { flex: 0 0 auto; padding: 9px 16px 8px; border: 1px solid var(--line-2); border-radius: 999px; background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; transition: border-color .2s ease, background-color .2s ease, color .2s ease; }
+.pricepill:hover { border-color: var(--ink); }
+.pricepill.is-active { background: var(--ink); border-color: var(--ink); color: #fff; }
+@media (max-width: 760px) { .pricepills { margin: 0 -16px 14px; padding: 0 16px; } .pricepill { padding: 8px 14px 7px; font-size: 13.5px; } }

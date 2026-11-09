@@ -121,7 +121,7 @@ add_action(
 		} elseif ( is_tax( 'product_cat' ) ) {
 			$desc = wp_strip_all_tags( term_description() ) ?: sprintf( 'Se %s fra danske webshops samlet ét sted på %s. Sammenlign priser, se butikkernes tilbud og find den rigtige model.', mb_strtolower( playform_cat_label( get_queried_object() ) ), playform_site( 'name' ) );
 		} elseif ( is_post_type_archive( 'product' ) ) {
-			$desc = sprintf( 'Alle produkter på %s: %s fra de danske webshops, vi samarbejder med. Priser og lager opdateres to gange i døgnet.', playform_site( 'name' ), playform_site( 'niche' ) );
+			$desc = sprintf( 'Alle produkter på %s: %s fra de butikker, vi samarbejder med. Priser og lager opdateres to gange i døgnet.', playform_site( 'name' ), playform_site( 'niche' ) );
 		} elseif ( is_singular( 'product' ) ) {
 			$id    = get_the_ID();
 			$p     = wc_get_product( $id );

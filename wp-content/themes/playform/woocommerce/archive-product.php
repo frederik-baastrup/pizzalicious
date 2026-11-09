@@ -169,6 +169,22 @@ global $wp_query;
 		<div class="results">
 			<p class="adline"><b>Annonce</b><span>Siden indeholder reklamelinks. Klikker du videre og køber hos en butik, tjener vi en provision. <a href="<?php echo esc_url( home_url( '/saadan-tjener-vi-penge/' ) ); ?>">Sådan tjener vi penge</a></span></p>
 
+			<?php
+			// Prisklasser som runde knapper lige over produkterne – fx "største rabat" mellem 5.000 og 10.000 kr
+			// i stedet for de billigste småting (ejerens ønske 9. nov. 2026). Ét valg ad gangen; samme filter som "Pris" i panelet.
+			$pf_bands = array_values( array_filter( (array) ( $state['facets']['pris']['options'] ?? [] ), static fn( $o ) => (int) $o['count'] > 0 || ! empty( $o['checked'] ) ) );
+			$pf_on    = playform_active_filters()['pris'] ?? [];
+			$pf_base  = remove_query_arg( [ 'paged', 'tilbud', 'pris' ], get_pagenum_link( 1, false ) );
+			if ( count( $pf_bands ) > 1 ) :
+				?>
+				<nav class="pricepills" aria-label="Prisklasse">
+					<a href="<?php echo esc_url( $pf_base ); ?>" class="pricepill<?php echo $pf_on ? '' : ' is-active'; ?>" rel="nofollow"<?php echo $pf_on ? '' : ' aria-current="true"'; ?>>Alle priser</a>
+					<?php foreach ( $pf_bands as $o ) : $on = [ (string) $o['key'] ] === array_map( 'strval', $pf_on ); ?>
+						<a href="<?php echo esc_url( add_query_arg( 'pris', $o['key'], $pf_base ) ); ?>" class="pricepill<?php echo $on ? ' is-active' : ''; ?>" rel="nofollow"<?php echo $on ? ' aria-current="true"' : ''; ?>><?php echo esc_html( $o['label'] ); ?></a>
+					<?php endforeach; ?>
+				</nav>
+			<?php endif; ?>
+
 			<div class="results__bar">
 				<button type="button" class="filterbtn" data-filter-btn aria-expanded="false"><?php echo playform_icon( 'filter', 16, 1.8 ); // phpcs:ignore ?>Filtrer<?php $n_act = count( array_filter( $state['tags'], static fn( $t ) => ! str_starts_with( $t['label'], '"' ) ) ); echo $n_act ? '<span class="filterbtn__n">' . (int) $n_act . '</span>' : ''; ?></button>
 				<span class="results__count"><span class="results__n"><b><?php echo (int) $state['total']; ?></b> produkter</span><?php echo $updated ? ' <span class="muted"><i class="dot">·</i> Priser opdateret ' . esc_html( $updated ) . '</span>' : ''; ?></span>

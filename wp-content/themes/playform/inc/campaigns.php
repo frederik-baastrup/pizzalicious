@@ -30,7 +30,7 @@ function playform_black_friday( int $year ): DateTimeImmutable {
 function playform_campaign_defs(): array {
 	$niche   = playform_site( 'niche' );
 	// Vi viser kun tilbud fra de butikker, vi samarbejder med – ikke hele markedet. Det skal teksten sige.
-	$from    = "fra de danske webshops, vi samarbejder med";
+	$from    = "fra de butikker, vi samarbejder med";
 	return [
 		'black-friday'    => [
 			'name'   => 'Black Friday',
