@@ -308,6 +308,10 @@ function playform_aff_url( string $url, string $uid, string $uid2 = '' ): string
 		return $url;
 	}
 	$clean = static fn( string $v ): string => substr( sanitize_title( $v ), 0, 50 );
+	// uid2 starter med sitets navn (kitzhen-produktside, koffee-bedste-kaffemaskine …), så salg kan skelnes mellem
+	// sitesne i Partner-ads, også når browseren ikke sender adressen med (alle sites deler partner-id).
+	$site  = function_exists( 'playform_site' ) ? sanitize_title( (string) playform_site( 'name' ) ) : '';
+	$uid2  = trim( $site . ( '' !== $uid2 ? '-' . sanitize_title( $uid2 ) : '' ), '-' );
 	$add   = '&uid=' . rawurlencode( $clean( $uid ) ) . ( '' !== $uid2 ? '&uid2=' . rawurlencode( $clean( $uid2 ) ) : '' );
 	$pos   = strpos( $url, '&htmlurl=' );
 	if ( false === $pos ) {
