@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 $blog    = get_option( 'page_for_posts' ) ? get_permalink( (int) get_option( 'page_for_posts' ) ) : home_url( '/viden/' );
 $current = is_category() ? get_queried_object() : null;
-$topics  = get_categories( [ 'hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'exclude' => [ (int) get_option( 'default_category' ) ] ] );
+$topics  = get_categories( [ 'hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'exclude' => array_filter( [ (int) get_option( 'default_category' ), (int) ( get_category_by_slug( 'annonce' )->term_id ?? 0 ) ] ) ] ); // "Annonce" = skjulte, solgte artikler – ingen fane
 $total   = (int) wp_count_posts( 'post' )->publish;
 $paged   = max( 1, (int) get_query_var( 'paged' ) );
 $title   = $current ? $current->name : 'Viden & guides';

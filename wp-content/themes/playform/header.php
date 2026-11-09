@@ -108,7 +108,7 @@ $pf_usps  = [
 					<a href="<?php echo esc_url( playform_tilbud_url() ); ?>" class="mm__link mm__link--sale<?php echo playform_is_tilbud_page() && ! is_tax() ? ' is-active' : ''; ?>">Tilbud</a>
 				</div>
 				<div class="mm__knowledge">
-					<a href="<?php echo esc_url( home_url( '/viden/' ) ); ?>">Viden</a>
+					<a href="<?php echo esc_url( ( $pf_viden = get_category_by_slug( 'viden' ) ) ? get_category_link( $pf_viden ) : home_url( '/viden/' ) ); ?>">Viden</a>
 					<a href="<?php echo esc_url( playform_guide_url() ); ?>">Købsguides</a>
 				</div>
 			</nav>
@@ -131,7 +131,7 @@ $pf_usps  = [
 				</div>
 			</form>
 			<nav class="knowledge" aria-label="Viden">
-				<a href="<?php echo esc_url( home_url( '/viden/' ) ); ?>">Viden</a>
+				<a href="<?php echo esc_url( ( $pf_viden = get_category_by_slug( 'viden' ) ) ? get_category_link( $pf_viden ) : home_url( '/viden/' ) ); ?>">Viden</a>
 				<a href="<?php echo esc_url( playform_guide_url() ); ?>">Købsguides</a>
 				<a href="<?php echo esc_url( playform_tilbud_url() ); ?>" class="knowledge__sale">Tilbud</a>
 			</nav>
