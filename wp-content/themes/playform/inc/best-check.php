@@ -83,7 +83,7 @@ function playform_best_check( bool $notify = false ): array {
 			$p       = playform_pick_product( $pk );
 			$problem = '';
 			if ( ! $p ) {
-				$problem = 'findes ikke længere hos butikkerne';
+				$problem = 'findes ikke længere hos butikkerne' . playform_pick_missing_reason( $pk );
 			} elseif ( ! get_post_meta( $p->get_id(), '_pf_in_stock', true ) ) {
 				$problem = 'er ikke på lager';
 			} elseif ( ! playform_pick_offer( $p->get_id() ) ) {
@@ -190,4 +190,30 @@ function playform_best_check_page(): void {
 		echo '</ul></div>';
 	}
 	echo '</div>';
+}
+
+/**
+ * Hvorfor findes et valg ikke? Slår EAN'en op i tilbudstabellen og blandt produkter i alle statusser, så tjekket
+ * kan skelne mellem "ikke i feedet", "kladde (intet billede)" og "tilbuddet er inaktivt/død side".
+ */
+function playform_pick_missing_reason( array $pick ): string {
+	global $wpdb;
+	$ean = (string) preg_replace( '/\D/', '', (string) ( $pick['ean'] ?? '' ) );
+	if ( $ean === '' || ! class_exists( '\\Playform\\Feeds\\Offers' ) ) {
+		return '';
+	}
+	$ean = strlen( $ean ) === 8 ? $ean : str_pad( ltrim( $ean, '0' ), 13, '0', STR_PAD_LEFT );
+	$t   = \Playform\Feeds\Offers::table();
+	$rows = (array) $wpdb->get_results( $wpdb->prepare( "SELECT shop, active, in_stock, product_id, link_dead_url, url FROM $t WHERE ean = %s", $ean ), ARRAY_A ); // phpcs:ignore
+	if ( ! $rows ) {
+		return ' (EAN ' . $ean . ' er ikke importeret fra nogen butik)';
+	}
+	$out = [];
+	foreach ( $rows as $r ) {
+		$st   = (int) $r['product_id'] ? get_post_status( (int) $r['product_id'] ) : 'intet produkt';
+		$img  = (int) $r['product_id'] ? ( get_post_meta( (int) $r['product_id'], '_pf_image', true ) ? 'billede ok' : 'intet billede' ) : '';
+		$out[] = $r['shop'] . ': ' . ( (int) $r['active'] ? 'aktiv' : 'inaktiv' ) . ', ' . ( (int) $r['in_stock'] ? 'på lager' : 'ikke på lager' )
+			. ', produkt ' . $st . ( $img ? ', ' . $img : '' ) . ( ! empty( $r['link_dead_url'] ) && $r['link_dead_url'] === $r['url'] ? ', død side' : '' );
+	}
+	return ' (' . implode( '; ', $out ) . ')';
 }
