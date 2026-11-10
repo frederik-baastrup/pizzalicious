@@ -128,12 +128,16 @@ function playform_purge_everything(): void {
 		sg_cachepress_purge_cache();
 	}
 	playform_purge_cache( 'first' ); // forside, /tilbud/ og kampagnesider først – få sekunder, så de altid når at blive tømt
-	playform_purge_cache( 'terms' );
+	// Kategorierne (ca. 140 sider à ~1 s) tømmes i cron, så udrulningens kald ikke løber ind i tidsgrænsen.
+	if ( ! wp_next_scheduled( 'playform_purge_terms' ) ) {
+		wp_schedule_single_event( time() + 5, 'playform_purge_terms' );
+	}
 	if ( ! wp_next_scheduled( 'playform_purge_rest' ) ) {
 		wp_schedule_single_event( time() + 5, 'playform_purge_rest' );
 	}
 }
 add_action( 'playform_purge_rest', static fn() => playform_purge_cache( 'rest' ) );
+add_action( 'playform_purge_terms', static fn() => playform_purge_cache( 'terms' ) );
 
 // Diagnose: udrulningens kald til /wp-json/?pf_deploy=… får at vide, om opdateringerne kørte, og hvordan cachen blev tømt.
 add_filter(
