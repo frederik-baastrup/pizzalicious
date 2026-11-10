@@ -68,6 +68,9 @@ final class Frontend {
 					'delivery' => $o['delivery'],
 					'restock'  => $o['restock_date'],
 					'url'      => $o['url'],
+					'shop_key'   => $o['shop'],
+					'list_price' => (float) ( $o['list_price'] ?? 0 ),
+					'sale_since' => $o['sale_since'] ?? null,
 				];
 			},
 			Offers::for_product( $product_id )

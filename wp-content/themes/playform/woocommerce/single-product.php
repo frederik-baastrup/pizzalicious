@@ -177,10 +177,10 @@ while ( have_posts() ) :
 				// Butikkens eget tilbud (højst Sales::DAYS dage gammelt) – samme regler som produktkortet: kontrolleret førpris
 				// fra vores prishistorik, ellers butikkens førpris (10. nov. 2026).
 				$o_sale = null;
-				if ( ! empty( $o['in_stock'] ) && ! empty( $o['sale_since'] ) && (float) $o['list_price'] > (float) $o['price'] && (float) $o['price'] > 0 && class_exists( '\\Playform\\Feeds\\Sales' ) ) {
+				if ( ! empty( $o['in_stock'] ) && ! empty( $o['sale_since'] ) && (float) ( $o['list_price'] ?? 0 ) > (float) $o['price'] && (float) $o['price'] > 0 && class_exists( '\\Playform\\Feeds\\Sales' ) ) {
 					$o_days = \Playform\Feeds\Sales::DAYS;
 					if ( $o['sale_since'] >= gmdate( 'Y-m-d', strtotime( current_time( 'Y-m-d' ) . ' -' . ( $o_days - 1 ) . ' days' ) ) ) {
-						$o_ref = \Playform\Feeds\Sales::reference( (int) $id, (string) $o['shop'], (float) $o['price'], (string) $o['sale_since'] );
+						$o_ref = \Playform\Feeds\Sales::reference( (int) $id, (string) ( $o['shop_key'] ?? $o['shop'] ), (float) $o['price'], (string) $o['sale_since'] );
 						$o_was = $o_ref ?: (float) $o['list_price'];
 						if ( $o_was > (float) $o['price'] ) {
 							$o_sale = [ 'was' => $o_was, 'pct' => playform_save_pct( (float) $o['price'], $o_was ), 'save' => $o_was - (float) $o['price'], 'label' => $o_ref ? 'Laveste pris de 30 dage før tilbuddet' : 'Butikkens førpris' ];
