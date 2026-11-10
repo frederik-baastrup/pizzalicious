@@ -103,7 +103,9 @@ if ( $campaign || $offer_hero ) :
 	}
 	$chero = get_template_directory() . '/assets/img/campaign-hero.jpg';
 	?>
-<section class="camp-hero" style="--hero-img: url('<?php echo esc_url( playform_asset( 'campaign-hero.jpg' ) . '?v=' . ( is_readable( $chero ) ? filemtime( $chero ) : 1 ) ); ?>')">
+<?php $cpat = $campaign && 'black-friday' === $campaign && is_readable( get_template_directory() . '/template-parts/campaign-pattern.php' ); ?>
+<section class="camp-hero<?php echo $cpat ? ' camp-hero--pattern' : ''; ?>" style="--hero-img: url('<?php echo esc_url( playform_asset( 'campaign-hero.jpg' ) . '?v=' . ( is_readable( $chero ) ? filemtime( $chero ) : 1 ) ); ?>')">
+	<?php if ( $cpat ) { get_template_part( 'template-parts/campaign-pattern' ); } ?>
 	<div class="camp-hero__inner">
 		<?php playform_breadcrumbs( $crumb ); ?>
 		<p class="camp-hero__when"><?php echo esc_html( $cwhen ); ?></p>

@@ -1625,3 +1625,16 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 /* "Se alle … tilbud" i kampagneheaderen glider blødt ned til produkterne (10. nov. 2026). */
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 #katalog { scroll-margin-top: 16px; }
+
+/* Black Friday: svævende ikoner i stedet for foto (template-parts/campaign-pattern.php, 10. nov. 2026). */
+.camp-hero--pattern { background: #140D0B; overflow: hidden; }
+.camp-hero--pattern::before { z-index: 0; background: radial-gradient(ellipse 42% 62% at 50% 50%, #140D0B 0%, rgba(0,0,0,0) 100%); }
+.camp-hero--pattern .camp-hero__inner { position: relative; z-index: 1; min-height: 460px; }
+.camp-pat { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.camp-pat .fl { position: absolute; display: inline-flex; color: #fff; transform: translate(-50%, -50%) rotate(var(--r)); animation: pf-float 10s ease-in-out infinite alternate; }
+.camp-pat .fl--accent { color: var(--camp-eyebrow); }
+.camp-pat .fl--chip { font-weight: 700; letter-spacing: -.02em; padding: .16em .55em .1em; border: 2px solid currentColor; border-radius: 999px; white-space: nowrap; line-height: 1.1; }
+@keyframes pf-float { from { transform: translate(-50%, -50%) translateY(-12px) rotate(var(--r)); } to { transform: translate(-50%, -50%) translateY(12px) rotate(calc(var(--r) + 5deg)); } }
+@media (prefers-reduced-motion: reduce) { .camp-pat .fl { animation: none; } }
+@media (max-width: 900px) { .camp-pat .fl--wide { display: none; } .camp-pat .fl svg { width: 52px; height: 52px; } .camp-pat .fl--chip { font-size: 20px !important; } }
+@media (max-width: 640px) { .camp-hero--pattern .camp-hero__inner { min-height: 0; } .camp-pat .fl { opacity: .16 !important; } }
