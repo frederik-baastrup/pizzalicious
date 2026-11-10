@@ -1525,3 +1525,5 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 @media (max-width: 760px) { .pricepills { margin: 0 -16px 14px; padding: 0 16px; } .pricepill { padding: 8px 14px 7px; font-size: 13.5px; } }
 
 .pricepills { position: relative; scroll-margin-top: 96px; } /* offsetLeft regnes fra rækken; plads til den faste header ved hop */
+
+@media (min-width: 901px) { .pricepills { display: none; } } /* prisknapperne kun på mobil – på computer står prisfilteret i sidepanelet (ejeren 10. nov. 2026) */
