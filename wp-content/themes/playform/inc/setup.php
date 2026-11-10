@@ -46,6 +46,13 @@ function playform_purge_urls( string $group ): array {
 	$urls = [];
 	if ( $group === 'terms' ) {
 		$urls[] = home_url( '/' );
+		// Tilbud og kampagnesider (/tilbud/, /black-friday/ …) – stod ikke på listen, så de kunne vise en gammel udgave i timevis.
+		$urls[] = home_url( user_trailingslashit( 'tilbud' ) );
+		if ( function_exists( 'playform_campaign_defs' ) ) {
+			foreach ( array_keys( playform_campaign_defs() ) as $cslug ) {
+				$urls[] = home_url( user_trailingslashit( $cslug ) );
+			}
+		}
 		foreach ( get_terms( [ 'taxonomy' => 'product_cat', 'hide_empty' => false ] ) as $t ) {
 			$l = get_term_link( $t );
 			if ( ! is_wp_error( $l ) ) {
