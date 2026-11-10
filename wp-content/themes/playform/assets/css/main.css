@@ -1534,3 +1534,7 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.mm__cat { white-space: nowrap; }
 	.mm__col a.mm__more { white-space: nowrap; }
 }
+
+/* Pizzalicious: rød understregning i menuen ved hover/aktiv (ejeren 10. nov. 2026). Teksten forbliver sort. */
+.mm__link::after { height: 3px; border-radius: 3px 3px 0 0; background: var(--accent); }
+.mm__link--sale::after { background: var(--sale); }
