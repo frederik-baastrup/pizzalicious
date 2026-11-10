@@ -1538,3 +1538,14 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 /* Pizzalicious: rød understregning i menuen ved hover/aktiv (ejeren 10. nov. 2026). Teksten forbliver sort. */
 .mm__link::after { height: 3px; border-radius: 3px 3px 0 0; background: var(--accent); }
 .mm__link--sale::after { background: var(--sale); }
+
+/* Pizzalicious: lys topbar som på Outdoorland (ejeren 10. nov. 2026) – varm, lys grå med mørk tekst. */
+.topbar { background: #F3F1EE; color: #6B6460; border-bottom: 1px solid #E6E2DD; }
+.topbar b { color: #1A1A1A; }
+.topbar svg { color: #1A1A1A; }
+.topbar__usp li + li { border-left-color: rgba(26, 26, 26, .14); }
+.topbar__ad { color: #6B6460; }
+.topbar__ad:hover { color: #1A1A1A; }
+.topbar__tag { border-color: rgba(26, 26, 26, .3); color: #1A1A1A; }
+.topbar__mob, .topbar__mob a { color: #6B6460; }
+.topbar__mob .topbar__tag:hover { color: #1A1A1A; }
