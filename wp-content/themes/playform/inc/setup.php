@@ -123,6 +123,10 @@ function playform_purge_cache( string $group = 'terms' ): string {
 
 /** Forside + kategorier tømmes straks; resten (tilbudssider, guides, artikler) lægges i cron og tømmes inden for 15 minutter. */
 function playform_purge_everything(): void {
+	// SiteGrounds samlede tømning først: /tilbud/ og kampagnesiderne blev ikke tømt side for side (10. nov. 2026).
+	if ( function_exists( 'sg_cachepress_purge_cache' ) ) {
+		sg_cachepress_purge_cache();
+	}
 	playform_purge_cache( 'first' ); // forside, /tilbud/ og kampagnesider først – få sekunder, så de altid når at blive tømt
 	playform_purge_cache( 'terms' );
 	if ( ! wp_next_scheduled( 'playform_purge_rest' ) ) {
