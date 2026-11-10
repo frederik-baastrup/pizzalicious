@@ -44,6 +44,14 @@ add_action(
 /** Sider, der kan ligge i SiteGrounds sidecache. 'terms' = forside + alle kategorisider (vigtigst), 'rest' = tilbudssider, guides og artikler. */
 function playform_purge_urls( string $group ): array {
 	$urls = [];
+	if ( $group === 'first' ) {
+		$urls[] = home_url( '/' );
+		$urls[] = home_url( user_trailingslashit( 'tilbud' ) );
+		foreach ( function_exists( 'playform_campaign_defs' ) ? array_keys( playform_campaign_defs() ) : [] as $cslug ) {
+			$urls[] = home_url( user_trailingslashit( $cslug ) );
+		}
+		return $urls;
+	}
 	if ( $group === 'terms' ) {
 		$urls[] = home_url( '/' );
 		// Tilbud og kampagnesider (/tilbud/, /black-friday/ …) – stod ikke på listen, så de kunne vise en gammel udgave i timevis.
@@ -106,6 +114,7 @@ function playform_purge_cache( string $group = 'terms' ): string {
 
 /** Forside + kategorier tømmes straks; resten (tilbudssider, guides, artikler) lægges i cron og tømmes inden for 15 minutter. */
 function playform_purge_everything(): void {
+	playform_purge_cache( 'first' ); // forside, /tilbud/ og kampagnesider først – få sekunder, så de altid når at blive tømt
 	playform_purge_cache( 'terms' );
 	if ( ! wp_next_scheduled( 'playform_purge_rest' ) ) {
 		wp_schedule_single_event( time() + 5, 'playform_purge_rest' );
