@@ -174,15 +174,28 @@ while ( have_posts() ) :
 			$best_tot = $in_stock ? min( array_intersect_key( $totals, $in_stock ) ) : ( $totals ? min( $totals ) : 0 );
 			foreach ( $offers as $i => $o ) :
 				$is_best = ! empty( $o['in_stock'] ) && abs( $totals[ $i ] - $best_tot ) < 0.5;
+				// Butikkens eget tilbud (højst Sales::DAYS dage gammelt) – samme regler som produktkortet: kontrolleret førpris
+				// fra vores prishistorik, ellers butikkens førpris (10. nov. 2026).
+				$o_sale = null;
+				if ( ! empty( $o['in_stock'] ) && ! empty( $o['sale_since'] ) && (float) $o['list_price'] > (float) $o['price'] && (float) $o['price'] > 0 && class_exists( '\\Playform\\Feeds\\Sales' ) ) {
+					$o_days = \Playform\Feeds\Sales::DAYS;
+					if ( $o['sale_since'] >= gmdate( 'Y-m-d', strtotime( current_time( 'Y-m-d' ) . ' -' . ( $o_days - 1 ) . ' days' ) ) ) {
+						$o_ref = \Playform\Feeds\Sales::reference( (int) $id, (string) $o['shop'], (float) $o['price'], (string) $o['sale_since'] );
+						$o_was = $o_ref ?: (float) $o['list_price'];
+						if ( $o_was > (float) $o['price'] ) {
+							$o_sale = [ 'was' => $o_was, 'pct' => playform_save_pct( (float) $o['price'], $o_was ), 'save' => $o_was - (float) $o['price'], 'label' => $o_ref ? 'Laveste pris de 30 dage før tilbuddet' : 'Butikkens førpris' ];
+						}
+					}
+				}
 				?>
 				<div class="offer<?php echo $is_best ? ' offer--best' : ''; ?>">
 					<span class="offer__shop">
 						<b><?php echo esc_html( $o['shop'] ); ?></b>
-						<?php if ( $is_best ) : ?><span class="badge badge--accent" title="Laveste pris inkl. fragt">Billigst<span class="gt-long"> inkl. fragt</span></span><?php endif; ?>
+						<?php if ( $is_best ) : ?><span class="badge badge--accent" title="Laveste pris inkl. fragt">Billigst<span class="gt-long"> inkl. fragt</span></span><?php endif; ?><?php if ( $o_sale && $o_sale['pct'] > 0 ) : ?><span class="badge badge--sale">Tilbud −<?php echo (int) $o_sale['pct']; ?> %</span><?php endif; ?>
 						<span class="stock<?php echo $o['in_stock'] ? ' stock--in' : ''; ?>"><span class="stock__dot"></span><?php echo $o['in_stock'] ? 'På lager' : 'Ikke på lager'; ?></span>
 					</span>
 					<span class="offer__meta"><?php echo esc_html( trim( ( $o['delivery'] ? 'Levering ' . $o['delivery'] : '' ) ) ); ?><br><?php echo $o['shipping'] === null ? '' : esc_html( $o['shipping'] > 0 ? 'Fragt ' . playform_kr( $o['shipping'] ) : 'Gratis fragt' ); ?></span>
-					<span class="offer__price"><?php echo esc_html( playform_kr( $o['price'] ) ); ?><small class="offer__ship"><?php echo $o['shipping'] === null ? 'fragt: se butik' : esc_html( $o['shipping'] > 0 ? '+ fragt ' . playform_kr( $o['shipping'] ) : 'gratis fragt' ); ?></small></span>
+					<span class="offer__price"><?php echo esc_html( playform_kr( $o['price'] ) ); ?><?php if ( $o_sale ) : ?><small class="offer__was"><s title="<?php echo esc_attr( $o_sale['label'] ); ?>"><?php echo esc_html( playform_kr( $o_sale['was'] ) ); ?></s> · spar <?php echo esc_html( playform_kr( $o_sale['save'] ) ); ?></small><?php endif; ?><small class="offer__ship"><?php echo $o['shipping'] === null ? 'fragt: se butik' : esc_html( $o['shipping'] > 0 ? '+ fragt ' . playform_kr( $o['shipping'] ) : 'gratis fragt' ); ?></small></span>
 					<a href="<?php echo esc_url( playform_aff_url( $o['url'], get_post_field( 'post_name', $id ), 'produktside-prisliste' ) ); ?>" class="btn-out" rel="sponsored nofollow noopener" referrerpolicy="strict-origin-when-cross-origin" target="_blank">Gå til butik</a>
 				</div>
 			<?php endforeach; ?>

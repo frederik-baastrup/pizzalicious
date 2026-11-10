@@ -1638,3 +1638,9 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 @media (prefers-reduced-motion: reduce) { .camp-pat .fl { animation: none; } }
 @media (max-width: 900px) { .camp-pat .fl--wide { display: none; } .camp-pat .fl svg { width: 52px; height: 52px; } .camp-pat .fl--chip { font-size: 20px !important; } }
 @media (max-width: 640px) { .camp-hero--pattern .camp-hero__inner { min-height: 0; } .camp-pat .fl { opacity: .16 !important; } }
+
+/* Prislisten: butikkens tilbud med førpris og besparelse (10. nov. 2026). */
+.badge--sale { background: var(--sale, #B42318); color: #fff; font-weight: 700; }
+.offer__shop .badge + .badge { margin-left: 4px; }
+.offer__was { font-size: 12px; font-weight: 600; color: var(--sale, #B42318); white-space: nowrap; }
+.offer__was s { color: var(--muted-2, #8A8A84); font-weight: 400; }
