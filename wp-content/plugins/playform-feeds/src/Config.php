@@ -95,6 +95,13 @@ final class Config {
 				'url'          => "$base&bannerid=16450&feedid=6",
 				'category_map' => [ 'pizzaovn' => 'pizzaovne' ],
 			],
+			// Fredstone: pizza- og bagesten (også til grill og pizzaovne), pizzaspader, pizzaindsatser og hævekasser. Ingen
+			// category_map – vores regler placerer varerne; grills, kagetylle, silikoneforme, aluplader og gavekort matcher
+			// intet og kommer ikke med. Tilføjet 10. nov. 2026.
+			'fredstone'        => [ 'name' => 'Fredstone', 'url' => "$base&bannerid=109359&feedid=3559" ],
+			// Skærtoft Mølle: økologisk mel. Kun Manitoba-mel (stærkt hvedemel til pizzadej) matcher 'ingredienser';
+			// rugmel, brødblandinger, gryn, kerner, kurser og bøger kommer ikke med. Tilføjet 10. nov. 2026.
+			'skaertoft'        => [ 'name' => 'Skærtoft Mølle', 'url' => "$base&bannerid=74932&feedid=1679" ],
 		];
 		$custom = get_option( 'playform_shops' );
 		return is_array( $custom ) && $custom ? $custom : $defaults;
@@ -109,8 +116,8 @@ final class Config {
 	public static function categories(): array {
 		return [
 			'ingredienser'    => [ 'name' => 'Ingredienser', 'match' => 'pizzamel|tipo ?0|\bsemola|manitoba|caputo|san marzano|passata|pelati|pizzasauce|pizza sauce|pizzatopping|pizza topping|pizzakrydderi|\boregano\b(?!.*(tæppe|gulv))|chiliolie|olio santo|pizzagær' ],
-			'pizzaovne'       => [ 'name' => 'Pizzaovne', 'match' => 'pizzaovn|pizza ?ovn|pizza oven|pizzaiolo|pizza ?maker|pizzetta|\booni (karu|koda|volt|fyra|pro)\b|gozney|roccbox|effeuno|rotisseri (&|og) pizzaovn|pizzaovnsindsats', 'not' => 'overtræk|cover|taske|termometer|børste|bord|handsk|spade|sten|gasbrænder|brænder til|indsats til|træpiller|brænde eg|\\bgreb\\b|dør til|glasdør|fod|krog|pære|regulator|steamer|beslag|reservedel' ],
-			'pizzasten'       => [ 'name' => 'Pizzasten & bagestål', 'match' => 'pizzasten|pizza ?sten|bagesten|bagest[åa]l|pizzastål|pizzaplade|pizzapande|pizzaform|detroit style|pizzamåtte' ],
+			'pizzaovne'       => [ 'name' => 'Pizzaovne', 'match' => 'pizzaovn|pizza ?ovn|pizza oven|pizzaiolo|pizza ?maker|pizzetta|\booni (karu|koda|volt|fyra|pro)\b|gozney|roccbox|effeuno|rotisseri (&|og) pizzaovn|pizzaovnsindsats|pizzaindsats', 'not' => 'overtræk|cover|taske|termometer|børste|bord|arbejdsplade|handsk|^(?!pizzaindsats).*spade|sten|gasbrænder|brænder til|(?<!pizza)indsats til|træpiller|brænde eg|\\bgreb\\b|dør til|glasdør|fod|krog|pære|regulator|steamer|beslag|reservedel' ],
+			'pizzasten'       => [ 'name' => 'Pizzasten & bagestål', 'match' => 'pizzasten|pizza ?sten|bagesten|dobbelt fredstone i|bagest[åa]l|pizzastål|pizzaplade|pizzapande|pizzaform|detroit style|pizzamåtte' ],
 			'pizzaspader'     => [ 'name' => 'Pizzaspader', 'match' => 'pizzaspade|pizza ?spade|pizza paddle|pizza pagaj|pizzaskovl|pizzavender|bagespade|pizza- og bagespatel' ],
 			'pizzaskaerere'   => [ 'name' => 'Pizzaskærere', 'match' => 'pizzaskærer|pizza ?skærer|pizzahjul|pizza ?hjul|pizza slicer|pizza ?cutter|pizzasaks|pizzakniv|pizza- og steakknive|pizza/steak' ],
 			'dej'             => [ 'name' => 'Dej & æltning', 'match' => 'æltemaskine\\b|spiral ?mixer|røremaskine\\b|køkkenmaskine\\b|køkkenassistent\\b|stand ?mixer\\b|dejkasse|pizzadejsæske|dejsæske|dejæske|dejbakke|dejdeler|dejskærer|hævekasse|pizzarulle|pizzavægt|hævekurv', 'not' => 'skål til|piskeris til|dejkrog til|tilbehør til|låg til|reservedel|overtræk til|cover til' ],
@@ -138,7 +145,7 @@ final class Config {
 				'pizzaovn-12-tommer' => [ 'name' => 'Pizzaovn 12 tommer', 'match' => '12"|12 ?tommer|\\b12\\b|\\b13"', 'not' => 'overtræk|cover|træpiller|dør til|greb\\b|bord|tilbehør|dejskraber|værktøj|støbejernsfad|sæt\\b|12 ?kg' ],
 			],
 			'pizzasten' => [
-				'pizzasten-sten'     => [ 'name' => 'Pizzasten', 'match' => 'pizzasten|pizza ?sten|bagesten|cordierit|keramisk' ],
+				'pizzasten-sten'     => [ 'name' => 'Pizzasten', 'match' => 'pizzasten|pizza ?sten|bagesten|dobbelt fredstone i|cordierit|keramisk' ],
 				'bagestaal'          => [ 'name' => 'Bagestål', 'match' => 'bagest[åa]l|pizzastål|stålplade' ],
 				'pizzapande'         => [ 'name' => 'Pizzapande & pizzaform', 'match' => 'pizzapande|pizzaform|pizzaplade|detroit|pande' ],
 				'pizzastaal'         => [ 'name' => 'Pizzastål', 'match' => 'pizzastål|pizza ?stål|bage ?/ ?pizzastål|bage-/pizzastål' ],
@@ -203,6 +210,8 @@ final class Config {
 			'kamadogrill|kamado ?grill|\bsignature (midi|pro)\b|\bicon (maxi|large|midi)\b',
 			// Airfryere med pizzafunktion hører ikke hjemme her
 			'airfryer|air ?fryer',
+			// Fredstone (grillmotor) og Skærtoft (hele korn er ikke mel)
+			'grill ?motor|motor til spyd|hele kerner',
 		];
 	}
 
