@@ -90,7 +90,7 @@ $pf_usps  = [
 												<?php foreach ( $p['prices'] as [ $label, $url ] ) : ?>
 													<a href="<?php echo esc_url( $url ); ?>" rel="nofollow"><?php echo esc_html( $label ); ?></a>
 												<?php endforeach; ?>
-												<a href="<?php echo esc_url( $p['url'] ); ?>" class="mm__more">Se hele kategorien &rarr;</a>
+												<a href="<?php echo esc_url( $p['url'] ); ?>" class="mm__more">Se alle &rarr;</a>
 											</div>
 										<?php endif; ?>
 										<a href="<?php echo esc_url( $p['tilbud'] ); ?>" class="mm__promo">

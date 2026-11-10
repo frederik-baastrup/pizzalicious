@@ -1527,3 +1527,10 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .pricepills { position: relative; scroll-margin-top: 96px; } /* offsetLeft regnes fra rækken; plads til den faste header ved hop */
 
 @media (min-width: 901px) { .pricepills { display: none; } } /* prisknapperne kun på mobil – på computer står prisfilteret i sidepanelet (ejeren 10. nov. 2026) */
+
+/* Mega-menuen: bredere kolonne med underkategorier, så navnene står på én linje, og "Se alle →" holdes samlet (ejeren 10. nov. 2026). */
+@media (min-width: 1081px) {
+	.mm__inner:has(.mm__cats--2) { grid-template-columns: 470px minmax(0, 1fr) minmax(0, 1fr) calc((100% - 406px) / 2); }
+	.mm__cat { white-space: nowrap; }
+	.mm__col a.mm__more { white-space: nowrap; }
+}
