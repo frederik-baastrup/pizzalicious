@@ -19,7 +19,14 @@ while ( have_posts() ) :
 		<header class="wrap guide__head">
 			<?php
 			$is_best = (int) ( playform_root_posts()[ get_post_field( 'post_name' ) ] ?? 0 ) === get_the_ID();
+			// Brødkrummer + tydeligt "Annonce" lige ved siden af, når artiklen har reklamelinks (markedsføringsloven § 6, stk. 4).
+			$pf_ad = playform_post_ad_label( get_the_ID() );
+			echo '<div class="guide__crumbrow">';
 			playform_breadcrumbs( [ [ 'Forside', home_url( '/' ) ], $is_best ? [ 'Købsguides', playform_guide_url() ] : [ 'Viden & guides', $blog ], [ get_the_title(), '' ] ] );
+			if ( $pf_ad ) {
+				echo '<a class="ad-chip" href="' . esc_url( home_url( '/saadan-tjener-vi-penge/' ) ) . '" title="Artiklen indeholder reklamelinks. Vi får provision, hvis du køber via dem.">Annonce</a>';
+			}
+			echo '</div>';
 			?>
 			<?php if ( get_post_meta( get_the_ID(), '_pf_hidden', true ) || get_post_meta( get_the_ID(), '_pf_sponsored', true ) ) : // Solgte/sponsorerede artikler skal tydeligt markeres som reklame (markedsføringsloven § 6, stk. 4). ?>
 				<p class="sponsored-note"><b>Annonce</b>Dette er sponsoreret indhold med betalte links.</p>

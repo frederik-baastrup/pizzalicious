@@ -1549,3 +1549,10 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .topbar__tag { border-color: rgba(26, 26, 26, .3); color: #1A1A1A; }
 .topbar__mob, .topbar__mob a { color: #6B6460; }
 .topbar__mob .topbar__tag:hover { color: #1A1A1A; }
+
+/* "Annonce" lige til højre for brødkrummerne i artikler og købsguides. */
+.guide__crumbrow { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; min-width: 0; }
+.guide__crumbrow .crumbs { margin-bottom: 0; min-width: 0; }
+.ad-chip { flex: none; padding: 3px 9px 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10.5px; font-weight: 600; letter-spacing: .6px; line-height: 1.4; text-transform: uppercase; color: var(--ink); opacity: .75; text-decoration: none; }
+.ad-chip:hover { opacity: 1; }
+@media (max-width: 640px) { .ad-chip { font-size: 9.5px; padding: 2px 7px 1px; } }
