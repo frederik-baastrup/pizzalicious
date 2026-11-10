@@ -1583,3 +1583,24 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.camp-hero__btn { margin-top: 22px; }
 	.cat-top--camp { padding-top: 18px; }
 }
+
+/* Kampagne- og kategoriheader: mere kompakt (ejerens ønske 10. nov. 2026). */
+.camp-hero__inner { min-height: 0; padding: 36px 24px 34px; max-width: 760px; }
+.camp-hero .crumbs { margin-bottom: 14px; }
+.camp-hero__when { margin-bottom: 8px; font-size: 12px; letter-spacing: 4px; }
+.camp-hero h1 { gap: 4px; }
+.camp-hero__name { font-size: clamp(38px, 5.2vw, 72px); }
+.camp-hero__sub { font-size: clamp(17px, 1.7vw, 22px); }
+.camp-hero__intro { margin-top: 12px; max-width: 600px; font-size: 15.5px; line-height: 1.5; }
+.camp-hero__note { margin-top: 8px; font-size: 14px; }
+.camp-hero__btn { margin-top: 18px; min-height: 44px; padding: 0 22px; font-size: 14.5px; }
+.camp-hero--cat .camp-hero__inner { min-height: 0; padding: 32px 24px 30px; }
+.camp-hero--cat h1 { font-size: clamp(32px, 4vw, 56px); }
+.cat-top--camp { padding-top: 20px; }
+@media (max-width: 640px) {
+	.camp-hero__inner, .camp-hero--cat .camp-hero__inner { padding: 26px 18px 26px; }
+	.camp-hero .crumbs { margin-bottom: 10px; }
+	.camp-hero__intro { font-size: 14.5px; }
+	.camp-hero__btn { margin-top: 16px; }
+	.cat-top--camp { padding-top: 14px; }
+}
