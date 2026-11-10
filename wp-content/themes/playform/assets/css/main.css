@@ -1621,3 +1621,7 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.camp-hero__intro { font-size: 15px; }
 	.cat-top--camp { padding-top: 16px; }
 }
+
+/* "Se alle … tilbud" i kampagneheaderen glider blødt ned til produkterne (10. nov. 2026). */
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+#katalog { scroll-margin-top: 16px; }

@@ -553,3 +553,15 @@
 	track.addEventListener('mouseleave', function () { to(1); });
 })();
 
+
+// Kampagneheaderens knap: glid blødt ned til produkterne i stedet for at hoppe (også i browsere uden CSS scroll-behavior).
+document.addEventListener('click', function (e) {
+	var a = e.target.closest && e.target.closest('.camp-hero__btn[href^="#"]');
+	if (!a) return;
+	var t = document.querySelector(a.getAttribute('href'));
+	if (!t) return;
+	e.preventDefault();
+	var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	t.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+	if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+});
