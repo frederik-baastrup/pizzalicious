@@ -299,9 +299,11 @@ function playform_catalog_state(): array {
 		$tags[] = [ 'label' => '"' . $q . '"', 'url' => remove_query_arg( [ 'q', 'paged' ] ) ];
 	}
 
-	$pct = [];
+	$pct  = [];
+	$save = [];
 	foreach ( $matching as $id ) {
 		$pct[ $id ] = [ (int) ! empty( $meta[ $id ]['_pf_in_stock'] ), (int) ( $meta[ $id ]['_pct'] ?? 0 ) ];
+		$save[ $id ] = [ (int) ! empty( $meta[ $id ]['_pf_in_stock'] ), (int) round( (float) ( $meta[ $id ]['_save'] ?? 0 ) ), (int) ( $meta[ $id ]['_pct'] ?? 0 ) ];
 	}
 	// "Mest populære": vi har ingen salgstal, så vi vægter det, almindelige købere typisk vælger: på lager,
 	// en pris tæt på det typiske i kategorien (ikke de dyreste specialmaskiner), flere butikker og tilbud.
@@ -322,7 +324,7 @@ function playform_catalog_state(): array {
 		$score += ! empty( $m['_pct'] ) ? 0.3 : 0.0; // på tilbud
 		$pop[ $id ] = [ (int) ! empty( $m['_pf_in_stock'] ), $score ];
 	}
-	$state = [ 'ids' => $matching, 'facets' => $facets, 'tags' => $tags, 'total' => count( $matching ), 'q' => $q, 'pct' => $pct, 'pop' => $pop ];
+	$state = [ 'ids' => $matching, 'facets' => $facets, 'tags' => $tags, 'total' => count( $matching ), 'q' => $q, 'pct' => $pct, 'save' => $save, 'pop' => $pop ];
 	return $state;
 }
 
@@ -352,6 +354,14 @@ add_action(
 			case 'nyeste':
 				$q->set( 'orderby', [ 'stock' => 'DESC', 'date' => 'DESC' ] );
 				break;
+			case 'besparelse':
+				// Flest kroner sparet først (ejerens valg 10. nov. 2026): en stor maskine med 25 % rabat inspirerer mere end
+				// et filter til 20 kr med 86 %. Standard på tilbuds- og kampagnesider; "Største rabat" sorterer stadig efter %.
+				$ids  = $state['ids'];
+				$save = $state['save'] ?? [];
+				usort( $ids, static fn( $a, $b ) => ( $save[ $b ] ?? [ 0, 0, 0 ] ) <=> ( $save[ $a ] ?? [ 0, 0, 0 ] ) ?: $a <=> $b );
+				playform_catalog_page_slice( $q, $ids );
+				break;
 			case 'rabat':
 				// Største rabat først – samme rabat som på produktkortet. Sorteres her i PHP: en meta_query med
 				// EXISTS/NOT EXISTS i OR joiner alle metafelter og sorterede efter tilfældige værdier.
@@ -371,11 +381,11 @@ add_action(
 	20
 );
 
-/** Valgt sortering. Tilbudssider sorterer som standard efter største rabat. */
+/** Valgt sortering. Tilbudssider sorterer som standard efter største besparelse i kr. */
 function playform_current_sort(): string {
 	$sort = isset( $_GET['sortering'] ) ? sanitize_key( $_GET['sortering'] ) : ''; // phpcs:ignore
-	$ok   = [ 'populaer', 'pris-lav', 'pris-hoj', 'nyeste', 'rabat' ];
-	return in_array( $sort, $ok, true ) ? $sort : ( playform_is_tilbud_page() ? 'rabat' : 'populaer' );
+	$ok   = [ 'populaer', 'besparelse', 'pris-lav', 'pris-hoj', 'nyeste', 'rabat' ];
+	return in_array( $sort, $ok, true ) ? $sort : ( playform_is_tilbud_page() ? 'besparelse' : 'populaer' );
 }
 
 function playform_catalog_state_for_query( WP_Query $q ): array {
@@ -471,6 +481,7 @@ function playform_catalog_meta( array $ids, string $cat ): array {
 		if ( ! empty( $m['_pf_shop_sale'] ) && ! empty( $m['_pf_in_stock'] ) ) {
 			$was       = (float) ( $m['_pf_sale_ref'] ?? 0 ) ?: (float) ( $m['_pf_sale_list'] ?? 0 );
 			$m['_pct'] = playform_save_pct( (float) ( $m['_price'] ?? 0 ), $was );
+			$m['_save'] = max( 0.0, $was - (float) ( $m['_price'] ?? 0 ) ); // sparet i kr
 		}
 		// Tilbudssider viser kun produkter, butikken har på tilbud.
 		if ( $tilbud && empty( $m['_pf_shop_sale'] ) ) {

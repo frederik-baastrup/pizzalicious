@@ -232,7 +232,7 @@ if ( $campaign || $offer_hero ) :
 					<label for="sortering">Sortér efter</label>
 					<span class="select">
 						<select id="sortering" name="sortering" data-autosubmit>
-							<?php foreach ( [ 'populaer' => 'Mest populære', 'rabat' => 'Største rabat', 'pris-lav' => 'Laveste pris', 'pris-hoj' => 'Højeste pris', 'nyeste' => 'Nyeste' ] as $k => $slabel ) : ?>
+							<?php foreach ( [ 'populaer' => 'Mest populære', 'besparelse' => 'Største besparelse', 'rabat' => 'Største rabat i %', 'pris-lav' => 'Laveste pris', 'pris-hoj' => 'Højeste pris', 'nyeste' => 'Nyeste' ] as $k => $slabel ) : ?>
 								<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $sort, $k ); ?>><?php echo esc_html( $slabel ); ?></option>
 							<?php endforeach; ?>
 						</select>
