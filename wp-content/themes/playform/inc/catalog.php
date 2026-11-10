@@ -150,7 +150,7 @@ function playform_catalog_state(): array {
 	$cache_key = '';
 	if ( empty( $args['s'] ) ) {
 		$last      = (array) get_option( 'playform_feeds_last_run', [] );
-		$cache_key = 'pf_catmeta3_' . md5( $cat . '|' . (int) $tilbud . '|' . ( $last['finished'] ?? '' ) . '|' . PLAYFORM_THEME_VERSION . '|' . count( $ids ) . '|' . ( $ids ? max( $ids ) : 0 ) );
+		$cache_key = 'pf_catmeta4_' . md5( $cat . '|' . (int) $tilbud . '|' . ( $last['finished'] ?? '' ) . '|' . PLAYFORM_THEME_VERSION . '|' . count( $ids ) . '|' . ( $ids ? max( $ids ) : 0 ) );
 		$cached    = get_transient( $cache_key );
 		if ( is_array( $cached ) ) {
 			$meta = $cached;
