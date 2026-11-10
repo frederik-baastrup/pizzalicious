@@ -101,6 +101,15 @@ function playform_purge_cache( string $group = 'terms' ): string {
 		return 'none';
 	}
 	$urls = playform_purge_urls( $group );
+	if ( 'first' === $group ) {
+		// Disse sider blev ikke tømt med én enkelt adresse: tøm også uden skråstreg og med underadresser.
+		foreach ( $urls as $u ) {
+			$urls[] = untrailingslashit( $u );
+		}
+		if ( class_exists( $S ) && method_exists( $S, 'purge_cache_request' ) ) {
+			$purge = static fn( string $u ) => $S::purge_cache_request( $u, true );
+		}
+	}
 	foreach ( $urls as $i => $u ) {
 		if ( $i ) {
 			usleep( 1100000 ); // SiteGround: højst én tømning pr. sekund
