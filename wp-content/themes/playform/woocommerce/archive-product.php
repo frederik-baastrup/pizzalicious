@@ -83,13 +83,39 @@ $updated = playform_last_update_label();
 $has_offer_tab = $top && in_array( $top->slug, playform_tilbud_slugs(), true );
 global $wp_query;
 ?>
-<section class="wrap cat-top">
+<?php if ( $campaign ) :
+	// Kampagnesiden: stort mørkt baggrundsbillede med navn, intro og knap centreret (ejerens valg 10. nov. 2026).
+	$cdef  = playform_campaign_defs()[ $campaign ];
+	[ $cs, $ce ] = playform_campaign_next_period( $campaign, playform_campaign_today() );
+	$csame = $cs->format( 'Y-m' ) === $ce->format( 'Y-m' ) && '01' === $cs->format( 'd' ) && $ce->format( 't' ) === $ce->format( 'd' );
+	$cwhen = $csame ? 'Hele ' . wp_date( 'F', $cs->getTimestamp() ) : wp_date( 'j. F', $cs->getTimestamp() ) . ' – ' . wp_date( 'j. F', $ce->getTimestamp() );
+	if ( $cnote ) {
+		$cwhen = 'Næste gang: ' . ( 'black-friday' === $campaign ? wp_date( 'j. F Y', playform_black_friday( (int) $cs->format( 'Y' ) )->getTimestamp() ) : wp_date( 'j. F Y', $cs->getTimestamp() ) );
+	}
+	$csub = trim( (string) ( explode( ' – ', $title, 2 )[1] ?? '' ) );
+	?>
+<section class="camp-hero">
+	<div class="camp-hero__inner">
+		<?php playform_breadcrumbs( $crumb ); ?>
+		<p class="camp-hero__when"><?php echo esc_html( $cwhen ); ?></p>
+		<h1><span class="camp-hero__name"><?php echo esc_html( $cdef['name'] ); ?></span><?php if ( $csub ) : ?><span class="screen-reader-text"> – </span><span class="camp-hero__sub"><?php echo esc_html( $csub ); ?></span><?php endif; ?></h1>
+		<?php if ( $intro ) : ?><p class="camp-hero__intro"><?php echo esc_html( wp_strip_all_tags( $intro ) ); ?></p><?php endif; ?>
+		<?php if ( $cnote ) : ?><p class="camp-hero__note"><?php echo esc_html( $cnote ); ?></p><?php endif; ?>
+		<?php if ( ! empty( $state['total'] ) ) : ?>
+			<a class="camp-hero__btn" href="#katalog">Se alle <?php echo (int) $state['total']; ?> tilbud<?php echo playform_icon( 'chevron', 16, 1.8 ); // phpcs:ignore ?></a>
+		<?php endif; ?>
+	</div>
+</section>
+<?php endif; ?>
+<section class="wrap cat-top<?php echo $campaign ? ' cat-top--camp' : ''; ?>">
+	<?php if ( ! $campaign ) : ?>
 	<?php playform_breadcrumbs( $crumb ); ?>
 	<div class="cat-top__head">
 		<h1><?php echo esc_html( $title ); ?></h1>
 		<?php if ( $intro ) : ?><p><?php echo esc_html( wp_strip_all_tags( $intro ) ); ?></p><?php endif; ?>
 		<?php if ( $cnote ) : ?><p class="campaign-note"><?php echo esc_html( $cnote ); ?></p><?php endif; ?>
 	</div>
+	<?php endif; ?>
 	<?php if ( $tabs || $has_offer_tab ) : ?>
 		<nav class="tabs" aria-label="Underkategorier">
 			<?php $on = ! $parent && ! $offers; ?>
@@ -119,7 +145,7 @@ global $wp_query;
 	<?php endif; ?>
 </section>
 
-<section class="wrap catalog">
+<section class="wrap catalog" id="katalog">
 	<div class="layout">
 		<aside class="filters" aria-label="Filtre">
 			<details class="filters__mobile" open>

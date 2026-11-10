@@ -1556,3 +1556,30 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .ad-chip { flex: none; padding: 3px 9px 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10.5px; font-weight: 600; letter-spacing: .6px; line-height: 1.4; text-transform: uppercase; color: var(--ink); opacity: .75; text-decoration: none; }
 .ad-chip:hover { opacity: 1; }
 @media (max-width: 640px) { .ad-chip { font-size: 9.5px; padding: 2px 7px 1px; } }
+
+/* Kampagnesider (Black Friday m.fl.): mørkt baggrundsbillede, alt centreret (10. nov. 2026). */
+.camp-hero { --camp-eyebrow: #FF6B5E; --camp-btn: #CE2B37; --camp-btn-ink: #fff; position: relative; color: #fff; background: #0E0D0C url("../img/campaign-hero.jpg") center / cover no-repeat; isolation: isolate; }
+.camp-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 70% 85% at 50% 50%, rgba(12,11,10,.6) 0%, rgba(12,11,10,.9) 100%); }
+.camp-hero__inner { max-width: 860px; margin: 0 auto; padding: 64px 24px 60px; min-height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.camp-hero .crumbs { justify-content: center; margin: 0 0 24px; color: rgba(255,255,255,.65); }
+.camp-hero .crumbs a { color: rgba(255,255,255,.65); }
+.camp-hero .crumbs a:hover { color: #fff; }
+.camp-hero .crumbs [aria-current] { color: #fff; }
+.camp-hero__when { margin: 0 0 14px; font-size: 13px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; color: var(--camp-eyebrow); }
+.camp-hero h1 { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #fff; }
+.camp-hero__name { font-size: clamp(50px, 8vw, 112px); line-height: .9; font-weight: 700; letter-spacing: -.035em; text-transform: uppercase; }
+.camp-hero__sub { font-size: clamp(19px, 2.2vw, 30px); line-height: 1.2; font-weight: 500; letter-spacing: -.01em; color: rgba(255,255,255,.88); }
+.camp-hero__intro { margin: 20px 0 0; max-width: 640px; font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.78); }
+.camp-hero__note { margin: 12px 0 0; max-width: 640px; font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,.68); }
+.camp-hero__btn { margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 26px; border-radius: 999px; background: var(--camp-btn); color: var(--camp-btn-ink); font-size: 15px; font-weight: 700; text-decoration: none; transition: transform .2s ease, filter .2s ease; }
+.camp-hero__btn:hover { color: var(--camp-btn-ink); filter: brightness(1.06); transform: translateY(-1px); }
+.camp-hero__btn svg { transform: rotate(0deg); }
+.cat-top--camp { padding-top: 28px; }
+@media (max-width: 640px) {
+	.camp-hero__inner { padding: 40px 18px 40px; min-height: 0; }
+	.camp-hero .crumbs { margin-bottom: 18px; }
+	.camp-hero__when { font-size: 11.5px; letter-spacing: 3.5px; }
+	.camp-hero__intro { font-size: 15.5px; margin-top: 16px; }
+	.camp-hero__btn { margin-top: 22px; }
+	.cat-top--camp { padding-top: 18px; }
+}
