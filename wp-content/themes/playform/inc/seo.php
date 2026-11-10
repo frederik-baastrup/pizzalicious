@@ -112,14 +112,14 @@ add_action(
 		}
 		$desc = '';
 		if ( is_front_page() ) {
-			$desc = 'Find pizzaovne, pizzasten, pizzaspader og alt til hjemmelavet pizza fra danske webshops. Se priser og tilbud side om side, og få hjælp i vores købsguides.';
+			$desc = 'Find pizzaovne, pizzasten, pizzaspader og alt til hjemmelavet pizza fra de butikker, vi samarbejder med. Se priser og tilbud side om side, og få hjælp i vores købsguides.';
 		} elseif ( function_exists( 'playform_current_campaign' ) && playform_current_campaign() ) {
 			$desc = playform_campaign_page_text( playform_current_campaign() )['intro'];
 		} elseif ( playform_is_tilbud_page() ) {
 			$t    = get_queried_object();
-			$desc = sprintf( 'Tilbud på %s fra danske webshops lige nu – butikkernes egne nedsatte priser på én side. Du køber direkte hos butikken.', $t instanceof WP_Term ? mb_strtolower( playform_cat_label( $t ) ) : playform_site( 'niche' ) );
+			$desc = sprintf( 'Tilbud på %s fra de butikker, vi samarbejder med lige nu – butikkernes egne nedsatte priser på én side. Du køber direkte hos butikken.', $t instanceof WP_Term ? mb_strtolower( playform_cat_label( $t ) ) : playform_site( 'niche' ) );
 		} elseif ( is_tax( 'product_cat' ) ) {
-			$desc = wp_strip_all_tags( term_description() ) ?: sprintf( 'Se %s fra danske webshops samlet ét sted på %s. Sammenlign priser, se butikkernes tilbud og find den rigtige model.', mb_strtolower( playform_cat_label( get_queried_object() ) ), playform_site( 'name' ) );
+			$desc = wp_strip_all_tags( term_description() ) ?: sprintf( 'Se %s fra de butikker, vi samarbejder med, samlet ét sted på %s. Sammenlign priser, se butikkernes tilbud og find den rigtige model.', mb_strtolower( playform_cat_label( get_queried_object() ) ), playform_site( 'name' ) );
 		} elseif ( is_post_type_archive( 'product' ) ) {
 			$desc = sprintf( 'Alle produkter på %s: %s fra de butikker, vi samarbejder med. Priser og lager opdateres to gange i døgnet.', playform_site( 'name' ), playform_site( 'niche' ) );
 		} elseif ( is_singular( 'product' ) ) {

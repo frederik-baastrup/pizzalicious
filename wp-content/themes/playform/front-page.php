@@ -111,7 +111,7 @@ $has_deals = count( $deals ) >= 4;
 ?>
 
 <section class="wrap hero-wrap">
-	<h1 class="screen-reader-text"><?php echo esc_html( playform_site( 'name' ) . ' – ' . playform_site( 'niche' ) . ' fra danske webshops samlet ét sted' ); ?></h1>
+	<h1 class="screen-reader-text"><?php echo esc_html( playform_site( 'name' ) . ' – ' . playform_site( 'niche' ) . ' fra de butikker, vi samarbejder med, samlet ét sted' ); ?></h1>
 	<div class="hero">
 		<?php foreach ( $hero as $i => $h ) : ?>
 			<?php if ( $i === 1 ) : ?><div class="hero__side"><?php endif; ?>
@@ -236,6 +236,6 @@ if ( $posts ) {
 
 <?php
 $front   = get_post( (int) get_option( 'page_on_front' ) );
-$seo     = $front && trim( $front->post_content ) ? apply_filters( 'the_content', $front->post_content ) : '<h2>Pizzaovne og pizzaudstyr fra danske webshops – samlet ét sted</h2><p>' . esc_html( playform_site( 'name' ) ) . ' er stedet for dig, der vil bage pizza derhjemme. Her finder du pizzaovne, pizzasten, pizzaspader, mel og meget mere fra en række danske webshops. Priser og lagerstatus bliver hentet morgen og aften, så du kan se, hvad ovnen koster i dag, og hvilken butik der har den på lager. Klik videre, og afslut købet hos butikken, som du plejer.</p><h3>Gas, træ eller el?</h3><p>Det første valg er brændslet. En gas pizzaovn er hurtig at tænde og nem at styre. En ovn til træ eller træpiller giver røgsmag og den klassiske oplevelse, men kræver lidt mere øvelse. En elektrisk pizzaovn kan stå i køkkenet og bruges hele året. Har du ikke plads til en pizzaovn, giver en pizzasten eller et bagestål en sprød bund i den almindelige ovn.</p><h3>Det skal du også bruge</h3><p>En pizzaspade til at sætte pizzaen ind og en mindre spade til at vende den, et infrarødt termometer til at måle stenens temperatur og en pizzaskærer. Til dejen er godt mel og tid vigtigere end udstyr – men en æltemaskine og et par dejkasser gør det nemmere at lave mange pizzaer på én gang.</p>';
+$seo     = $front && trim( $front->post_content ) ? apply_filters( 'the_content', $front->post_content ) : '<h2>Pizzaovne og pizzaudstyr fra de butikker, vi samarbejder med – samlet ét sted</h2><p>' . esc_html( playform_site( 'name' ) ) . ' er stedet for dig, der vil bage pizza derhjemme. Her finder du pizzaovne, pizzasten, pizzaspader, mel og meget mere fra en række danske webshops. Priser og lagerstatus bliver hentet morgen og aften, så du kan se, hvad ovnen koster i dag, og hvilken butik der har den på lager. Klik videre, og afslut købet hos butikken, som du plejer.</p><h3>Gas, træ eller el?</h3><p>Det første valg er brændslet. En gas pizzaovn er hurtig at tænde og nem at styre. En ovn til træ eller træpiller giver røgsmag og den klassiske oplevelse, men kræver lidt mere øvelse. En elektrisk pizzaovn kan stå i køkkenet og bruges hele året. Har du ikke plads til en pizzaovn, giver en pizzasten eller et bagestål en sprød bund i den almindelige ovn.</p><h3>Det skal du også bruge</h3><p>En pizzaspade til at sætte pizzaen ind og en mindre spade til at vende den, et infrarødt termometer til at måle stenens temperatur og en pizzaskærer. Til dejen er godt mel og tid vigtigere end udstyr – men en æltemaskine og et par dejkasser gør det nemmere at lave mange pizzaer på én gang.</p>';
 get_template_part( 'template-parts/seo-text', null, [ 'html' => $seo, 'right' => true ] );
 get_footer();

@@ -35,7 +35,7 @@ function playform_legal_privacy(): string {
 <p>{NAME} ({DOMAIN}) drives af {COMPANY}, {ADDRESS}, CVR {CVR}. Du kan altid kontakte os på <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
 
 <h2>Hvad {NAME} er</h2>
-<p>{NAME} samler {NICHE} fra flere danske webshops ét sted. Du kan ikke købe noget direkte hos os. Når du klikker på "Gå til butik", sendes du videre til butikken, og det er butikken, der behandler dit køb og dine oplysninger i forbindelse med det.</p>
+<p>{NAME} samler {NICHE} fra de butikker, vi samarbejder med, ét sted. Du kan ikke købe noget direkte hos os. Når du klikker på "Gå til butik", sendes du videre til butikken, og det er butikken, der behandler dit køb og dine oplysninger i forbindelse med det.</p>
 
 <h2>Hvilke oplysninger vi behandler</h2>
 <h3>Når du besøger siden</h3>
