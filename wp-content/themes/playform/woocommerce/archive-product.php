@@ -83,18 +83,27 @@ $updated = playform_last_update_label();
 $has_offer_tab = $top && in_array( $top->slug, playform_tilbud_slugs(), true );
 global $wp_query;
 ?>
-<?php if ( $campaign ) :
-	// Kampagnesiden: stort mørkt baggrundsbillede med navn, intro og knap centreret (ejerens valg 10. nov. 2026).
-	$cdef  = playform_campaign_defs()[ $campaign ];
-	[ $cs, $ce ] = playform_campaign_next_period( $campaign, playform_campaign_today() );
-	$csame = $cs->format( 'Y-m' ) === $ce->format( 'Y-m' ) && '01' === $cs->format( 'd' ) && $ce->format( 't' ) === $ce->format( 'd' );
-	$cwhen = $csame ? 'Hele ' . wp_date( 'F', $cs->getTimestamp() ) : wp_date( 'j. F', $cs->getTimestamp() ) . ' – ' . wp_date( 'j. F', $ce->getTimestamp() );
-	if ( $cnote ) {
-		$cwhen = 'Næste gang: ' . ( 'black-friday' === $campaign ? wp_date( 'j. F Y', playform_black_friday( (int) $cs->format( 'Y' ) )->getTimestamp() ) : wp_date( 'j. F Y', $cs->getTimestamp() ) );
+<?php
+// Kampagnesider og /tilbud/: stort mørkt baggrundsbillede med navn, intro og knap centreret (ejerens valg 10. nov. 2026).
+$offer_hero = ! $campaign && $offers && ! $is_cat && '' === $search;
+if ( $campaign || $offer_hero ) :
+	if ( $campaign ) {
+		$cdef  = playform_campaign_defs()[ $campaign ];
+		[ $cs, $ce ] = playform_campaign_next_period( $campaign, playform_campaign_today() );
+		$csame = $cs->format( 'Y-m' ) === $ce->format( 'Y-m' ) && '01' === $cs->format( 'd' ) && $ce->format( 't' ) === $ce->format( 'd' );
+		$cwhen = $csame ? 'Hele ' . wp_date( 'F', $cs->getTimestamp() ) : wp_date( 'j. F', $cs->getTimestamp() ) . ' – ' . wp_date( 'j. F', $ce->getTimestamp() );
+		if ( $cnote ) {
+			$cwhen = 'Næste gang: ' . ( 'black-friday' === $campaign ? wp_date( 'j. F Y', playform_black_friday( (int) $cs->format( 'Y' ) )->getTimestamp() ) : wp_date( 'j. F Y', $cs->getTimestamp() ) );
+		}
+		$csub = trim( (string) ( explode( ' – ', $title, 2 )[1] ?? '' ) );
+	} else {
+		$cdef  = [ 'name' => 'Tilbud' ];
+		$cwhen = sprintf( 'Højst %d dage gamle', class_exists( '\Playform\Feeds\Sales' ) ? \Playform\Feeds\Sales::DAYS : 14 );
+		$csub  = 'Butikkernes egne tilbud på ' . playform_site( 'niche' );
 	}
-	$csub = trim( (string) ( explode( ' – ', $title, 2 )[1] ?? '' ) );
+	$chero = get_template_directory() . '/assets/img/campaign-hero.jpg';
 	?>
-<section class="camp-hero">
+<section class="camp-hero" style="--hero-img: url('<?php echo esc_url( playform_asset( 'campaign-hero.jpg' ) . '?v=' . ( is_readable( $chero ) ? filemtime( $chero ) : 1 ) ); ?>')">
 	<div class="camp-hero__inner">
 		<?php playform_breadcrumbs( $crumb ); ?>
 		<p class="camp-hero__when"><?php echo esc_html( $cwhen ); ?></p>
@@ -107,8 +116,8 @@ global $wp_query;
 	</div>
 </section>
 <?php endif; ?>
-<section class="wrap cat-top<?php echo $campaign ? ' cat-top--camp' : ''; ?>">
-	<?php if ( ! $campaign ) : ?>
+<section class="wrap cat-top<?php echo ( $campaign || $offer_hero ) ? ' cat-top--camp' : ''; ?>">
+	<?php if ( ! $campaign && ! $offer_hero ) : ?>
 	<?php playform_breadcrumbs( $crumb ); ?>
 	<div class="cat-top__head">
 		<h1><?php echo esc_html( $title ); ?></h1>
