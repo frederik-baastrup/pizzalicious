@@ -1604,3 +1604,20 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.camp-hero__btn { margin-top: 16px; }
 	.cat-top--camp { padding-top: 14px; }
 }
+
+/* En anelse større end den kompakte udgave (10. nov. 2026). */
+.camp-hero__inner { padding: 48px 24px 46px; max-width: 800px; }
+.camp-hero .crumbs { margin-bottom: 18px; }
+.camp-hero__when { margin-bottom: 10px; }
+.camp-hero__name { font-size: clamp(42px, 6vw, 86px); }
+.camp-hero__sub { font-size: clamp(18px, 1.9vw, 25px); }
+.camp-hero__intro { margin-top: 14px; max-width: 620px; font-size: 16px; }
+.camp-hero__btn { margin-top: 22px; min-height: 46px; padding: 0 24px; font-size: 15px; }
+.camp-hero--cat .camp-hero__inner { padding: 44px 24px 42px; }
+.camp-hero--cat h1 { font-size: clamp(36px, 4.6vw, 64px); }
+.cat-top--camp { padding-top: 24px; }
+@media (max-width: 640px) {
+	.camp-hero__inner, .camp-hero--cat .camp-hero__inner { padding: 32px 18px 32px; }
+	.camp-hero__intro { font-size: 15px; }
+	.cat-top--camp { padding-top: 16px; }
+}
