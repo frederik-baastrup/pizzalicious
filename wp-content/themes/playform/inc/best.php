@@ -585,6 +585,8 @@ function playform_best_kw( string $kw ): string {
 			$w[ $i ] .= ( 'let' === $l ? 'te' : 'e' );
 		} elseif ( preg_match( '/(sk|bar|lig|ig)$/u', $l ) ) {
 			$w[ $i ] .= 'e';
+		} elseif ( preg_match( '/løst?$/u', $l ) ) {
+			$w[ $i ] = preg_replace( '/t$/u', '', $w[ $i ] ) . 'e'; // trådløst → trådløse
 		} elseif ( preg_match( '/bart$/u', $l ) ) {
 			$w[ $i ] = mb_substr( $w[ $i ], 0, -1 ) . 'e';
 		} elseif ( preg_match( '/[^e]et$/u', $l ) ) {
