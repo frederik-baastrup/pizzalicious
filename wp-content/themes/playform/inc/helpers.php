@@ -362,19 +362,27 @@ add_filter(
 			return $html;
 		}
 		$slug = (string) get_post_field( 'post_name', get_the_ID() );
+		// Alle Partner-ads-links i artiklen: sporing (uid/uid2) og rel="sponsored nofollow" (Googles regel for betalte links).
 		return (string) preg_replace_callback(
-			'~href=(["\'])(https?://(?:www\.)?partner-ads\.com/[^"\']+)\1~i',
+			'~<a\s[^>]*href=(["\'])(https?://(?:www\.)?partner-ads\.com/[^"\']+)\1[^>]*>~i',
 			static function ( array $m ) use ( $slug ): string {
+				$tag = $m[0];
 				$url = html_entity_decode( $m[2], ENT_QUOTES );
-				if ( str_contains( $url, 'uid=' ) ) {
-					return $m[0];
+				if ( ! str_contains( $url, 'uid=' ) ) {
+					if ( preg_match( '~^https?://(?:www\.)?partner-ads\.com/dk/c/p/(\d+)/b/(\d+)/(.+)$~i', $url, $d ) ) {
+						$url = 'https://www.partner-ads.com/dk/klikbanner.php?partnerid=' . $d[1] . '&bannerid=' . $d[2] . '&htmlurl=' . $d[3];
+					}
+					if ( str_contains( $url, 'klikbanner.php' ) ) {
+						$tag = str_replace( $m[1] . $m[2] . $m[1], $m[1] . esc_attr( playform_aff_url( $url, $slug, 'artikel' ) ) . $m[1], $tag );
+					}
 				}
-				if ( preg_match( '~^https?://(?:www\.)?partner-ads\.com/dk/c/p/(\d+)/b/(\d+)/(.+)$~i', $url, $d ) ) {
-					$url = 'https://www.partner-ads.com/dk/klikbanner.php?partnerid=' . $d[1] . '&bannerid=' . $d[2] . '&htmlurl=' . $d[3];
-				} elseif ( ! str_contains( $url, 'klikbanner.php' ) ) {
-					return $m[0];
+				if ( preg_match( '~\srel=(["\'])([^"\']*)\1~i', $tag, $r ) ) {
+					$rel = array_unique( array_merge( preg_split( '/\s+/', trim( $r[2] ) ), [ 'sponsored', 'nofollow' ] ) );
+					$tag = str_replace( $r[0], ' rel="' . esc_attr( trim( implode( ' ', array_filter( $rel ) ) ) ) . '"', $tag );
+				} else {
+					$tag = preg_replace( '~^<a\s~i', '<a rel="sponsored nofollow" ', $tag );
 				}
-				return 'href=' . $m[1] . esc_attr( playform_aff_url( $url, $slug, 'artikel' ) ) . $m[1];
+				return $tag;
 			},
 			$html
 		);
