@@ -354,10 +354,16 @@
 		});
 	});
 
-	// Filtre er foldet sammen på mobil. Kommer man fra en prisknap (#produkter), forbliver panelet lukket.
-	if (window.matchMedia('(max-width: 900px)').matches) {
-		var f = document.querySelector('.filters__mobile');
-		if (f && (!document.querySelector('.tags') || location.hash === '#produkter')) f.removeAttribute('open');
+	// Filtre er foldet sammen på mobil. Panelet står kun åbent, når man lige har klikket på et valg i selve panelet
+	// (så man kan vælge flere); kategorifaner, prisknapper og links udefra åbner det ikke (ejerens ønske 12. nov. 2026).
+	var f = document.querySelector('.filters__mobile');
+	if (f) {
+		var keep = false;
+		try { keep = sessionStorage.getItem('pf-fopen') === '1'; sessionStorage.removeItem('pf-fopen'); } catch (e) {}
+		if (window.matchMedia('(max-width: 900px)').matches && (!keep || location.hash === '#produkter')) f.removeAttribute('open');
+		f.addEventListener('click', function (e) {
+			if (e.target.closest('a.opt, .filters__head a, .fsec a')) { try { sessionStorage.setItem('pf-fopen', '1'); } catch (err) {} }
+		});
 	}
 	// Prisknapperne: rul rækken, så den valgte knap står synligt (i midten) i stedet for at starte forfra
 	var pp = document.querySelector('.pricepills');
