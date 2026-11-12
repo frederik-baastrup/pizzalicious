@@ -212,16 +212,21 @@ function playform_author_profile(): void {
 add_action(
 	'init',
 	static function (): void {
-		if ( get_option( 'playform_author_photo_v' ) === '2' ) {
+		if ( get_option( 'playform_author_photo_v' ) === '3' ) {
 			return;
 		}
-		foreach ( get_users( [ 'meta_key' => 'pf_photo', 'fields' => 'ID' ] ) as $id ) {
+		foreach ( get_users( [ 'fields' => 'ID' ] ) as $id ) {
 			$photo = (string) get_user_meta( $id, 'pf_photo', true );
 			if ( str_ends_with( $photo, 'authors/frederik-baastrup.jpg' ) ) {
 				update_user_meta( $id, 'pf_photo', playform_asset( 'authors/frederik-baastrup-2.jpg' ) );
 			}
+			// Den gamle standardtekst sagde "fra danske webshops" – vi viser kun butikker, vi samarbejder med.
+			$bio = (string) get_user_meta( $id, 'description', true );
+			if ( str_contains( $bio, 'fra danske webshops' ) ) {
+				update_user_meta( $id, 'description', str_replace( 'fra danske webshops', 'fra de butikker, vi samarbejder med,', $bio ) );
+			}
 		}
-		update_option( 'playform_author_photo_v', '2', false );
+		update_option( 'playform_author_photo_v', '3', false );
 		if ( function_exists( 'sg_cachepress_purge_cache' ) ) {
 			sg_cachepress_purge_cache(); // billedet står på alle artikler og guides
 		}
