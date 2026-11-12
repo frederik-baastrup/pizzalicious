@@ -304,8 +304,11 @@ function playform_post_image( $post, int $min_width, string $size = 'large' ): s
  * fordi butikkens adresse i htmlurl ikke er kodet og skal stå til sidst.
  */
 function playform_aff_url( string $url, string $uid, string $uid2 = '' ): string {
-	if ( ! str_contains( $url, 'partner-ads.com' ) || str_contains( $url, 'uid=' ) ) {
+	if ( ! str_contains( $url, 'partner-ads.com' ) ) {
 		return $url;
+	}
+	if ( str_contains( $url, 'uid=' ) ) {
+		return function_exists( 'playform_go_url' ) ? playform_go_url( $url ) : $url;
 	}
 	$clean = static fn( string $v ): string => substr( sanitize_title( $v ), 0, 50 );
 	// uid2 starter med sitets navn (kitzhen-produktside, koffee-bedste-kaffemaskine …), så salg kan skelnes mellem
@@ -318,7 +321,9 @@ function playform_aff_url( string $url, string $uid, string $uid2 = '' ): string
 		$pos = strpos( $url, '&amp;htmlurl=' );
 		$add = str_replace( '&', '&amp;', $add );
 	}
-	return false === $pos ? $url . $add : substr( $url, 0, $pos ) . $add . substr( $url, $pos );
+	$out = false === $pos ? $url . $add : substr( $url, 0, $pos ) . $add . substr( $url, $pos );
+	// Klikket går gennem /go/ (inc/go.php): lukket for robotter, tælles og sendes videre med samme uid/uid2.
+	return function_exists( 'playform_go_url' ) ? playform_go_url( $out ) : $out;
 }
 
 /**
