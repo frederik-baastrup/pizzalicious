@@ -348,3 +348,36 @@ function playform_post_ad_label( $p ): string {
 	}
 	return '';
 }
+
+/**
+ * Gamle Partner-ads-links i artikler (flyttet 1:1 fra de gamle sites) får sporing, så Partner-ads viser, hvilken
+ * artikel klik og salg kom fra: uid = artiklens slug, uid2 = "<site>-artikel" (12. nov. 2026). Det gamle deeplink-format
+ * /dk/c/p/<partner>/b/<banner>/<url> omskrives til klikbanner.php med htmlurl – samme banner og samme destination.
+ * Links, der allerede har uid (købsguides, produktkort), røres ikke; andre links (fx solgte links) røres slet ikke.
+ */
+add_filter(
+	'the_content',
+	static function ( string $html ): string {
+		if ( ! is_singular( 'post' ) || ! str_contains( $html, 'partner-ads.com' ) ) {
+			return $html;
+		}
+		$slug = (string) get_post_field( 'post_name', get_the_ID() );
+		return (string) preg_replace_callback(
+			'~href=(["\'])(https?://(?:www\.)?partner-ads\.com/[^"\']+)\1~i',
+			static function ( array $m ) use ( $slug ): string {
+				$url = html_entity_decode( $m[2], ENT_QUOTES );
+				if ( str_contains( $url, 'uid=' ) ) {
+					return $m[0];
+				}
+				if ( preg_match( '~^https?://(?:www\.)?partner-ads\.com/dk/c/p/(\d+)/b/(\d+)/(.+)$~i', $url, $d ) ) {
+					$url = 'https://www.partner-ads.com/dk/klikbanner.php?partnerid=' . $d[1] . '&bannerid=' . $d[2] . '&htmlurl=' . $d[3];
+				} elseif ( ! str_contains( $url, 'klikbanner.php' ) ) {
+					return $m[0];
+				}
+				return 'href=' . $m[1] . esc_attr( playform_aff_url( $url, $slug, 'artikel' ) ) . $m[1];
+			},
+			$html
+		);
+	},
+	20
+);
