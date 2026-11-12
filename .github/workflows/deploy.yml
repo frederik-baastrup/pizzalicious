@@ -3,7 +3,14 @@ name: Udrul til SiteGround
 on:
   push:
     branches: [main]
+    # Ændringer, der ikke påvirker sitet, udrulles ikke (sparer Actions-minutter).
+    paths-ignore: ['CLAUDE.md', '**.md', 'dev/**']
   workflow_dispatch:
+
+# Mange push i træk: kun én udrulning ad gangen, og ventende udrulninger erstattes af den nyeste (sparer minutter).
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
 
 # Mappen på FTP-kontoen og sitets adresse sættes som repository-variabler (Settings → Secrets and variables →
 # Actions → Variables): SITE_DIR (fx pizzalicious.dk/public_html) og SITE_URL (fx https://pizzalicious.dk).
