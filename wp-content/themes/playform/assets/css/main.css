@@ -1459,7 +1459,7 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .sponsored-note b { padding: 3px 9px 2px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
 
 /* Synligt fokus på søgefeltet (tastatur) */
-.search:focus-within { outline: 2px solid var(--ink); outline-offset: 2px; }
+.search:focus-within { outline: none; } /* fokus vises af feltets egen sorte kant – ingen dobbelt ring */
 .pick-alt__ad { margin-top: 6px; font-size: 11.5px; }
 
 /* Fragt under prisen i prislisten */
@@ -1644,3 +1644,5 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .offer__shop .badge + .badge { margin-left: 4px; }
 .offer__was { font-size: 12px; font-weight: 600; color: var(--sale, #B42318); white-space: nowrap; }
 .offer__was s { color: var(--muted-2, #8A8A84); font-weight: 400; }
+
+.prose .ai-note, .ai-note { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line, rgba(0,0,0,.1)); font-size: 12px; line-height: 1.5; color: var(--muted); }
