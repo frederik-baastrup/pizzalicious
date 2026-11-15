@@ -105,6 +105,23 @@ add_shortcode(
 	}
 );
 
+/** Prisfeltet i "Kort fortalt": ved butikkens tilbud vises mærke ("−23 %"), førpris og tilbudspris. */
+function playform_tldr_price( array $d ): string {
+	if ( empty( $d['in_stock'] ) ) {
+		return '<span class="tldr__price">Ikke på lager</span>';
+	}
+	if ( ! empty( $d['sale'] ) && ( $d['was'] ?? 0 ) > $d['price'] ) {
+		$pct = playform_save_pct( (float) $d['price'], (float) $d['was'] );
+		$src = 'shop' === ( $d['was_src'] ?? '' ) ? 'Butikkens førpris' : 'Laveste pris de 30 dage før tilbuddet';
+		return '<span class="tldr__price is-sale"><span class="badge badge--sale">' . ( $pct ? esc_html( '−' . $pct . ' %' ) : 'Tilbud' ) . '</span>'
+			. '<s title="' . esc_attr( $src ) . '">' . esc_html( playform_kr( $d['was'] ) ) . '</s><b>' . esc_html( playform_kr( $d['price'] ) ) . '</b></span>';
+	}
+	if ( ! empty( $d['sale'] ) ) {
+		return '<span class="tldr__price is-sale"><span class="badge badge--sale">Tilbud</span><b>' . esc_html( playform_kr( $d['price'] ) ) . '</b></span>';
+	}
+	return '<span class="tldr__price">' . esc_html( playform_kr( $d['price'] ) ) . '</span>';
+}
+
 // Kort fortalt: de 3 valg med rolle, pris og knap.
 add_shortcode(
 	'fitbase_kort',
@@ -138,7 +155,7 @@ add_shortcode(
 				. '<span class="tldr__n">' . ( $i + 1 ) . '</span>'
 				. ( $d['image'] ? '<img src="' . esc_url( $d['image'] ) . '" alt="" loading="lazy">' : '<span class="tldr__ph"></span>' )
 				. '<span class="tldr__txt"><small>' . esc_html( $pick['role'] ?? '' ) . '</small><b>' . esc_html( $d['name'] ) . '</b></span>'
-				. '<span class="tldr__price">' . ( $d['in_stock'] ? esc_html( playform_kr( $d['price'] ) ) : 'Ikke på lager' ) . '</span></a>';
+				. playform_tldr_price( $d ) . '</a>';
 		}
 		$n = count( playform_picks() );
 		$kw = (string) get_post_meta( get_the_ID(), '_pf_keyword', true );
@@ -193,6 +210,7 @@ add_shortcode(
 			</a>
 			<div class="pick__body">
 				<span class="pick__role"><?php echo esc_html( $pick['role'] ?? '' ); ?></span>
+				<?php if ( $d['sale'] && $d['was'] > $d['price'] ) : $pct = playform_save_pct( (float) $d['price'], (float) $d['was'] ); ?><span class="badge badge--sale pick__sale"><?php echo $pct ? esc_html( 'Tilbud −' . $pct . ' %' ) : 'Tilbud'; ?></span><?php elseif ( $d['sale'] ) : ?><span class="badge badge--sale pick__sale">Tilbud</span><?php endif; ?>
 				<a class="pick__name" href="<?php echo esc_url( $d['url'] ); ?>"><?php echo esc_html( $d['name'] ); ?></a>
 				<?php if ( $rev ) : ?>
 					<span class="pick__basis pick__basis--rev"><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Anmeldt af

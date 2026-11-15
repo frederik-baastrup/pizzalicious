@@ -1646,3 +1646,13 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .offer__was s { color: var(--muted-2, #8A8A84); font-weight: 400; }
 
 .prose .ai-note, .ai-note { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line, rgba(0,0,0,.1)); font-size: 12px; line-height: 1.5; color: var(--muted); }
+
+.tldr__price.is-sale { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; line-height: 1.25; }
+.tldr__price.is-sale b { color: var(--sale); font-weight: 700; }
+.tldr__price.is-sale s { font-size: 12px; font-weight: 400; color: var(--muted); }
+.tldr__price .badge { font-size: 11px; padding: 2px 7px; margin-bottom: 2px; }
+.pick__sale { display: inline-block; margin-left: 8px; font-size: 11px; padding: 2px 8px; vertical-align: middle; }
+@media (max-width: 760px) {
+	.tldr__price.is-sale { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 6px; }
+	.tldr__price .badge { margin: 0; }
+}
