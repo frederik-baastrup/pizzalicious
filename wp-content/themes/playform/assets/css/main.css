@@ -1656,3 +1656,6 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 	.tldr__price.is-sale { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 6px; }
 	.tldr__price .badge { margin: 0; }
 }
+/* "Læs mere"-fade som maske, så den passer til enhver baggrundsfarve (ingen hvid kasse). */
+.seo__text.is-collapsed::after { display: none; }
+.seo__text.is-collapsed { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 96px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 96px), transparent); }
