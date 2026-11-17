@@ -65,10 +65,10 @@ final class Normalizer {
 
 	public static function ean( string $v ): string {
 		$v = preg_replace( '/\D/', '', $v );
-		if ( ! preg_match( '/^(\d{8}|\d{12,14})$/', $v ) || trim( $v, '0' ) === '' ) {
+		if ( ! preg_match( '/^(\d{8}|\d{11,14})$/', $v ) || trim( $v, '0' ) === '' ) {
 			return '';
 		}
-		// UPC-12 og EAN-13 med foranstillede nuller skal matche hinanden.
+		// UPC-12 og EAN-13 med foranstillede nuller skal matche hinanden. 11 cifre = UPC uden det første 0 (fx Weber i nogle feeds).
 		return strlen( $v ) === 8 ? $v : str_pad( ltrim( $v, '0' ), 13, '0', STR_PAD_LEFT );
 	}
 

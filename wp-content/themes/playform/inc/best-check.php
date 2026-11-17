@@ -142,7 +142,8 @@ function playform_best_check( bool $notify = false ): array {
 	wp_mkdir_p( $up['basedir'] . '/playform' );
 	file_put_contents( $up['basedir'] . '/playform/best-check.json', wp_json_encode( $report, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ) ); // phpcs:ignore
 
-	if ( $notify && $report['articles'] ) {
+	// Ingen mail (ejerens ønske 17. nov. 2026): Claude retter guiderne selv i en ugentlig planlagt opgave.
+	if ( false && $notify && $report['articles'] ) {
 		$lines = [];
 		foreach ( $report['articles'] as $a ) {
 			$lines[] = $a['title'] . "\n" . $a['url'];
