@@ -571,3 +571,15 @@ document.addEventListener('click', function (e) {
 	t.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
 	if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
 });
+	if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+});
+
+/* Menneske-tjek til /go/: cookien sættes først, når den besøgende interagerer med siden. */
+(function () {
+	if (document.cookie.indexOf('pf_h=1') !== -1) return;
+	var set = function () {
+		document.cookie = 'pf_h=1;path=/;max-age=31536000;SameSite=Lax';
+		['pointerdown', 'scroll', 'keydown', 'touchstart'].forEach(function (e) { window.removeEventListener(e, set, true); });
+	};
+	['pointerdown', 'scroll', 'keydown', 'touchstart'].forEach(function (e) { window.addEventListener(e, set, { capture: true, passive: true }); });
+})();

@@ -49,6 +49,18 @@ add_action(
 			status_header( 403 );
 			exit;
 		}
+		// Menneske-tjek (17. nov. 2026): sitets JavaScript sætter cookien pf_h, når en besøgende rører siden
+		// (scroll, klik, tast). Uden cookie får man en lille side, der sætter den og sender videre med JavaScript –
+		// robotter uden JavaScript kommer aldrig til Partner-ads, og klikket tælles ikke.
+		if ( empty( $_COOKIE['pf_h'] ) ) {
+			status_header( 200 );
+			header( 'Content-Type: text/html; charset=utf-8' );
+			$again = esc_url( home_url( '/go/' ) . '?u=' . rawurlencode( $u ) . '&s=' . rawurlencode( $s ) );
+			echo '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Videresender …</title>'
+				. '<p style="font:16px system-ui,sans-serif;margin:40px;text-align:center">Du sendes videre til butikken …</p>'
+				. '<script>setTimeout(function(){document.cookie="pf_h=1;path=/;max-age=31536000;SameSite=Lax";location.replace(' . wp_json_encode( html_entity_decode( $again ) ) . ');},300);</script>';
+			exit;
+		}
 		playform_go_count( $dest );
 		header( 'Referrer-Policy: no-referrer-when-downgrade', true );
 		wp_redirect( $dest, 302, 'Playform' );
