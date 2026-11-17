@@ -50,6 +50,22 @@ final class Config {
 			'kirlund'          => [ 'name' => 'Kirlund', 'url' => "$base&bannerid=116914&feedid=4306" ],
 			'ushi'             => [ 'name' => 'Ushi.dk', 'url' => "$base&bannerid=90749&feedid=2345" ],
 			'kitchen-gadget'   => [ 'name' => 'Kitchen Gadget', 'url' => "$base&bannerid=107557&feedid=3406" ],
+			// PizzaPal (godkendt 17. nov. 2026): ren pizzabutik – vores egne regler placerer varerne; gavekort og gebyrer udelukkes af exclude().
+			'pizzapal'         => [
+				'name'         => 'PizzaPal',
+				'url'          => "$base&bannerid=114514&feedid=4039",
+				'refine'       => true,
+				'category_map' => [
+					'pizzaovne'     => 'pizzaovne',
+					'pizzaspader'   => 'pizzaspader',
+					'biscotto sten' => 'pizzasten',
+					'mel'           => 'ingredienser',
+					'gær'           => 'ingredienser',
+					'tomater'       => 'ingredienser',
+					'udstyr'        => 'tilbehoer',
+					'pizzakit'      => 'tilbehoer',
+				],
+			],
 			// Pizzanørderi: ren pizzabutik. Fast oversættelse af butikkens kategorier; 'refine' lader vores regler
 			// placere varen mere præcist (fx pizzasaks i "Andet pizzaudstyr"). Kurser, vin, øl, bøger og merchandise udelukkes.
 			'pizzanoerderi'    => [
