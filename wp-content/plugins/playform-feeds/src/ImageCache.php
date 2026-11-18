@@ -64,7 +64,7 @@ final class ImageCache {
 	/** Henter manglende billeder løbende (hvert 5. minut), så nye produkter hurtigt får et lokalt billede. */
 	public static function register(): void {
 		add_filter( 'cron_schedules', static function ( array $s ): array {
-			$s['pf_5min'] = [ 'interval' => 900, 'display' => 'Hvert 15. minut' ]; // 15 min (18. nov. 2026, spar CPU)
+			$s['pf_5min'] = [ 'interval' => 3600, 'display' => 'Hver time' ]; // kun efter import, ellers stopper den straks (18. nov. 2026, spar CPU)
 			return $s;
 		} );
 		add_action( self::HOOK, [ self::class, 'tick' ] );
