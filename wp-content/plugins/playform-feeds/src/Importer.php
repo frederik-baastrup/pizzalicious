@@ -41,8 +41,20 @@ final class Importer {
 			$this->stats[ $key ] = [ 'name' => $shop['name'], 'read' => 0, 'excluded' => 0, 'new' => 0, 'updated' => 0, 'unchanged' => 0, 'removed' => 0, 'error' => '' ];
 			try {
 				$file = $files[ $key ] ?? FeedReader::download( $shop['url'], $key );
+				// Spar CPU (18. nov. 2026): uændret feed siden sidste fulde import (højst 30 timer siden) springes over.
+				// Butikkens tilbud bliver liggende som de er; næste ændrede feed læses helt igen.
+				$hash = is_file( $file ) ? md5_file( $file ) : '';
+				$prev = (array) get_option( 'playform_feed_hash_' . $key, [] );
+				if ( ! $limit && ! isset( $files[ $key ] ) && '' !== $hash && ( $prev['hash'] ?? '' ) === $hash && ( $prev['time'] ?? 0 ) > time() - 30 * HOUR_IN_SECONDS ) {
+					$this->log( "{$shop['name']}: feedet er uændret – springes over." );
+					$this->stats[ $key ]['unchanged'] = -1;
+					continue;
+				}
 				$this->log( "Læser {$shop['name']} …" );
 				$this->import_shop( $key, $shop['name'], $file, $started, $today, $limit );
+				if ( ! $limit && '' !== $hash ) {
+					update_option( 'playform_feed_hash_' . $key, [ 'hash' => $hash, 'time' => time() ], false );
+				}
 				// Kun når feedet blev læst helt, må manglende varer markeres som væk.
 				if ( ! $limit ) {
 					$gone                           = Offers::deactivate_missing( $key, $started );
