@@ -571,8 +571,6 @@ document.addEventListener('click', function (e) {
 	t.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
 	if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
 });
-	if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
-});
 
 /* Menneske-tjek til /go/: cookien sættes først, når den besøgende interagerer med siden. */
 (function () {
