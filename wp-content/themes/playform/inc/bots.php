@@ -21,7 +21,9 @@ function playform_bot_on_filter_url(): bool {
 
 if ( playform_heavy_bot() || playform_bot_on_filter_url() ) {
 	status_header( 403 );
-	header( 'Cache-Control: public, max-age=86400' );
+	// Aldrig cache: SiteGrounds cache skelner ikke mellem robotter og mennesker (en cachet 403 lukkede forsider ude, 20. nov. 2026).
+	header( 'Cache-Control: no-store, no-cache, private, max-age=0' );
+	header( 'X-Cache-Enabled: False' );
 	header( 'X-Robots-Tag: noindex' );
 	exit;
 }
