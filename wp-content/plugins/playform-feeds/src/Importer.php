@@ -50,6 +50,12 @@ final class Importer {
 					$this->stats[ $key ]['unchanged'] = -1;
 					continue;
 				}
+				// Spar CPU (21. nov. 2026, CPU-kvoten ramt igen): meget store feeds (over 50 MB, fx Proshop) læses højst én gang i døgnet.
+				if ( ! $limit && ! isset( $files[ $key ] ) && is_file( $file ) && filesize( $file ) > 50 * MB_IN_BYTES && ( $prev['time'] ?? 0 ) > time() - 20 * HOUR_IN_SECONDS ) {
+					$this->log( "{$shop['name']}: stort feed – læses kun én gang i døgnet." );
+					$this->stats[ $key ]['unchanged'] = -1;
+					continue;
+				}
 				$this->log( "Læser {$shop['name']} …" );
 				$this->import_shop( $key, $shop['name'], $file, $started, $today, $limit );
 				if ( ! $limit && '' !== $hash ) {
