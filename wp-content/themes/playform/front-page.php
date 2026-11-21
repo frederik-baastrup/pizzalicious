@@ -135,7 +135,7 @@ $has_deals = count( $deals ) >= 4;
 
 	<div class="usp">
 		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'grid', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Alt til pizza</b><span>Ovne, sten og tilbehør fra flere shops</span></span></div>
-		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'refresh', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Opdateret 2× dagligt</b><span>Friske priser og lagertal</span></span></div>
+		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'refresh', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Opdateret hver dag</b><span>Friske priser og lagertal</span></span></div>
 		<div class="usp__item"><span class="usp__icon"><?php echo playform_icon( 'store', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Handl hos webshoppen</b><span>Vi sender dig videre til butikken</span></span></div>
 		<a class="usp__item" href="<?php echo esc_url( playform_tilbud_url() ); ?>"><span class="usp__icon"><?php echo playform_icon( 'tag', 22, 1.4 ); // phpcs:ignore ?></span><span><b>Butikkernes tilbud</b><span>Se de nedsatte priser</span></span></a>
 	</div>

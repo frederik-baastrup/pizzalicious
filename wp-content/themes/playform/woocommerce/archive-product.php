@@ -53,7 +53,7 @@ if ( $campaign ) {
 } elseif ( $is_cat ) {
 	$title = $term->name;
 	$intro = $term->description ?: sprintf(
-		'Her har vi samlet %s fra de butikker, vi samarbejder med, så du slipper for at lede. Priser og lager opdateres to gange om dagen – og du køber hos butikken selv.',
+		'Her har vi samlet %s fra de butikker, vi samarbejder med, så du slipper for at lede. Priser og lager opdateres hver dag – og du køber hos butikken selv.',
 		mb_strtolower( $label )
 	);
 } elseif ( $search !== '' ) {
@@ -292,7 +292,7 @@ if ( $campaign || $offer_hero ) :
 				<div class="empty">
 					<?php if ( $offers && ! $state['tags'] ) : ?>
 						<b>Ingen tilbud<?php echo $is_cat ? ' på ' . esc_html( mb_strtolower( $label ) ) : ''; ?> lige nu</b>
-						<span>Vi tager kun tilbud med, som butikkerne selv har sat op, og som højst er <?php echo (int) ( class_exists( '\Playform\Feeds\Sales' ) ? \Playform\Feeds\Sales::DAYS : 14 ); ?> dage gamle. Kom tilbage lidt senere – priserne hentes to gange om dagen.</span>
+						<span>Vi tager kun tilbud med, som butikkerne selv har sat op, og som højst er <?php echo (int) ( class_exists( '\Playform\Feeds\Sales' ) ? \Playform\Feeds\Sales::DAYS : 14 ); ?> dage gamle. Kom tilbage lidt senere – priserne hentes hver dag.</span>
 						<?php if ( $is_cat ) : ?><a class="btn" href="<?php echo esc_url( get_term_link( $term ) ); ?>">Se alle <?php echo esc_html( mb_strtolower( $label ) ); ?></a><?php endif; ?>
 					<?php elseif ( in_array( 'tilbud', playform_active_filters()['egenskab'] ?? [], true ) ) : ?>
 						<b>Ingen tilbud matcher dine filtre</b>
@@ -304,7 +304,7 @@ if ( $campaign || $offer_hero ) :
 						<a class="btn" href="<?php echo esc_url( playform_reset_url() ); ?>">Nulstil filtre</a>
 					<?php else : ?>
 						<b>Ingen produkter i kategorien lige nu</b>
-						<span>I øjeblikket har butikkerne ikke noget på lager her. Udvalget hentes på ny to gange om dagen – kom forbi igen.</span>
+						<span>I øjeblikket har butikkerne ikke noget på lager her. Udvalget hentes på ny hver dag – kom forbi igen.</span>
 						<a class="btn" href="<?php echo esc_url( home_url( '/' ) ); ?>">Til forsiden</a>
 					<?php endif; ?>
 				</div>

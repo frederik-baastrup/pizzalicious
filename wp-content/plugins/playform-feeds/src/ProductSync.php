@@ -22,6 +22,7 @@ final class ProductSync {
 	public const META_CATEGORY   = '_pf_category';
 	/** Eksterne produkter kan ikke have lagerstatus i WooCommerce, så vi gemmer den selv. */
 	public const META_IN_STOCK   = '_pf_in_stock';
+	public const META_OOS        = '_pf_oos_since'; // dato, hvor varen blev udsolgt hos alle butikker
 
 	public static function create( array $offer, string $category ): int {
 		$product = new \WC_Product_External();
@@ -90,7 +91,7 @@ final class ProductSync {
 			}
 		}
 		// Uden billede er det typisk en udgået vare eller en reservedel – den vises ikke, før der kommer et billede.
-		if ( '' === $image ) {
+		if ( '' === $image || self::long_sold_out( $product_id, (int) $best['in_stock'] ) ) {
 			$product->set_status( 'draft' );
 		} elseif ( 'draft' === $product->get_status() && ( $product->get_meta( self::META_CATEGORY ) ?: $category ) !== Config::uncategorized_slug() ) {
 			$product->set_status( 'publish' );
@@ -125,6 +126,39 @@ final class ProductSync {
 	 * fx "Hos Pro Outdoor" på lager, men butikkens tilbud er udsolgt eller dets side er væk. Køres efter hver import.
 	 * @return int antal rettede produkter
 	 */
+	/**
+	 * Spar CPU (21. nov. 2026, ejerens valg): udsolgt hos alle butikker i over 60 dage → skjult (kladde). Kommer varen
+	 * på lager igen, vises den igen ved næste import. Prishistorik over 12 måneder slettes.
+	 */
+	public static function long_sold_out( int $product_id, int $in_stock ): bool {
+		if ( $in_stock ) {
+			delete_post_meta( $product_id, self::META_OOS );
+			return false;
+		}
+		$since = (string) get_post_meta( $product_id, self::META_OOS, true );
+		if ( '' === $since ) {
+			update_post_meta( $product_id, self::META_OOS, current_time( 'Y-m-d' ) );
+			return false;
+		}
+		return $since < gmdate( 'Y-m-d', current_time( 'timestamp' ) - 60 * DAY_IN_SECONDS );
+	}
+
+	/** Dagligt: markér udsolgte varer, skjul dem efter 60 dage, ryd gammel prishistorik. */
+	public static function daily_cleanup(): int {
+		global $wpdb;
+		$pm    = $wpdb->postmeta;
+		$today = current_time( 'Y-m-d' );
+		$limit = gmdate( 'Y-m-d', current_time( 'timestamp' ) - 60 * DAY_IN_SECONDS );
+		$wpdb->query( "DELETE o FROM $pm o JOIN $pm s ON s.post_id = o.post_id AND s.meta_key = '" . self::META_IN_STOCK . "' AND s.meta_value = '1' WHERE o.meta_key = '" . self::META_OOS . "'" );
+		$wpdb->query( $wpdb->prepare( "INSERT INTO $pm (post_id, meta_key, meta_value) SELECT s.post_id, %s, %s FROM $pm s LEFT JOIN $pm o ON o.post_id = s.post_id AND o.meta_key = %s WHERE s.meta_key = %s AND s.meta_value = '0' AND o.meta_id IS NULL", self::META_OOS, $today, self::META_OOS, self::META_IN_STOCK ) );
+		$hidden = (int) $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->posts} p JOIN $pm o ON o.post_id = p.ID AND o.meta_key = %s SET p.post_status = 'draft' WHERE p.post_type = 'product' AND p.post_status = 'publish' AND o.meta_value < %s", self::META_OOS, $limit ) );
+		$wpdb->query( $wpdb->prepare( 'DELETE FROM ' . PriceHistory::table() . ' WHERE recorded_on < %s', gmdate( 'Y-m-d', current_time( 'timestamp' ) - 365 * DAY_IN_SECONDS ) ) );
+		if ( $hidden ) {
+			wp_cache_flush();
+		}
+		return $hidden;
+	}
+
 	public static function heal_stock(): int {
 		global $wpdb;
 		$t    = Offers::table();

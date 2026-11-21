@@ -150,7 +150,7 @@ while ( have_posts() ) :
 
 	<section class="usps" aria-label="Sådan virker <?php echo esc_attr( playform_site( 'name' ) ); ?>">
 		<ul class="wrap usps__in">
-			<li><?php echo playform_icon( 'refresh', 18, 1.4 ); // phpcs:ignore ?><span><b>Opdateret 2× dagligt</b>Priser og lager direkte fra shoppen</span></li>
+			<li><?php echo playform_icon( 'refresh', 18, 1.4 ); // phpcs:ignore ?><span><b>Opdateret hver dag</b>Priser og lager direkte fra shoppen</span></li>
 			<li><?php echo playform_icon( 'store', 18, 1.4 ); // phpcs:ignore ?><span><b>Du handler hos butikken</b>Butikkens egne vilkår for levering og retur</span></li>
 			<li><?php echo playform_icon( 'tag', 18, 1.4 ); // phpcs:ignore ?><span><b>Butikkernes egne tilbud</b>Maks. 14 dage gamle</span></li>
 			<li><?php echo playform_icon( 'grid', 18, 1.4 ); // phpcs:ignore ?><span><b>Flere shops på ét sted</b>Udvalg fra shops, vi samarbejder med</span></li>

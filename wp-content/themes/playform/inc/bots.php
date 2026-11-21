@@ -44,3 +44,11 @@ add_filter(
 	},
 	98
 );
+
+// Spar CPU (21. nov. 2026): WooCommerce' baggrundsjob til Analytics, Marketing og forslag bruges ikke.
+add_filter( 'woocommerce_admin_disabled', '__return_true' );
+add_filter( 'woocommerce_allow_marketplace_suggestions', '__return_false' );
+add_filter( 'woocommerce_background_image_regeneration', '__return_false' );
+add_filter( 'pre_option_woocommerce_analytics_enabled', static fn() => 'no' );
+add_filter( 'pre_option_woocommerce_feature_marketplace_enabled', static fn() => 'no' );
+add_filter( 'action_scheduler_retention_period', static fn() => DAY_IN_SECONDS );

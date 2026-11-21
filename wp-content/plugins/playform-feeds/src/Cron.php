@@ -2,7 +2,7 @@
 namespace Playform\Feeds;
 
 /**
- * Importen kører kl. 05:30 og 17:30 dansk tid.
+ * Importen kører kl. 05:30 dansk tid.
  * På hostingen bør et rigtigt cronjob kalde: wp playform import (se README).
  */
 final class Cron {
@@ -52,6 +52,11 @@ final class Cron {
 			LinkCheck::run(); // døde produktsider hos butikkerne
 		} catch ( \Throwable $e ) {
 			error_log( Config::site()['name'] . ' linktjek: ' . $e->getMessage() ); // phpcs:ignore
+		}
+		try {
+			ProductSync::daily_cleanup(); // udsolgt > 60 dage skjules, prishistorik > 12 mdr. slettes
+		} catch ( \Throwable $e ) {
+			error_log( 'Oprydning: ' . $e->getMessage() ); // phpcs:ignore
 		}
 		try {
 			ProductSync::heal_stock(); // lagerstatus, der ikke passer til tilbuddene

@@ -102,7 +102,7 @@ while ( have_posts() ) :
 					<ul class="author-card__rules">
 						<?php if ( ! get_post_meta( get_the_ID(), '_pf_hidden', true ) && ! get_post_meta( get_the_ID(), '_pf_sponsored', true ) ) : ?><li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Ingen betalte placeringer</li><?php endif; ?>
 						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Fakta fra butikkernes egne data</li>
-						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Priser opdateres to gange i døgnet</li>
+						<li><?php echo playform_icon( 'check', 14, 1.8 ); // phpcs:ignore ?>Priser opdateres hver dag</li>
 					</ul>
 				</aside>
 			</div>

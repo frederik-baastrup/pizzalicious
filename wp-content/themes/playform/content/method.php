@@ -15,7 +15,7 @@ return [
 <h2>Hvad der skal være på plads</h2>
 <ul>
 <li>Produktet findes hos en af <a href="/vores-butikker/">de danske webshops, vi samarbejder med</a>. Vi sammenligner altså ikke alt, hvad der findes, men det, vores butikker har.</li>
-<li>Det var på lager og havde billede, da vi skrev guiden. Prisen og lagerstatus holder vi derefter opdateret automatisk to gange om dagen.</li>
+<li>Det var på lager og havde billede, da vi skrev guiden. Prisen og lagerstatus holder vi derefter opdateret automatisk hver dag.</li>
 <li>Det passer til emnet – en guide til gasovne viser ikke træpilleovne.</li>
 <li>Vi tager højst fem modeller med pr. guide.</li>
 </ul>

@@ -31,6 +31,15 @@ final class Cli {
 				$files[ $k ] = $p;
 			}
 		}
+		// Én fuld import i døgnet (ejerens valg 21. nov. 2026, spar CPU): kørslen kl. 17:30 springes over.
+		$full = null === $only && ! $files && empty( $assoc['limit'] );
+		if ( $full && empty( $assoc['force'] ) && (int) get_option( 'playform_last_full_import', 0 ) > time() - 20 * HOUR_IN_SECONDS ) {
+			\WP_CLI::log( 'Fuld import er kørt inden for 20 timer – springes over (brug --force).' );
+			return;
+		}
+		if ( $full ) {
+			update_option( 'playform_last_full_import', time(), false );
+		}
 		$t0      = microtime( true );
 		$summary = ( new Importer( static fn( $m ) => \WP_CLI::log( $m ) ) )->run( $only, $files, (int) ( $assoc['limit'] ?? 0 ) );
 		$rows    = [];
