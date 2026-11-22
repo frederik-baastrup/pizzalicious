@@ -244,7 +244,7 @@ add_shortcode(
 						<a class="pick__more" href="<?php echo esc_url( $d['url'] ); ?>">Se produktet</a>
 					<?php endif; ?>
 				</div>
-				<?php echo $p ? playform_pick_pricelist( $p->get_id() ) : ''; // phpcs:ignore -- escapet i funktionen ?>
+				<?php if ( $p ) { $GLOBALS['pf_pick_ids'][ $n ] = $p->get_id(); } // prissammenligningen sættes ind under teksten (playform_pick_pricelists_in_content) ?>
 				<?php echo $alt_html; // phpcs:ignore -- bygget og escapet ovenfor ?>
 			</div>
 		</div>
@@ -802,3 +802,30 @@ function playform_pick_pricelist( int $id ): string {
 	}
 	return $h . '</div></div>';
 }
+
+/**
+ * Prissammenligningen står mellem valgets tekst og "Godt til / Mindre godt til" (ejerens ønske 22. nov. 2026).
+ * Kører efter shortcodes, så fitbase_valg har registreret hvert valgs produkt.
+ */
+add_filter(
+	'the_content',
+	static function ( $html ) {
+		if ( ! is_string( $html ) || empty( $GLOBALS['pf_pick_ids'] ) || false === strpos( $html, 'id="valg-' ) ) {
+			return $html;
+		}
+		$parts = preg_split( '~(?=<h2 id="valg-\d+")~', $html );
+		foreach ( $parts as $k => $part ) {
+			if ( ! preg_match( '~^<h2 id="valg-(\d+)"~', $part, $m ) || empty( $GLOBALS['pf_pick_ids'][ (int) $m[1] ] ) ) {
+				continue;
+			}
+			$list = playform_pick_pricelist( (int) $GLOBALS['pf_pick_ids'][ (int) $m[1] ] );
+			$pos  = strpos( $part, '<div class="pick-fit">' );
+			if ( false === $pos ) {
+				$pos = strpos( $part, '<h2', 4 ); // intet "Godt til": før næste overskrift
+			}
+			$parts[ $k ] = false === $pos ? $part . $list : substr_replace( $part, $list, $pos, 0 );
+		}
+		return implode( '', $parts );
+	},
+	12
+);

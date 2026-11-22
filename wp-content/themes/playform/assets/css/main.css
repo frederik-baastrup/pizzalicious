@@ -1689,7 +1689,7 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .chart--high .chart__stat--now b { color: var(--pc-high); }
 
 /* Prissammenligning i købsguides (22. nov. 2026) */
-.pick__prices { margin-top: 18px; }
+.pick__prices { margin: 24px 0; }
 .pick__prices-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-bottom: 8px; }
 .pick__prices-head b { font-size: 15px; font-weight: 600; }
 .pick__prices-head span { font-size: 13px; color: var(--muted, #6b6b6b); }
