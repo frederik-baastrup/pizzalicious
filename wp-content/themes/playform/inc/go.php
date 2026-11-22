@@ -56,9 +56,12 @@ add_action(
 			status_header( 200 );
 			header( 'Content-Type: text/html; charset=utf-8' );
 			$again = esc_url( home_url( '/go/' ) . '?u=' . rawurlencode( $u ) . '&s=' . rawurlencode( $s ) );
-			echo '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="origin"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Videresender …</title>'
-				. '<p style="font:16px system-ui,sans-serif;margin:40px;text-align:center">Du sendes videre til butikken …</p>'
-				. '<script>setTimeout(function(){document.cookie="pf_h=1;path=/;max-age=31536000;SameSite=Lax";location.replace(' . wp_json_encode( html_entity_decode( $again ) ) . ');},300);</script>';
+			// 22. nov. 2026: ingen automatisk videresendelse – en headless crawler klikkede sig gennem Pizzalicious.
+			// Rigtige besøgende ser aldrig siden (de har pf_h fra deres første klik/tryk); en robot klikker ikke på knappen.
+			echo '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="origin"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gå til butikken</title>'
+				. '<p style="font:16px system-ui,sans-serif;margin:60px 20px 20px;text-align:center">Du er på vej til butikken.</p>'
+				. '<p style="text-align:center"><a id="go" href="#" style="display:inline-block;font:600 16px system-ui,sans-serif;padding:14px 26px;border-radius:999px;background:#111;color:#fff;text-decoration:none">Fortsæt til butikken &rarr;</a></p>'
+				. '<script>document.getElementById("go").addEventListener("click",function(e){e.preventDefault();document.cookie="pf_h=1;path=/;max-age=31536000;SameSite=Lax";location.replace(' . wp_json_encode( html_entity_decode( $again ) ) . ');});</script>';
 			exit;
 		}
 		playform_go_count( $dest );
