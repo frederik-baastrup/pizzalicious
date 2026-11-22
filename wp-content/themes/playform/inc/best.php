@@ -244,6 +244,7 @@ add_shortcode(
 						<a class="pick__more" href="<?php echo esc_url( $d['url'] ); ?>">Se produktet</a>
 					<?php endif; ?>
 				</div>
+				<?php echo $p ? playform_pick_pricelist( $p->get_id() ) : ''; // phpcs:ignore -- escapet i funktionen ?>
 				<?php echo $alt_html; // phpcs:ignore -- bygget og escapet ovenfor ?>
 			</div>
 		</div>
@@ -770,3 +771,34 @@ add_filter(
 	},
 	20
 );
+
+/**
+ * Prissammenligning under hvert valg i købsguiden (22. nov. 2026, ejerens ønske): samme liste som på produktsiden,
+ * også når kun én butik har varen. Kun butikker, vi samarbejder med.
+ */
+function playform_pick_pricelist( int $id ): string {
+	if ( ! class_exists( '\\Playform\\Feeds\\Frontend' ) ) {
+		return '';
+	}
+	$offers = array_values( array_filter( \Playform\Feeds\Frontend::offers( $id ), static fn( $o ) => (float) ( $o['price'] ?? 0 ) > 0 ) );
+	if ( ! $offers ) {
+		return '';
+	}
+	usort( $offers, static fn( $a, $b ) => [ empty( $a['in_stock'] ), (float) $a['price'] + (float) ( $a['shipping'] ?? 0 ) ] <=> [ empty( $b['in_stock'] ), (float) $b['price'] + (float) ( $b['shipping'] ?? 0 ) ] );
+	$slug  = get_post_field( 'post_name', $id );
+	$guide = get_post_field( 'post_name', get_the_ID() ) . '-prisliste';
+	$n     = count( $offers );
+	$h     = '<div class="pick__prices"><div class="pick__prices-head"><b>Prissammenligning</b><span>' . esc_html( 1 === $n ? 'Priser hos den butik, vi samarbejder med, der har varen' : 'Priser hos ' . $n . ' butikker, vi samarbejder med' ) . ' · opdateret dagligt</span></div><div class="offers offers--compact">';
+	foreach ( $offers as $i => $o ) {
+		$in   = ! empty( $o['in_stock'] );
+		$ship = $o['shipping'] ?? null;
+		$h   .= '<div class="offer' . ( 0 === $i && $in && $n > 1 ? ' offer--best' : '' ) . '">'
+			. '<span class="offer__shop"><b>' . esc_html( (string) $o['shop'] ) . '</b>'
+			. ( 0 === $i && $in && $n > 1 ? '<span class="badge badge--accent">Billigst</span>' : '' )
+			. '<span class="stock' . ( $in ? ' stock--in' : '' ) . '"><span class="stock__dot"></span>' . ( $in ? 'På lager' : 'Ikke på lager' ) . '</span></span>'
+			. '<span class="offer__price">' . esc_html( playform_kr( (float) $o['price'] ) ) . '<small class="offer__ship">' . esc_html( null === $ship ? 'fragt: se butik' : ( $ship > 0 ? '+ fragt ' . playform_kr( (float) $ship ) : 'gratis fragt' ) ) . '</small></span>'
+			. '<a href="' . esc_url( playform_aff_url( (string) $o['url'], $slug, $guide ) ) . '" class="btn-out" rel="sponsored nofollow noopener" referrerpolicy="strict-origin-when-cross-origin" target="_blank">Gå til butik</a>'
+			. '</div>';
+	}
+	return $h . '</div></div>';
+}

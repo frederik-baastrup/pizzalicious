@@ -1687,3 +1687,12 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .chart__stat--high b { color: var(--pc-high); }
 .chart--low .chart__stat--now b { color: var(--pc-low); }
 .chart--high .chart__stat--now b { color: var(--pc-high); }
+
+/* Prissammenligning i købsguides (22. nov. 2026) */
+.pick__prices { margin-top: 18px; }
+.pick__prices-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-bottom: 8px; }
+.pick__prices-head b { font-size: 15px; font-weight: 600; }
+.pick__prices-head span { font-size: 13px; color: var(--muted, #6b6b6b); }
+.offers--compact { gap: 6px; }
+.offers--compact .offer { grid-template-columns: minmax(0, 1fr) auto auto; padding: 10px 14px; gap: 12px; }
+@media (max-width: 560px) { .offers--compact .offer { grid-template-columns: minmax(0, 1fr) auto; } .offers--compact .offer .btn-out { grid-column: 1 / -1; text-align: center; } }
