@@ -152,7 +152,25 @@ final class ProductSync {
 		$wpdb->query( "DELETE o FROM $pm o JOIN $pm s ON s.post_id = o.post_id AND s.meta_key = '" . self::META_IN_STOCK . "' AND s.meta_value = '1' WHERE o.meta_key = '" . self::META_OOS . "'" );
 		$wpdb->query( $wpdb->prepare( "INSERT INTO $pm (post_id, meta_key, meta_value) SELECT s.post_id, %s, %s FROM $pm s LEFT JOIN $pm o ON o.post_id = s.post_id AND o.meta_key = %s WHERE s.meta_key = %s AND s.meta_value = '0' AND o.meta_id IS NULL", self::META_OOS, $today, self::META_OOS, self::META_IN_STOCK ) );
 		$hidden = (int) $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->posts} p JOIN $pm o ON o.post_id = p.ID AND o.meta_key = %s SET p.post_status = 'draft' WHERE p.post_type = 'product' AND p.post_status = 'publish' AND o.meta_value < %s", self::META_OOS, $limit ) );
-		$wpdb->query( $wpdb->prepare( 'DELETE FROM ' . PriceHistory::table() . ' WHERE recorded_on < %s', gmdate( 'Y-m-d', current_time( 'timestamp' ) - 365 * DAY_IN_SECONDS ) ) );
+		$h = PriceHistory::table();
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $h WHERE recorded_on < %s", gmdate( 'Y-m-d', current_time( 'timestamp' ) - 365 * DAY_IN_SECONDS ) ) );
+		// 22. nov. 2026 (databasen over 1 GB): historik for skjulte/slettede produkter, gamle inaktive tilbud,
+		// færdige baggrundsjob – og komprimering af uændrede dage. OPTIMIZE frigiver pladsen om søndagen.
+		$gone  = (int) $wpdb->query( "DELETE h FROM $h h LEFT JOIN {$wpdb->posts} p ON p.ID = h.product_id AND p.post_status = 'publish' WHERE p.ID IS NULL" );
+		$gone += PriceHistory::compact( 240 );
+		$o     = Offers::table();
+		$gone += (int) $wpdb->query( $wpdb->prepare( "DELETE FROM $o WHERE active = 0 AND last_seen < %s", gmdate( 'Y-m-d H:i:s', time() - 60 * DAY_IN_SECONDS ) ) );
+		foreach ( [ 'actionscheduler_logs', 'actionscheduler_actions' ] as $as ) {
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . $as ) ) ) {
+				$gone += (int) $wpdb->query( 'actionscheduler_logs' === $as ? "DELETE FROM {$wpdb->prefix}actionscheduler_logs WHERE log_date_gmt < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 7 DAY)" : "DELETE FROM {$wpdb->prefix}actionscheduler_actions WHERE status IN ('complete','failed','canceled') AND scheduled_date_gmt < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 7 DAY)" );
+			}
+		}
+		$gone += (int) $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_timeout\\_%' AND option_value < UNIX_TIMESTAMP()" );
+		if ( $gone > 50000 || '7' === current_time( 'N' ) ) {
+			foreach ( [ $h, $o, $wpdb->postmeta, $wpdb->options ] as $tbl ) {
+				$wpdb->query( "OPTIMIZE TABLE $tbl" );
+			}
+		}
 		if ( $hidden ) {
 			wp_cache_flush();
 		}

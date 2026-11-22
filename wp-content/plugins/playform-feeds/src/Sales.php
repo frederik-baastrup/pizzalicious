@@ -90,6 +90,11 @@ final class Sales {
 			),
 			ARRAY_A
 		);
+		// Komprimeret historik (PriceHistory::compact): prisen, der gjaldt ved vinduets start, er den seneste række før $from.
+		$carry = $wpdb->get_var( $wpdb->prepare( "SELECT price FROM $h WHERE product_id = %d AND shop = %s AND recorded_on < %s ORDER BY recorded_on DESC LIMIT 1", $product_id, $shop, $from ) );
+		if ( $row && null !== $carry ) {
+			$row['ref'] = null === $row['ref'] ? $carry : min( (float) $row['ref'], (float) $carry );
+		}
 		if ( ! $row || ! $row['first_day'] || $row['first_day'] > $from || $row['ref'] === null ) {
 			return null;
 		}
