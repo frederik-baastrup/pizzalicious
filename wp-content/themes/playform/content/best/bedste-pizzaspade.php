@@ -29,17 +29,17 @@ HTML,
 			'less'    => [ 'Små 12" ovne' ],
 		],
 		[
-			'ean'     => '5060568341606',
-			'price'   => 295,
-			'name'    => 'Ooni pizzaspade i bambus 35,5 cm',
+			'ean'     => '5060568344409',
+			'price'   => 255,
+			'name'    => 'Ooni Karu 16 pizzaspade i bambus',
 			'role'    => 'Bedst til at bygge pizzaen',
 			'reviews' => [],
-			'verdict' => 'Stor bambusspade til pizzaer op til 35,5 cm – rå dej hænger mindre fast i træ end i metal.',
+			'verdict' => 'Bambusspade fra Ooni med plads til pizzaer på op til 16" – rå dej slipper lettere fra træ end fra metal.',
 			'why'     => <<<'HTML'
-<p>Ooni bambusspaden har plads til pizzaer på op til 35,5 cm i diameter og passer til Oonis største ovne.</p>
-<p>Mange bygger pizzaen direkte på en træspade, fordi den rå dej hænger mindre fast i træ end i metal, og bruger en metalspade til at tage pizzaen ud.</p>
+<p>Oonis bambusspade til Karu 16 er lavet til de store pizzaer: bladet er beregnet til pizzaer, der er op til 16" brede.</p>
+<p>Mange bygger pizzaen direkte på en træspade, fordi den rå dej hænger mindre fast i træ end i metal, og bruger en metalspade til at tage pizzaen ud. Når pizzaen er bagt, kan bambusspaden også gå med på bordet som serveringsbræt.</p>
 HTML,
-			'good'    => [ 'At bygge pizzaen på spaden', 'Servering' ],
+			'good'    => [ 'At bygge pizzaen på spaden', 'Store pizzaer', 'Servering' ],
 			'less'    => [ 'At tage pizzaen ud af ovnen' ],
 		],
 		[
