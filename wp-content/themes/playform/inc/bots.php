@@ -28,6 +28,40 @@ if ( playform_heavy_bot() || playform_bot_on_filter_url() ) {
 	exit;
 }
 
+/**
+ * Adresser med parametre (?maerke=, ?pris=, ?side= …) uden menneske-cookie (pf_h, sat af main.js ved første klik,
+ * tryk eller scroll) får en lille JavaScript-side, der sætter cookien og genindlæser. Rigtige besøgende mærker det
+ * ikke; scrapere, der ikke kører JavaScript, koster næsten ingen CPU. Indført 24. nov. 2026 efter et
+ * angreb på Myappeal: 70 kald i sekundet på /produkter?maerke=… fra tusindvis af IP-adresser.
+ */
+function playform_needs_challenge(): bool {
+	if ( empty( $_SERVER['QUERY_STRING'] ) || ! empty( $_COOKIE['pf_h'] ) || 'GET' !== ( $_SERVER['REQUEST_METHOD'] ?? 'GET' ) ) {
+		return false;
+	}
+	if ( is_admin() || wp_doing_ajax() || wp_doing_cron() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+		return false;
+	}
+	foreach ( array_keys( $_COOKIE ) as $c ) {
+		if ( 0 === strpos( (string) $c, 'wordpress_logged_in_' ) ) {
+			return false;
+		}
+	}
+	$uri = (string) ( $_SERVER['REQUEST_URI'] ?? '' );
+	return ! preg_match( '~^/(wp-|go/|xmlrpc|feed|sitemap)|[?&](pf_list|preview|rest_route|wc-ajax|p|page_id)=~', $uri );
+}
+
+if ( playform_needs_challenge() ) {
+	status_header( 200 );
+	header( 'Cache-Control: no-store, no-cache, private, max-age=0' );
+	header( 'X-Cache-Enabled: False' );
+	header( 'X-Robots-Tag: noindex, nofollow' );
+	header( 'Content-Type: text/html; charset=utf-8' );
+	echo '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>…</title>'
+		. '<script>document.cookie="pf_h=1;path=/;max-age=31536000;SameSite=Lax";location.reload();</script>'
+		. '<noscript><p style="font:16px system-ui,sans-serif;margin:40px">Slå JavaScript til for at bruge filtrene.</p></noscript>';
+	exit;
+}
+
 add_filter(
 	'robots_txt',
 	static function ( $out ) {
