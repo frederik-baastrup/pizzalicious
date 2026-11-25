@@ -1695,4 +1695,18 @@ ul.guide__facts { display: inline-flex; flex-wrap: wrap; align-items: center; ma
 .pick__prices-head span { font-size: 13px; color: var(--muted, #6b6b6b); }
 .offers--compact { gap: 6px; }
 .offers--compact .offer { grid-template-columns: minmax(0, 1fr) auto auto; padding: 10px 14px; gap: 12px; }
-@media (max-width: 560px) { .offers--compact .offer { grid-template-columns: minmax(0, 1fr) auto; } .offers--compact .offer .btn-out { grid-column: 1 / -1; text-align: center; } }
+
+/* Prissammenligning i købsguides: hele rækken er et link, kompakt på mobil (25. nov. 2026) */
+.offers--compact .offer { position: relative; cursor: pointer; }
+.offers--compact .offer .btn-out { position: static; }
+.offers--compact .offer .btn-out::before { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+@media (max-width: 760px) {
+	.offers--compact .offer { grid-template-columns: minmax(0, 1fr) auto 14px; gap: 10px; padding: 10px 12px 10px 14px; border: 1px solid var(--line); border-radius: 12px; box-shadow: none; transform: none; }
+	.offers--compact .offer + .offer { border-top: 1px solid var(--line); }
+	.offers--compact .offer--best { border-color: var(--ink); }
+	.offers--compact .offer__shop b { flex: 0 1 auto; font-size: 15px; }
+	.offers--compact .offer__price { font-size: 16px; }
+	.offers--compact .offer .btn-out, .offers--compact .offer--best .btn-out { width: 14px; height: 14px; padding: 0; border: 0; background: none; color: var(--muted, #6b6b6b); font-size: 0; }
+	.offers--compact .offer .btn-out::after { width: 14px; height: 14px; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; }
+	.offers--compact .offer:active { background: var(--soft, #f4f4f4); }
+}
