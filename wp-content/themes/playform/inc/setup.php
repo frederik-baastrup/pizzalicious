@@ -1110,3 +1110,32 @@ add_action(
 	},
 	40
 );
+
+/**
+ * SiteGround Securitys aktivitetslog (sgs_log_events/sgs_log_visitors) fyldte 765 MB af Outdoorlands database
+ * (26. nov. 2026, ejerens valg): tømmes nu og derefter hver dag, og loggen slås fra. Firewall og login-beskyttelse virker.
+ */
+function playform_truncate_sgs_logs(): void {
+	global $wpdb;
+	foreach ( [ 'sgs_log_events', 'sgs_log_visitors' ] as $t ) {
+		$t = $wpdb->prefix . $t;
+		if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $t ) ) ) {
+			$wpdb->query( "TRUNCATE TABLE $t" );
+		}
+	}
+	update_option( 'sg_security_disable_activity_log', 1 );
+}
+add_action(
+	'init',
+	static function () {
+		if ( get_option( 'playform_sgs_logs_v' ) !== '1' ) {
+			update_option( 'playform_sgs_logs_v', '1', false );
+			playform_truncate_sgs_logs();
+		}
+		if ( ! wp_next_scheduled( 'playform_sgs_logs_daily' ) ) {
+			wp_schedule_event( time() + DAY_IN_SECONDS, 'daily', 'playform_sgs_logs_daily' );
+		}
+	},
+	40
+);
+add_action( 'playform_sgs_logs_daily', 'playform_truncate_sgs_logs' );
