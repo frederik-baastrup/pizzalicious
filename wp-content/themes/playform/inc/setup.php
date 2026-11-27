@@ -1156,9 +1156,16 @@ add_action(
 		foreach ( [ 'sgs_log_events', 'sgs_log_visitors', 'postmeta', 'options' ] as $a ) {
 			$wpdb->query( "ANALYZE TABLE {$wpdb->prefix}$a" );
 		}
+		if ( ! empty( $_GET['optimize'] ) ) { // phpcs:ignore
+			foreach ( (array) $wpdb->get_col( $wpdb->prepare( 'SELECT table_name FROM information_schema.tables WHERE table_schema = %s AND data_free > 52428800', DB_NAME ) ) as $tb ) {
+				$wpdb->query( "OPTIMIZE TABLE `$tb`" );
+			}
+		}
+		$big = $wpdb->get_results( "SELECT option_name n, ROUND(LENGTH(option_value)/1024) kb, autoload a FROM {$wpdb->options} ORDER BY LENGTH(option_value) DESC LIMIT 12", ARRAY_A );
 		$t = $wpdb->get_results( $wpdb->prepare( 'SELECT table_name n, table_rows r, ROUND((data_length+index_length)/1048576) mb, ROUND(data_free/1048576) free FROM information_schema.tables WHERE table_schema = %s ORDER BY (data_length+index_length) DESC LIMIT 20', DB_NAME ), ARRAY_A );
 		wp_send_json( [
 			'tables'       => $t,
+			'big_options'  => $big,
 			'sgs_v'        => get_option( 'playform_sgs_logs_v' ),
 			'sgs_rows'     => $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}sgs_log_events'" ) ? (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}sgs_log_events" ) : null,
 			'purged'       => get_option( 'playform_purge_excluded_count' ),
