@@ -165,6 +165,8 @@ final class ProductSync {
 				$gone += (int) $wpdb->query( 'actionscheduler_logs' === $as ? "DELETE FROM {$wpdb->prefix}actionscheduler_logs WHERE log_date_gmt < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 7 DAY)" : "DELETE FROM {$wpdb->prefix}actionscheduler_actions WHERE status IN ('complete','failed','canceled') AND scheduled_date_gmt < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 7 DAY)" );
 			}
 		}
+		// Forældede transients: først værdierne (før blev kun timeout-rækkerne slettet, og værdierne blev liggende), så timeouts.
+		$gone += (int) $wpdb->query( "DELETE a FROM {$wpdb->options} a JOIN {$wpdb->options} t ON t.option_name = CONCAT('_transient_timeout_', SUBSTRING(a.option_name, 12)) WHERE a.option_name LIKE '\\_transient\\_%' AND a.option_name NOT LIKE '\\_transient\\_timeout\\_%' AND t.option_value < UNIX_TIMESTAMP()" );
 		$gone += (int) $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_timeout\\_%' AND option_value < UNIX_TIMESTAMP()" );
 		if ( $gone > 50000 || '7' === current_time( 'N' ) ) {
 			foreach ( [ $h, $o, $wpdb->postmeta, $wpdb->options ] as $tbl ) {

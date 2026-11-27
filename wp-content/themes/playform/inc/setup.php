@@ -1178,3 +1178,20 @@ add_action(
 	},
 	1
 );
+
+/** Engangsoprydning 27. nov. 2026: gamle filter-caches (pf_catmeta*) og forældede transients fyldte databasen. */
+add_action(
+	'init',
+	static function () {
+		if ( get_option( 'playform_catmeta_cleanup' ) === '1' ) {
+			return;
+		}
+		update_option( 'playform_catmeta_cleanup', '1', false );
+		global $wpdb;
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_pf\\_catmeta%' OR option_name LIKE '\\_transient\\_timeout\\_pf\\_catmeta%'" );
+		$wpdb->query( "DELETE a FROM {$wpdb->options} a JOIN {$wpdb->options} t ON t.option_name = CONCAT('_transient_timeout_', SUBSTRING(a.option_name, 12)) WHERE a.option_name LIKE '\\_transient\\_%' AND a.option_name NOT LIKE '\\_transient\\_timeout\\_%' AND t.option_value < UNIX_TIMESTAMP()" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_timeout\\_%' AND option_value < UNIX_TIMESTAMP()" );
+		$wpdb->query( "OPTIMIZE TABLE {$wpdb->options}" );
+	},
+	50
+);

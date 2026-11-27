@@ -150,7 +150,10 @@ function playform_catalog_state(): array {
 	$cache_key = '';
 	if ( empty( $args['s'] ) ) {
 		$last      = (array) get_option( 'playform_feeds_last_run', [] );
-		$cache_key = 'pf_catmeta4_' . md5( $cat . '|' . (int) $tilbud . '|' . ( $last['finished'] ?? '' ) . '|' . PLAYFORM_THEME_VERSION . '|' . count( $ids ) . '|' . ( $ids ? max( $ids ) : 0 ) );
+		// 27. nov. 2026: én transient pr. kategori (pf_cm5_<kategori>_<version>) – den gamle nøgle skiftede ved hvert nyt
+		// produkt og efterlod tusindvis af 1–5 MB store transients (Kitzhens database nåede 3,7 GB). Ældre versioner slettes.
+		$cat_key   = 'pf_cm5_' . substr( md5( $cat . '|' . (int) $tilbud ), 0, 12 );
+		$cache_key = $cat_key . '_' . substr( md5( ( $last['finished'] ?? '' ) . '|' . PLAYFORM_THEME_VERSION . '|' . count( $ids ) . '|' . ( $ids ? max( $ids ) : 0 ) ), 0, 12 );
 		$cached    = get_transient( $cache_key );
 		if ( is_array( $cached ) ) {
 			$meta = $cached;
@@ -159,6 +162,8 @@ function playform_catalog_state(): array {
 	if ( ! isset( $meta ) ) {
 		$meta = playform_catalog_meta( $ids, $cat );
 		if ( $cache_key ) {
+			global $wpdb;
+			$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s", $wpdb->esc_like( '_transient_' . $cat_key ) . '%', $wpdb->esc_like( '_transient_timeout_' . $cat_key ) . '%' ) );
 			set_transient( $cache_key, $meta, 12 * HOUR_IN_SECONDS );
 		}
 	}
